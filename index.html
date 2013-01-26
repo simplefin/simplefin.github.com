@@ -1,8 +1,223 @@
-<html>
-    <head>
-        <title>SimpleFIN</title>
-    </head>
-    <body>
-        <h1>SimpleFIN</h1>
-    </body>
-</html>
+---
+layout: default
+title: The title
+---
+
+<div class="title"><span class="strong">S</span>imple<span class="strong">FIN</span></div>
+
+<div class="container">
+    <div class="row">
+        <div class="span12">
+
+            <p>Getting transaction information from your bank should be easy and
+            secure.  SimpleFIN (or just SFIN) stands for Simple Financial Interchange
+            and aims to make read-only financial interchange simple.</p>
+            
+            <p>This document defines:
+            <ol>
+                <li>a data format for financial transaction information</li>
+                <li>the interface HTTP servers should implement to serve SFIN data</li>
+                <li>a recommendation for authentication</li>
+            </ol>
+            </p>            
+
+            <h2>Data Format</h2>
+            
+            <p>Data is encoded as JSON strings.  Following are the objects
+            specified by this standard:</p>
+            
+            <h3>Organization</h3>
+            
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Example</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>domain</code></td>
+                    <td>string</td>
+                    <td><code>"example.com"</code></td>
+                    <td><b>required</b></td>
+                    <td>The domain name of the organization.</td>
+                </tr>
+                <tr>
+                    <td><code>sfin_url</code></td>
+                    <td>string</td>
+                    <td><code>"https://www.example.com/sfin/"</code></td>
+                    <td>optional</td>
+                    <td>URL of organization's SFIN root endpoint.  If provided,
+                        the domain of the URL must match <code>domain</code>.</td>
+                </tr>
+                </tbody>
+            </table>
+            
+            <h3>Account</h3>
+            
+            <table class="table table-bordered">
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Example</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>org</code></td>
+                    <td>Organization</td>
+                    <td>{% highlight javascript %}{"domain": "example.com", "sfin_url": "https://www.example.com/sfin/"}{% endhighlight %}</td>
+                    <td><b>required</b></td>
+                    <td>Organization of this account.  If this is a bank account,
+                        this field will be the bank's organization.</td>
+                </tr>
+                <tr>
+                    <td><code>id</code></td>
+                    <td>string</td>
+                    <td><code>"283920398594"</code></td>
+                    <td><b>required</b></td>
+                    <td>An ID that uniquely identifies an account within the
+                        account's organization.  This does not have to be the
+                        same value that a person would recognize as their
+                        account number.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>name</code></td>
+                    <td>string</td>
+                    <td><code>"Money-Market Checking"</code></td>
+                    <td><b>required</b></td>
+                    <td>A name that uniquely describes an account.  This name
+                        should be chosen so that a person can easily associate
+                        it with only one of their accounts within an
+                        organization.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>currency</code></td>
+                    <td>string</td>
+                    <td><code>"GBP"</code></td>
+                    <td><b>required</b></td>
+                    <td>Currency of account.  XXX find list of acceptable values.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>balance</code></td>
+                    <td>numeric string</td>
+                    <td><code>"22.33"</code></td>
+                    <td><b>required</b></td>
+                    <td>The balance of the account as of
+                        <code class="nobr">last-transaction-id</code>.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>available-balance</code></td>
+                    <td>numeric string</td>
+                    <td><code>"15.33"</code></td>
+                    <td>optional</td>
+                    <td>The available balance of the account as of
+                        <code class="nobr">last-transaction-id</code>.  This
+                        may be omitted if it is the same as <code>balance</code>.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code class="nobr">last-transaction-id</code></td>
+                    <td>string</td>
+                    <td><code>"83940394098343ABCFKDSDF89"</code></td>
+                    <td><b>required</b></td>
+                    <td>ID of the most recently recorded Transaction on this
+                        account.</td>
+                </tr>
+            </table>
+            
+            <h3>Transaction</h3>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Example</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>id</code></td>
+                    <td>string</td>
+                    <td><code>"9990203-3840394"</code></td>
+                    <td><b>required</b></td>
+                    <td>An ID that uniquely describes a transaction within an
+                        Account.  An organization may reuse transaction ids
+                        for different accounts, but may never reuse a
+                        transaction id within an account.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>posted</code></td>
+                    <td class="nobr">ISO GMT date string</td>
+                    <td><code class="nobr">"2015-01-01T10:00:03.23434"</code></td>
+                    <td><b>required</b></td>
+                    <td>Timestamp transaction happened.  The timezone must be
+                        GMT.</td>
+                </tr>
+                <tr>
+                    <td><code>amount</code></td>
+                    <td>numeric string</td>
+                    <td><code>"90.28"</code></td>
+                    <td><b>required</b></td>
+                    <td>Amount of transaction.  Positive numbers indicate money
+                        being deposited into the account.</td>
+                </tr>
+                <tr>
+                    <td><code>memo</code></td>
+                    <td>string</td>
+                    <td><code>"Bob's Grocery Store - 22 S. Main"</code></td>
+                    <td><b>required</b></td>
+                    <td>A human-readable description of the source (in the case
+                        of a deposit) or destination (in the case of a withdrawl)
+                        of the money.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>sic</code></td>
+                    <td>string</td>
+                    <td><code>"2839"</code></td>
+                    <td>optional</td>
+                    <td>XXX SIC of payee</td>
+                </tr>
+            </table>
+
+
+            <h2>HTTP Servers</h2>
+            
+            <h3>Endpoints</h3>
+            <p>HTTP servers must provide the following URL scheme:</p>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>Method</th>
+                    <th>Path</th>
+                    <th>What it's for</th>
+                </tr>
+                <tr>
+                    <td><code>GET</code></td>
+                    <td><code>/accounts</code></td>
+                    <td>Among other things, a successful response will contain
+                        a list of accounts available to the requester.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>GET</code></td>
+                    <td><code>/accounts/:id</code></td>
+                    <td>Successful responses will contain account information
+                        and a list of transactions.
+                    </td>
+                </tr>
+            </table>
+            
+            <h3>Authentication</h3>
+
+        </div>
+    </div>
+</div>
