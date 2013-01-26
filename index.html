@@ -13,15 +13,15 @@ title: The title
             secure.  SimpleFIN (or just SFIN) stands for Simple Financial Interchange
             and aims to make read-only financial interchange simple.</p>
             
-            <p>This document defines:
+            <p>The SFIN standard defines:
             <ol>
-                <li>a data format for financial transaction information</li>
-                <li>the interface HTTP servers should implement to serve SFIN data</li>
-                <li>a recommendation for authentication</li>
+                <li>a <a href="#data-format">data format</a> for financial transaction information</li>
+                <li>the interface <a href="#http-servers">HTTP servers</a> should implement to serve SFIN data, and</li>
+                <li>the <a href="#authentication">authentication mechanism</a> used in communicating with the HTTP servers.</li>
             </ol>
             </p>            
 
-            <h2>Data Format</h2>
+            <a name="data-format"><h2>Data Format</h2></a>
             
             <p>Data is encoded as JSON strings.  Following are the objects
             specified by this standard:</p>
@@ -45,9 +45,9 @@ title: The title
                     <td>The domain name of the organization.</td>
                 </tr>
                 <tr>
-                    <td><code>sfin_url</code></td>
+                    <td><code class="nobr">sfin-url</code></td>
                     <td>string</td>
-                    <td><code>"https://www.example.com/sfin/"</code></td>
+                    <td><code class="nobr">"https://www.example.com/sfin/"</code></td>
                     <td>optional</td>
                     <td>URL of organization's SFIN root endpoint.  If provided,
                         the domain of the URL must match <code>domain</code>.</td>
@@ -68,7 +68,7 @@ title: The title
                 <tr>
                     <td><code>org</code></td>
                     <td>Organization</td>
-                    <td>{% highlight javascript %}{"domain": "example.com", "sfin_url": "https://www.example.com/sfin/"}{% endhighlight %}</td>
+                    <td>{% highlight javascript %}{"domain": "example.com", "sfin-url": "https://www.example.com/sfin/"}{% endhighlight %}</td>
                     <td><b>required</b></td>
                     <td>Organization of this account.  If this is a bank account,
                         this field will be the bank's organization.</td>
@@ -76,7 +76,7 @@ title: The title
                 <tr>
                     <td><code>id</code></td>
                     <td>string</td>
-                    <td><code>"283920398594"</code></td>
+                    <td><code>"123"</code></td>
                     <td><b>required</b></td>
                     <td>An ID that uniquely identifies an account within the
                         account's organization.  This does not have to be the
@@ -189,10 +189,9 @@ title: The title
             </table>
 
 
-            <h2>HTTP Servers</h2>
+            <a name="http-servers"><h2>HTTP Servers</h2></a>
             
-            <h3>Endpoints</h3>
-            <p>HTTP servers must provide the following URL scheme:</p>
+            <p>HTTP servers must provide the following set of URL paths:</p>
 
             <table class="table table-bordered">
                 <tr>
@@ -203,20 +202,101 @@ title: The title
                 <tr>
                     <td><code>GET</code></td>
                     <td><code>/accounts</code></td>
-                    <td>Among other things, a successful response will contain
+                    <td><a href="#fetch-accounts">Fetch accounts.</a>
+                        Among other things, a successful response will contain
                         a list of accounts available to the requester.
                     </td>
                 </tr>
                 <tr>
                     <td><code>GET</code></td>
                     <td><code>/accounts/:id</code></td>
-                    <td>Successful responses will contain account information
+                    <td><a href="#fetch-transactions">Fetch transactions.</a>
+                        Successful responses will contain account information
                         and a list of transactions.
                     </td>
                 </tr>
             </table>
             
-            <h3>Authentication</h3>
+            
+            <a name="fetch-accounts"><h3>Fetch accounts</h3></a>
+            <pre><code>GET /accounts</code></pre>
+            
+            <p>Fetch a list of all accounts available to the requester.  Here is
+            an example response body:</p>
+            
+            {% highlight javascript %}{
+    "accounts": [
+        {
+            "org": {
+                "domain": "mybank.com",
+                "sfin-url": "https://sfin.mybank.com/"
+            },
+            "id": "2930002",
+            "name": "Savings",
+            "currency": "USD",
+            "balance": "100.23",
+            "available-balance": "75.23",
+            "last-transaction-id": "AO334"
+        }
+    ]
+]{% endhighlight %}
+            
+            
+            <a name="fetch-transactions"><h3>Fetch transactions</h3></a>
+            <pre><code>GET /accounts/:id</code></pre>
+
+            <p>Fetch a list of the most recent transactions for a particular
+            account (specified by the <code>:id</code>).  If the response from
+            <code>GET /accounts</code> indicates that there's an account with
+            <code>id</code> of <code>1392</code>, the transactions for that
+            account will be found at <code>/accounts/1392</code>.</p>
+            
+            <p>Servers must respond with all transactions for at least the past
+            60 days, though more than 60 days of transactions may be returned.
+            </p>
+            
+            <p>Transactions must be sorted by <code>id</code>, with the latest
+            transaction last.</p>
+            
+            <p>Here is an example response body:</p>
+            
+            {% highlight javascript %}{
+    "transactions": [
+        {
+            "id": "AO334",
+            "posted": "2001-01-01T09:22:33.2343",
+            "amount": "-22.33",
+            "memo": "John's Pizza Pie Castle, Cafe and Spa",
+            "sic": "2354"
+        },
+        {
+            "id": "AO335",
+            "posted": "2001-01-05T10:33:29.82",
+            "amount": "-5.02",
+            "memo": "Frodo's Ring Repair",
+            "sic": "9003"
+        }
+    ]
+}{% endhighlight %}
+
+            Optional query parameters
+            <table class="table table-bordered">
+                <tr>
+                    <th>Name</th>
+                    <th>Example</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code class="nobr">since-transaction</code></td>
+                    <td><code class="nobr">?since-transaction=AO335</code></td>
+                    <td>If given, only transactions with an <code>id</code>
+                        newer than and not including
+                        <code>since-transaction</code> will be returned.
+                    </td>
+                </tr>
+            </table>
+
+            <a name="authentication"><h2>Authentication</h2></a>
 
         </div>
     </div>
