@@ -1,13 +1,13 @@
 ---
 layout: default
-title: The title
+title: SimpleFIN
 ---
 
 <div class="title"><span class="strong">S</span>imple<span class="strong">FIN</span></div>
 
 <div class="container">
     <div class="row">
-        <div class="span12">
+        <div class="offset2 span8">
 
             <p>Getting transaction information from your bank should be easy and
             secure.  SimpleFIN (or just SFIN) stands for Simple Financial Interchange
@@ -26,31 +26,30 @@ title: The title
             <p>Data is encoded as JSON strings.  Following are the objects
             specified by this standard:</p>
             
-            <h3>Organization</h3>
+            <a name="organization"><h3>Organization</h3></a>
             
             <table class="table table-bordered">
                 <tbody>
                 <tr>
-                    <th>Name</th>
+                    <th>Attribute</th>
                     <th>Type</th>
                     <th>Example</th>
-                    <th>Required</th>
                     <th>Description</th>
                 </tr>
                 <tr>
                     <td><code>domain</code></td>
                     <td>string</td>
                     <td><code>"example.com"</code></td>
-                    <td><b>required</b></td>
-                    <td>The domain name of the organization.</td>
+                    <td>The domain name of the organization.
+                        <br/><b>Required</b></td>
                 </tr>
                 <tr>
                     <td><code class="nobr">sfin-url</code></td>
                     <td>string</td>
                     <td><code class="nobr">"https://www.example.com/sfin/"</code></td>
-                    <td>optional</td>
                     <td>URL of organization's SFIN root endpoint.  If provided,
-                        the domain of the URL must match <code>domain</code>.</td>
+                        the domain of the URL must match <code>domain</code>.
+                        <br/>Optional</td>
                 </tr>
                 </tbody>
             </table>
@@ -59,134 +58,190 @@ title: The title
             
             <table class="table table-bordered">
                 <tr>
-                    <th>Name</th>
+                    <th>Attribute</th>
                     <th>Type</th>
                     <th>Example</th>
-                    <th>Required</th>
                     <th>Description</th>
                 </tr>
                 <tr>
                     <td><code>org</code></td>
-                    <td>Organization</td>
-                    <td>{% highlight javascript %}{"domain": "example.com", "sfin-url": "https://www.example.com/sfin/"}{% endhighlight %}</td>
-                    <td><b>required</b></td>
+                    <td><a href="#organization">Organization</a></td>
+                    <td><code>{"domain": "example.com", "sfin-url": "https://www.example.com/sfin/"}</code></td>
                     <td>Organization of this account.  If this is a bank account,
-                        this field will be the bank's organization.</td>
+                        this field will be the bank's organization.
+                        <br/><b>Required</b></td>
                 </tr>
                 <tr>
                     <td><code>id</code></td>
                     <td>string</td>
                     <td><code>"123"</code></td>
-                    <td><b>required</b></td>
                     <td>An ID that uniquely identifies an account within the
                         account's organization.  This does not have to be the
                         same value that a person would recognize as their
                         account number.
+                        <br/><b>Required</b>
                     </td>
                 </tr>
                 <tr>
                     <td><code>name</code></td>
                     <td>string</td>
                     <td><code>"Money-Market Checking"</code></td>
-                    <td><b>required</b></td>
                     <td>A name that uniquely describes an account.  This name
                         should be chosen so that a person can easily associate
                         it with only one of their accounts within an
                         organization.
+                        <br/><b>Required</b>
                     </td>
                 </tr>
                 <tr>
                     <td><code>currency</code></td>
                     <td>string</td>
                     <td><code>"GBP"</code></td>
-                    <td><b>required</b></td>
                     <td>Currency of account.  XXX find list of acceptable values.
+                        <br/><b>Required</b>
                     </td>
                 </tr>
                 <tr>
                     <td><code>balance</code></td>
                     <td>numeric string</td>
                     <td><code>"22.33"</code></td>
-                    <td><b>required</b></td>
                     <td>The balance of the account as of
                         <code class="nobr">last-transaction-id</code>.
+                        <br/><b>Required</b>
                     </td>
                 </tr>
                 <tr>
                     <td><code>available-balance</code></td>
                     <td>numeric string</td>
                     <td><code>"15.33"</code></td>
-                    <td>optional</td>
                     <td>The available balance of the account as of
                         <code class="nobr">last-transaction-id</code>.  This
                         may be omitted if it is the same as <code>balance</code>.
+                        <br/>Optional
                     </td>
                 </tr>
                 <tr>
                     <td><code class="nobr">last-transaction-id</code></td>
                     <td>string</td>
                     <td><code>"83940394098343ABCFKDSDF89"</code></td>
-                    <td><b>required</b></td>
                     <td>ID of the most recently recorded Transaction on this
-                        account.</td>
+                        account.
+                        <br/><b>Required</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code class="nobr">transactions</code></td>
+                    <td>list of <a href="#transaction">Transactions</a></td>
+                    <td><code>[{
+            "id": "AO334",
+            "posted": "2001-01-01T09:22:33.2343",
+            "amount": "-22.33",
+            "memo": "John's Pizza Pie Castle, Cafe and Spa",
+            "sic": "2354"
+        }]</code>
+                    </td>
+                    <td>List of <a href="#transaction">Transactions</a> for
+                        this account.
+                        <br/>Optional
+                    </td>
                 </tr>
             </table>
             
-            <h3>Transaction</h3>
+            <a name="transaction"><h3>Transaction</h3></a>
 
             <table class="table table-bordered">
                 <tr>
-                    <th>Name</th>
+                    <th>Attribute</th>
                     <th>Type</th>
                     <th>Example</th>
-                    <th>Required</th>
                     <th>Description</th>
                 </tr>
                 <tr>
                     <td><code>id</code></td>
                     <td>string</td>
                     <td><code>"9990203-3840394"</code></td>
-                    <td><b>required</b></td>
                     <td>An ID that uniquely describes a transaction within an
                         Account.  An organization may reuse transaction ids
                         for different accounts, but may never reuse a
                         transaction id within an account.
+                        <br/><b>Required</b>
                     </td>
                 </tr>
                 <tr>
                     <td><code>posted</code></td>
-                    <td class="nobr">ISO GMT date string</td>
+                    <td>ISO timestamp</td>
                     <td><code class="nobr">"2015-01-01T10:00:03.23434"</code></td>
-                    <td><b>required</b></td>
                     <td>Timestamp transaction happened.  The timezone must be
-                        GMT.</td>
+                        GMT.
+                        <br/><b>Required</b>
+                    </td>
                 </tr>
                 <tr>
                     <td><code>amount</code></td>
                     <td>numeric string</td>
                     <td><code>"90.28"</code></td>
-                    <td><b>required</b></td>
                     <td>Amount of transaction.  Positive numbers indicate money
-                        being deposited into the account.</td>
+                        being deposited into the account.
+                        <br/><b>Required</b>
+                    </td>
                 </tr>
                 <tr>
                     <td><code>memo</code></td>
                     <td>string</td>
                     <td><code>"Bob's Grocery Store - 22 S. Main"</code></td>
-                    <td><b>required</b></td>
                     <td>A human-readable description of the source (in the case
                         of a deposit) or destination (in the case of a withdrawl)
                         of the money.
+                        <br/><b>Required</b>
                     </td>
                 </tr>
                 <tr>
                     <td><code>sic</code></td>
                     <td>string</td>
                     <td><code>"2839"</code></td>
-                    <td>optional</td>
-                    <td>XXX SIC of payee</td>
+                    <td>XXX SIC of payee
+                        <br/>Optional
+                    </td>
                 </tr>
             </table>
+
+
+            <a name="account-set"><h3>Account Set</h3></a>
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>Attribute</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>accounts</code></td>
+                    <td>list of <a href="#account">Accounts</a></td>
+                    <td>A list of <a href="#account">Account</a> objects.
+                        <br/><b>Required</b>
+                    </td>
+                </tr>
+            </table>
+            
+            <p>Here is an example Account Set:</p>
+
+            {% highlight javascript %}{
+    "accounts": [
+        {
+            "org": {
+                "domain": "mybank.com",
+                "sfin-url": "https://sfin.mybank.com/"
+            },
+            "id": "2930002",
+            "name": "Savings",
+            "currency": "USD",
+            "balance": "100.23",
+            "available-balance": "75.23",
+            "last-transaction-id": "AO334",
+            "transactions": []
+        }
+    ]
+]{% endhighlight %}
 
 
             <a name="http-servers"><h2>HTTP Servers</h2></a>
@@ -198,22 +253,22 @@ title: The title
                 <tr>
                     <th>Method</th>
                     <th>Path</th>
-                    <th>What it's for</th>
+                    <th>Response</th>
                 </tr>
                 <tr>
                     <td><code>GET</code></td>
                     <td><code>/accounts</code></td>
-                    <td><a href="#fetch-accounts">Fetch accounts.</a>
-                        Among other things, a successful response will contain
-                        a list of accounts available to the requester.
+                    <td>An <a href="#account-set">Account Set</a> <em>without</em>
+                        <code>Account.transactions</code> provided by default.
+                        See <a href="#fetch-accounts">Fetch accounts</a>.
                     </td>
                 </tr>
                 <tr>
                     <td><code>GET</code></td>
                     <td><code>/accounts/:id</code></td>
-                    <td><a href="#fetch-transactions">Fetch transactions.</a>
-                        Successful responses will contain account information
-                        and a list of transactions.
+                    <td>An <a href="#account-set">Account Set</a> <em>with</em>
+                        <code>Account.transactions</code> provided.
+                        See <a href="#fetch-transactions">Fetch transactions</a>.
                     </td>
                 </tr>
             </table>
@@ -222,8 +277,15 @@ title: The title
             <a name="fetch-accounts"><h3>Fetch accounts</h3></a>
             <pre><code>GET /accounts</code></pre>
             
-            <p>Fetch a list of all accounts available to the requester.  Here is
-            an example response body:</p>
+            <p>Fetch a list of all accounts available to the requester.</p>
+            
+            <ol>
+                <li>If no query parameters are supplied, no
+                    <code>Account.transactions</code> will be returned.</li>
+                
+            </ol>
+            
+            <h4>Example response body</h4>
             
             {% highlight javascript %}{
     "accounts": [
@@ -237,10 +299,39 @@ title: The title
             "currency": "USD",
             "balance": "100.23",
             "available-balance": "75.23",
-            "last-transaction-id": "AO334"
+            "last-transaction-id": "AO334",
         }
     ]
 ]{% endhighlight %}
+
+            
+
+            <h4>Optional query parameters</h4>
+            
+            <table class="table table-bordered">
+                <tr>
+                    <th>Name</th>
+                    <th>Example</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                
+                    <td><code class="nobr">start-date</code></td>
+                    <td><code class="nobr">?start-date=2001-05-15</code></td>
+                    <td>If given, transactions <em>on or after</em> the
+                    supplied date or timestamp will be returned.</td>
+                </tr>
+                <tr>
+                    <td><code class="nobr">end-date</code></td>
+                    <td><code class="nobr">?end-date=2001-06-19</code></td>
+                    <td>If given, only transactions <em>before</em> the
+                    supplied date or timestamp will be returned.  Transactions
+                    with a <code>posted</code> date equal to this date/timestamp
+                    will <em>not</em> be returned.  For instance, querying for
+                    <code>?start-date=2001-05-01&end-date=2001-06-01</code>
+                    will return all transactions from May, 2001.</td>
+                </tr>
+            </table>            
             
             
             <a name="fetch-transactions"><h3>Fetch transactions</h3></a>
@@ -252,35 +343,63 @@ title: The title
             <code>id</code> of <code>1392</code>, the transactions for that
             account will be found at <code>/accounts/1392</code>.</p>
             
-            <p>Servers must respond with all transactions for at least the past
-            60 days, though more than 60 days of transactions may be returned.
-            </p>
+            <ol>
+                <li>Servers must respond with all transactions for at least the past
+                    60 days, though more than 60 days of transactions may be returned.
+                </li>
+                
+                <li>Transactions must be sorted by <code>id</code>, with the latest
+                    transaction last.
+                </li>
+                
+                <li>The <code>last-transaction-id</code> <em>must</em> be the last
+                    Transaction listed;</li>
             
-            <p>Transactions must be sorted by <code>id</code>, with the latest
-            transaction last.</p>
+                <li>The <code>balance</code> and <code>available-balance</code>
+                    <em>must</em> be the balance resulting from the last
+                    transaction listed.
+                </li>
+            </ol>
+   
             
-            <p>Here is an example response body:</p>
+            <h4>Example response body</h4>
             
             {% highlight javascript %}{
-    "transactions": [
+    "accounts": [
         {
-            "id": "AO334",
-            "posted": "2001-01-01T09:22:33.2343",
-            "amount": "-22.33",
-            "memo": "John's Pizza Pie Castle, Cafe and Spa",
-            "sic": "2354"
-        },
-        {
-            "id": "AO335",
-            "posted": "2001-01-05T10:33:29.82",
-            "amount": "-5.02",
-            "memo": "Frodo's Ring Repair",
-            "sic": "9003"
+            "org": {
+                "domain": "mybank.com",
+                "sfin-url": "https://sfin.mybank.com/"
+            },
+            "id": "2930002",
+            "name": "Savings",
+            "currency": "USD",
+            "balance": "100.23",
+            "available-balance": "75.23",
+            "last-transaction-id": "AO335",
+            "transactions": [
+                {
+                    "id": "AO334",
+                    "posted": "2001-01-01T09:22:33.2343",
+                    "amount": "-22.33",
+                    "memo": "John's Pizza Pie Castle, Cafe and Spa",
+                    "sic": "2354"
+                },
+                {
+                    "id": "AO335",
+                    "posted": "2001-01-05T10:33:29.82",
+                    "amount": "-5.02",
+                    "memo": "Frodo's Ring Repair",
+                    "sic": "9003"
+                }
+            ]
         }
     ]
 }{% endhighlight %}
 
-            Optional query parameters
+            
+            <h4>Optional query parameters</h4>
+            
             <table class="table table-bordered">
                 <tr>
                     <th>Name</th>
@@ -295,10 +414,116 @@ title: The title
                         <code>since-transaction</code> will be returned.
                     </td>
                 </tr>
+                <tr>
+                
+                    <td><code class="nobr">start-date</code></td>
+                    <td><code class="nobr">?start-date=2001-05-15</code></td>
+                    <td>If given, only transactions <em>on or after</em> the
+                    supplied date or timestamp will be returned.</td>
+                </tr>
+                <tr>
+                    <td><code class="nobr">end-date</code></td>
+                    <td><code class="nobr">?end-date=2001-06-19</code></td>
+                    <td>If given, only transactions <em>before</em> the
+                    supplied date or timestamp will be returned.  Transactions
+                    with a <code>posted</code> date equal to this date/timestamp
+                    will <em>not</em> be returned.  For instance, querying for
+                    <code>?start-date=2001-05-01&end-date=2001-06-01</code>
+                    will return all transactions from May, 2001.</td>
+                </tr>
+            </table>
+
+            <h3>Errors</h3>
+      
+            <table class="table table-bordered">
+                <tr>
+                    <th class="nobr">Response code</th>
+                    <th>Applicable paths</th>
+                    <th>Scenario</th>
+                </tr>
+                <tr>
+                    <td><code class="nobr">403 Forbidden</code></td>
+                    <td><code class="nobr">/accounts</code>
+                        <br/><code class="nobr">/accounts/:id</code></td>
+                    <td>If the requester is not authenticated or an invalid
+                        token is used.</td>
+                </tr>
+                <tr>
+                    <td><code class="nobr">404 Not Found</code></td>
+                    <td><code class="nobr">/accounts/:id</code></td>
+                    <td>If the requested account does not exist.</td>
+                </tr>
+                <tr>
+                    <td><code class="nobr">404 Not Found</code></td>
+                    <td><code class="nobr">/accounts/:id</code></td>
+                    <td>If the requested account exists, but the requester is
+                        not authorized to view it.  <code>404</code> is used
+                        instead of <code>403</code> to deter brute-force
+                        account listing.
+                    </td>
+                </tr>
             </table>
 
             <a name="authentication"><h2>Authentication</h2></a>
 
+            HTTP Bearer Authentication is used.  In every request, the client
+            sends an <code>Authentication</code> header of the format:
+            
+            <pre><code>Authentication: Bearer TOKEN</code></pre>
+            
+            where <code>TOKEN</code> is replaced with a valid token received from
+            the operator of the SFIN server.  The format and length of tokens
+            is determined by the SFIN server operator, keeping the following
+            in mind:
+            
+            <ol>
+                <li>Tokens <em>must</em> be alphanumeric</li>
+                <li>Tokens <em>should</em> be randomly generated, rather than
+                    being based upon potentially sensitive account information.
+                </li>
+            </ol>
+            
+            <h3>Acquiring tokens</h3>
+            
+            <p><em>The process for acquiring tokens is not part of the SFIN
+            standard.</em>  An organization operating an SFIN server may do
+            whatever they'd like to deliver tokens to users, including sending
+            mail or email, providing a web interface for managing tokens,
+            or using other established processes such as OAuth or OpenID.</p>
+            
+            <p>Users <em>must</em> be allowed to distribute tokens to third
+            parties.</p>
+            
+            <h4>Recommendations</h4>
+            
+            <p>This standard <em>recommends</em> that, whatever process is used,
+            users have the following abilities:</p>
+            
+            <ol>
+                <li>Users can associate user-provided names with tokens.</li>
+                <li>Users can create many token (for providing to third party
+                    services).</li>
+                <li>Users can choose an expiration date for tokens when creating
+                    them.</li>
+                <li>Users can manually invalidate/expire existing tokens at
+                    will.  This is useful in the case of stolen tokens or abuse
+                    by third parties to whom tokens were given.</li>
+            </ol>
+            
+            <p>Additionally, consider the following when implementing a token
+            management system:</p>
+            
+            <ol>
+                <li>It may be nice to notify users prior to token
+                    expiration.</li>
+                <li>It may be nice to allow users to temporarily disable all
+                    tokens and later re-enable them.  This can be used to
+                    prevent access while doing research into abuse.</li>
+                <li>Consider providing logging/audit information regarding
+                    token use, including the time tokens were used and the
+                    IPs from which requests came.</li>
+            </ol>
+                  
         </div>
     </div>
 </div>
