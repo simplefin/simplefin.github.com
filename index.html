@@ -10,21 +10,34 @@ title: SimpleFIN
         <div class="offset2 span8">
 
             <p>Getting transaction information from your bank should be easy and
-            secure.  SimpleFIN (or just SFIN) stands for Simple Financial Interchange
+            secure.  SimpleFIN (SFIN) stands for Simple Financial Interchange
             and aims to make read-only financial interchange simple.</p>
             
-            <p>The SFIN standard defines:
+            <p>The SFIN standard defines:</p>            
             <ol>
-                <li>a <a href="#data-format">data format</a> for financial transaction information</li>
-                <li>the interface <a href="#http-servers">HTTP servers</a> should implement to serve SFIN data, and</li>
-                <li>the <a href="#authentication">authentication mechanism</a> used in communicating with the HTTP servers.</li>
+                <li><a href="#data-format">SFIN data format</a></li>
+                <li><a href="#file-format">SFIN file format</a></li>
+                <li><a href="#http-protocol">SFIN HTTP protocol</a>, including <a href="#authentication">authentication</a></li>
             </ol>
-            </p>            
+            
+            <p>You should use SFIN because:
+            <ul>
+                <li>All access is read-only.</li>
+                <li>You can read and comprehend the spec in a single day.</li>
+                <li>You don't have to pay anyone to use it (ahem, QFX).</li>
+            </ul>
+            </p>
+            
+            <p>SFIN data may be obtained either directly from a financial
+            institution <em>or</em> from a third party that previously obtained
+            the original data from a financial institution.  In other words,
+            both banks and financial aggregation services may provide SFIN
+            data and sevices.</p>
 
             <a name="data-format"><h2>Data Format</h2></a>
             
             <p>Data is encoded as JSON strings.  Following are the objects
-            specified by this standard:</p>
+            defined by SFIN:</p>
             
             <a name="organization"><h3>Organization</h3></a>
             
@@ -40,7 +53,7 @@ title: SimpleFIN
                     <td><code>domain</code></td>
                     <td>string</td>
                     <td><code>"example.com"</code></td>
-                    <td>The domain name of the organization.
+                    <td>The domain name of a financial organization.
                         <br/><b>Required</b></td>
                 </tr>
                 <tr>
@@ -67,7 +80,8 @@ title: SimpleFIN
                     <td><code>org</code></td>
                     <td><a href="#organization">Organization</a></td>
                     <td><code>{"domain": "example.com", "sfin-url": "https://www.example.com/sfin/"}</code></td>
-                    <td>Organization of this account.  If this is a bank account,
+                    <td><a href="#organization">Organization</a> from which
+                        this account originates.  If this is a bank account,
                         this field will be the bank's organization.
                         <br/><b>Required</b></td>
                 </tr>
@@ -76,9 +90,7 @@ title: SimpleFIN
                     <td>string</td>
                     <td><code>"123"</code></td>
                     <td>An ID that uniquely identifies an account within the
-                        account's organization.  This does not have to be the
-                        same value that a person would recognize as their
-                        account number.
+                        account's organization.
                         <br/><b>Required</b>
                     </td>
                 </tr>
@@ -244,10 +256,29 @@ title: SimpleFIN
 ]{% endhighlight %}
 
 
-            <a name="http-servers"><h2>HTTP Servers</h2></a>
+            <a name="file-format"><h2>File format</h2></a>
             
-            <p>HTTP servers must require SSL for all SFIN communication.
-            Servers must provide the following set of URL paths:</p>
+            <p>An SFIN file is simply a JSON-encoded <a href="#account-set">Account
+            Set</a>.  Typically, the file will have the <code>.sfin</code>
+            extension.</p>
+
+
+            <a name="http-protocol"><h2>HTTP Protocol</h2></a>
+            
+            <ol>
+                <li>HTTP servers must require SSL for all SFIN communication.
+                </li>
+                <li>As noted in <a href="#organization">Organization's
+                    <code>sfin-url</code> attribute</a>, an SFIN HTTP server must
+                    designate a root URL as the root SFIN resource.  For
+                    instance, <code>https://sfin.mybank.com</code> or
+                    <code>https://www.mybank.com/sfin</code>.  All paths noted
+                    below are relative to this root URL.
+                </li>
+            </ol>
+            
+            
+            Servers must provide the following paths:</p>
 
             <table class="table table-bordered">
                 <tr>
@@ -258,23 +289,25 @@ title: SimpleFIN
                 <tr>
                     <td><code>GET</code></td>
                     <td><code>/accounts</code></td>
-                    <td>An <a href="#account-set">Account Set</a> <em>without</em>
-                        <code>Account.transactions</code> provided by default.
-                        See <a href="#fetch-accounts">Fetch accounts</a>.
+                    <td>An <a href="#account-set">Account Set</a> for all
+                        accounts accessible to the client from this server.
+                        See <a href="#/accounts" class="code">/accounts</a> for
+                        more information.
                     </td>
                 </tr>
                 <tr>
                     <td><code>GET</code></td>
                     <td><code>/accounts/:id</code></td>
-                    <td>An <a href="#account-set">Account Set</a> <em>with</em>
-                        <code>Account.transactions</code> provided.
-                        See <a href="#fetch-transactions">Fetch transactions</a>.
+                    <td>An <a href="#account-set">Account Set</a> for a
+                        specific <a href="#account">Account</a>.
+                        See <a href="#/accounts/:id" class="code">/accounts/:id</a>
+                        for more information.
                     </td>
                 </tr>
             </table>
             
             
-            <a name="fetch-accounts"><h3>Fetch accounts</h3></a>
+            <a name="/accounts"><h3 class="code">/accounts</h3></a>
             <pre><code>GET /accounts</code></pre>
             
             <p>Fetch a list of all accounts available to the requester.</p>
@@ -334,16 +367,32 @@ title: SimpleFIN
             </table>            
             
             
-            <a name="fetch-transactions"><h3>Fetch transactions</h3></a>
+            <a name="/accounts/:id"><h3 class="code">/accounts/:id</h3></a>
             <pre><code>GET /accounts/:id</code></pre>
 
             <p>Fetch a list of the most recent transactions for a particular
-            account (specified by the <code>:id</code>).  If the response from
+            account (specified by the <code>:id</code>).</p>
+            
+            <p>For instance, if the response from
             <code>GET /accounts</code> indicates that there's an account with
             <code>id</code> of <code>1392</code>, the transactions for that
             account will be found at <code>/accounts/1392</code>.</p>
             
             <ol>
+                <li>If no <code>domain</code> query parameter is supplied,
+                    only accounts originating from the same domain as the
+                    SFIN server will be returned.
+                    
+                    <br/><br/>
+                    For example, <pre><code>https://www.mybank.com/sfin/accounts/10</code></pre>
+                    corresponds to account <code>10</code> originating from 
+                    <code>mybank.com</code>.
+                    
+                    <br/><br/>
+                    But <pre><code>https://www.mybank.com/sfin/accounts/10?domain=foo.com</code></pre>
+                    corresponds to account <code>10</code> originating from
+                    <code>foo.com</code>.
+                </li>
                 <li>Servers must respond with all transactions for at least the past
                     60 days, though more than 60 days of transactions may be returned.
                 </li>
@@ -415,7 +464,6 @@ title: SimpleFIN
                     </td>
                 </tr>
                 <tr>
-                
                     <td><code class="nobr">start-date</code></td>
                     <td><code class="nobr">?start-date=2001-05-15</code></td>
                     <td>If given, only transactions <em>on or after</em> the
@@ -430,6 +478,17 @@ title: SimpleFIN
                     will <em>not</em> be returned.  For instance, querying for
                     <code>?start-date=2001-05-01&end-date=2001-06-01</code>
                     will return all transactions from May, 2001.</td>
+                </tr>
+                <tr>
+                    <td><code class="nobr">domain</code></td>
+                    <td><code class="nobr">?domain=mybank.com</code></td>
+                    <td>If given, find the account for the given domain.  If
+                        not supplied, this parameter defaults to the domain
+                        name of the SFIN server.  For instance, the following
+                        two URLs are equivalent:
+                        <pre><code>http://www.mybank.com/sfin/accounts/10</code></pre>
+                        <pre><code>http://www.mybank.com/sfin/accounts/10?domain=mybank.com</code></pre>
+                    </td>
                 </tr>
             </table>
 
@@ -485,11 +544,11 @@ title: SimpleFIN
             
             <h3>Acquiring tokens</h3>
             
-            <p><em>The process for acquiring tokens is not part of the SFIN
-            standard.</em>  An organization operating an SFIN server may do
+            <div class="alert alert-info">The process for acquiring tokens is not part of the SFIN
+            standard.  An organization operating an SFIN server may do
             whatever they'd like to deliver tokens to users, including sending
             mail or email, providing a web interface for managing tokens,
-            or using other established processes such as OAuth or OpenID.</p>
+            or using other established processes such as OAuth or OpenID.</div>
             
             <p>Users <em>must</em> be allowed to distribute tokens to third
             parties.</p>
@@ -501,7 +560,7 @@ title: SimpleFIN
             
             <ol>
                 <li>Users can associate user-provided names with tokens.</li>
-                <li>Users can create many token (for providing to third party
+                <li>Users can create many tokens (for providing to third party
                     services).</li>
                 <li>Users can choose an expiration date for tokens when creating
                     them.</li>
@@ -522,6 +581,10 @@ title: SimpleFIN
                 <li>Consider providing logging/audit information regarding
                     token use, including the time tokens were used and the
                     IPs from which requests came.</li>
+                <li>Allow tokens to be associated with a subset of available
+                    accounts.  For instance, allow the user to create one token
+                    for access to just their checking account, and another token
+                    for access to just their savings account.</li>
             </ol>
                   
         </div>
