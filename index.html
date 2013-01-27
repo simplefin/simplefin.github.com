@@ -590,7 +590,39 @@ title: SimpleFIN
                     for access to just their checking account, and another token
                     for access to just their savings account.</li>
             </ol>
-                  
+            
+            <h4>Example token management</h4>
+            
+            <p>Here is an example of what a web interface <em>could</em> look
+            like.  This is purely a recommendation:
+            </p>
+            
+            <table class="table table-condensed">
+                <tr>
+                    <th>SFIN token</th>
+                    <th>Description</th>
+                    <th>Accessible accounts</th>
+                    <th>Expiration</th>
+                    <th>Last used</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>98DJF093J3NMANZ009281N</td>
+                    <td>My desktop money management software</td>
+                    <td>CHECKING as 830293840</td>
+                    <td>2015-01-01</td>
+                    <td><span class="nobr">2012-06-09</span> <span class="nobr">22:43:09</span></td>
+                    <td><button type="button" class="btn btn-danger">Disable</button></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="text" class="span2"></td>
+                    <td><select size=2><option>CHECKING</option><option>SAVINGS</option></select></td>
+                    <td><input type="text" class="span2"></td>
+                    <td></td>
+                    <td><button type="button" class="btn">Generate</button></td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
