@@ -1,0 +1,76 @@
+h1,h2,h3,h4,h5 {
+    margin-top: 2em;
+    color: #08c;
+}
+h2 {
+    margin-top: 0em;
+}
+.section {
+    margin-top: 8em;
+}
+.section:first-child {
+    margin-top: 0em;
+}
+.section .number {
+    color: #ccc;
+    font-size: 80px;
+    line-height: 85px;
+}
+div.title {
+    font-size: 42px;
+    line-height: 43px;
+    color: #08c;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    text-align: center;
+}
+div.title .strong {
+    font-weight: bold;
+}
+.nobr {
+    white-space: nowrap;
+}
+.table-centered td,th {
+    text-align: center;
+    vertical-align: middle;
+}
+.code {
+    font-family: monospace;
+}
+table * {
+    font-size: small !important;
+}
+
+
+.attr-def {
+    margin-bottom: 2em;
+}
+.attr-def .attr-name {
+    font-family: monospace;
+    color: #08c;
+}
+.attr-def .attr-type {
+    font-style: italic;
+}
+.attr-def .attr-optional {
+    color: #999;
+    font-style: italic;
+}
+.attr-def .attr-required {
+    color: #000;
+    font-weight: bold;
+}
+.attr-def .attr-example {
+    margin-top: 0.5em;
+}
+.code-block {
+    font-family: monospace;
+    color: #d14;
+    padding: 0.5em 0.75em;
+    background: #f7f7f9;
+    border-radius: 8px;
+    border: 1px solid #e1e1e8;
+    white-space: pre-wrap;
+    word-break: break-all;
+    word-wrap: break-word;
+}

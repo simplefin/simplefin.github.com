@@ -51,182 +51,124 @@ title: SimpleFIN
         defined by SimpleFIN:
       </p>
 
-      
+      {% macro attribute(name, type, optional=False) %}
+        <div class="row-fluid attr-def">
+          <div class="span3 attr-name">{{ name }}</div>
+          <div class="span2">
+            <div class="attr-type">{{ type }}</div>
+            {% if optional %}<div class="attr-optional">optional</div>{% endif %}
+          </div>
+          <div class="span7">
+            <div class="attr-description">{{ caller('description') }}</div>
+            <div class="attr-example code-block">{{ caller('example') }}</div>
+          </div>
+        </div>
+      {% endmacro %}
 
       <div class="object">
         <a name="organization"><h3 class="object-name">Organization</h3></a>
 
-        
-        <div class="row-fluid attr-def">
-          <div class="span3 attr-name">domain</div>
-          <div class="span2">
-            <div class="attr-type">string</div>
-            
-          </div>
-          <div class="span7">
-            <div class="attr-description">The domain name of an organization with financial data.</div>
-            <div class="attr-example code-block">"example.com"</div>
-          </div>
-        </div>
-      
+        {% call(what) attribute('domain', 'string') %}
+          {%- if what == 'description' -%}
+            The domain name of an organization with financial data.
+          {%- elif what == 'example' -%}
+            "example.com"
+          {%- endif -%}
+        {% endcall %}
 
-        
-        <div class="row-fluid attr-def">
-          <div class="span3 attr-name">sfin-url</div>
-          <div class="span2">
-            <div class="attr-type">string</div>
-            <div class="attr-optional">optional</div>
-          </div>
-          <div class="span7">
-            <div class="attr-description">URL of organization's SimpleFIN root endpoint.  If provided,
-            the domain of the URL must match <code>domain</code>.</div>
-            <div class="attr-example code-block">"https://www.example.com/sfin/"</div>
-          </div>
-        </div>
-      
+        {% call(what) attribute('sfin-url', 'string', optional=True) %}
+          {%- if what == 'description' -%}
+            URL of organization's SimpleFIN root endpoint.  If provided,
+            the domain of the URL must match <code>domain</code>.
+          {%- elif what == 'example' -%}
+            "https://www.example.com/sfin/"
+          {%- endif -%}
+        {% endcall %}
 
       </div>
 
       <div class="object">
           <a name="account"><h3 class="object-name">Account</h3></a>
 
-          
-        <div class="row-fluid attr-def">
-          <div class="span3 attr-name">org</div>
-          <div class="span2">
-            <div class="attr-type"><a href="#organization">Organization</a></div>
-            
-          </div>
-          <div class="span7">
-            <div class="attr-description">Organization from which
+          {% call(what) attribute('org', '<a href="#organization">Organization</a>') %}
+            {%- if what == 'description' -%}
+              Organization from which
               this account originates.  If this is a bank account,
-              this field will be the bank's organization.</div>
-            <div class="attr-example code-block">{
+              this field will be the bank's organization.
+            {%- elif what == 'example' -%}
+{
   "domain": "example.com",
   "sfin-url": "https://www.example.com/sfin/"
-}</div>
-          </div>
-        </div>
-      
+}
+            {%- endif -%}
+          {% endcall %}
 
-          
-        <div class="row-fluid attr-def">
-          <div class="span3 attr-name">id</div>
-          <div class="span2">
-            <div class="attr-type">string</div>
-            
-          </div>
-          <div class="span7">
-            <div class="attr-description">An ID that uniquely identifies an account within the
+          {% call(what) attribute('id', 'string') %}
+            {%- if what == 'description' -%}
+              An ID that uniquely identifies an account within the
               account's organization.  This doesn't necessarily have
               to correspond to an id with which the account holder is
               familiar.  It is recommended that this id not reveal
               any sensitive data (login information for the bank's
-              web banking portal, for instance).</div>
-            <div class="attr-example code-block">"123"</div>
-          </div>
-        </div>
-      
+              web banking portal, for instance).
+            {%- elif what == 'example' -%}"123"{%- endif -%}
+          {% endcall %}
 
-          
-        <div class="row-fluid attr-def">
-          <div class="span3 attr-name">name</div>
-          <div class="span2">
-            <div class="attr-type">string</div>
-            
-          </div>
-          <div class="span7">
-            <div class="attr-description">A name that uniquely describes an account among all the
+          {% call(what) attribute('name', 'string') %}
+            {%- if what == 'description' -%}
+              A name that uniquely describes an account among all the
               users other accounts.
               This name should be chosen so that a person can easily associate
-              it with only one of their accounts within an organization.</div>
-            <div class="attr-example code-block">"Money-Market Checking"</div>
-          </div>
-        </div>
-      
+              it with only one of their accounts within an organization.
+            {%- elif what == 'example' -%}"Money-Market Checking"{%- endif -%}
+          {% endcall %}
 
-          
-        <div class="row-fluid attr-def">
-          <div class="span3 attr-name">currency</div>
-          <div class="span2">
-            <div class="attr-type">string</div>
-            
-          </div>
-          <div class="span7">
-            <div class="attr-description">Currency of account.
+          {% call(what) attribute('currency', 'string') %}
+            {%- if what == 'description' -%}
+              Currency of account.
               TODO: find list of acceptable values.
-              TODO: Allow for custom currencies (for rewards points, for instance).</div>
-            <div class="attr-example code-block">"GBP"</div>
-          </div>
-        </div>
-      
+              TODO: Allow for custom currencies (for rewards points, for instance).
+            {%- elif what == 'example' -%}"GBP"{%- endif -%}
+          {% endcall %}
 
-          
-        <div class="row-fluid attr-def">
-          <div class="span3 attr-name">balance</div>
-          <div class="span2">
-            <div class="attr-type">numeric string</div>
-            
-          </div>
-          <div class="span7">
-            <div class="attr-description">The balance of the account as of
-              <code class="nobr">last-transaction-id</code>.</div>
-            <div class="attr-example code-block">"22.33"</div>
-          </div>
-        </div>
-      
+          {% call(what) attribute('balance', 'numeric string') %}
+            {%- if what == 'description' -%}
+              The balance of the account as of
+              <code class="nobr">last-transaction-id</code>.
+            {%- elif what == 'example' -%}"22.33"{%- endif -%}
+          {% endcall %}
 
-          
-        <div class="row-fluid attr-def">
-          <div class="span3 attr-name">available-balance</div>
-          <div class="span2">
-            <div class="attr-type">numeric string</div>
-            <div class="attr-optional">optional</div>
-          </div>
-          <div class="span7">
-            <div class="attr-description">The available balance of the account as of
+          {% call(what) attribute('available-balance', 'numeric string', optional=True) %}
+            {%- if what == 'description' -%}
+              The available balance of the account as of
               <code class="nobr">last-transaction-id</code>.  This
-              may be omitted if it is the same as <code>balance</code>.</div>
-            <div class="attr-example code-block">"15.33"</div>
-          </div>
-        </div>
-      
+              may be omitted if it is the same as <code>balance</code>.
+            {%- elif what == 'example' -%}"15.33"{%- endif -%}
+          {% endcall %}
 
-          
-        <div class="row-fluid attr-def">
-          <div class="span3 attr-name">last-transaction-id</div>
-          <div class="span2">
-            <div class="attr-type">string</div>
-            
-          </div>
-          <div class="span7">
-            <div class="attr-description">ID of the most recently recorded Transaction on this
-              account.</div>
-            <div class="attr-example code-block">"83940394098343ABCFKDSDF89"</div>
-          </div>
-        </div>
-      
+          {% call(what) attribute('last-transaction-id', 'string') %}
+            {%- if what == 'description' -%}
+              ID of the most recently recorded Transaction on this
+              account.
+            {%- elif what == 'example' -%}
+              "83940394098343ABCFKDSDF89"
+            {%- endif -%}
+          {% endcall %}
 
-          
-        <div class="row-fluid attr-def">
-          <div class="span3 attr-name">transactions</div>
-          <div class="span2">
-            <div class="attr-type">list of <a href="#transaction">Transactions</a></div>
-            <div class="attr-optional">optional</div>
-          </div>
-          <div class="span7">
-            <div class="attr-description">List of <a href="#transaction">Transactions</a> for
-              this account.</div>
-            <div class="attr-example code-block">[{
+          {% call(what) attribute('transactions', 'list of <a href="#transaction">Transactions</a>', optional=True) %}
+            {%- if what == 'description' -%}
+              List of <a href="#transaction">Transactions</a> for
+              this account.
+            {%- elif what == 'example' -%}
+[{
   "id": "AO334",
   "posted": "2001-01-01T09:22:33.2343",
   "amount": "-22.33",
   "memo": "John's Pizza Pie Castle, Cafe and Spa",
   "sic": "2354"
-}]</div>
-          </div>
-        </div>
-      
+}]
+            {%- endif -%}
+          {% endcall %}
 
           <a name="transaction"><h3>Transaction</h3></a>
 
