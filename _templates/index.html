@@ -88,7 +88,7 @@ title: SimpleFIN
         <h4>Example</h4>
         <div class="code-block">{
   "domain": "mybank.com",
-  "sfin-url": "https://sfin.mybank.com/"
+  "sfin-url": "https://sfin.mybank.com"
 }</div>
 
         <h4>Attributes</h4>
@@ -105,7 +105,7 @@ title: SimpleFIN
             URL of organization's SimpleFIN root endpoint.  If provided,
             the domain of the URL must match <a href="#organization.domain" class="attr-ref">domain</a>.
           {%- elif what == 'example' -%}
-            "https://www.example.com/sfin/"
+            "https://www.example.com/sfin"
           {%- endif -%}
         {% endcall %}
 
@@ -119,7 +119,7 @@ title: SimpleFIN
           <div class="code-block">{
   "org": {
     "domain": "mybank.com",
-    "sfin-url": "https://sfin.mybank.com/"
+    "sfin-url": "https://sfin.mybank.com"
   },
   "id": "2930002",
   "name": "Savings",
@@ -147,7 +147,7 @@ title: SimpleFIN
             {%- elif what == 'example' -%}
 {
   "domain": "example.com",
-  "sfin-url": "https://www.example.com/sfin/"
+  "sfin-url": "https://www.example.com/sfin"
 }
             {%- endif -%}
           {% endcall %}
@@ -304,7 +304,7 @@ title: SimpleFIN
     {
       "org": {
         "domain": "mybank.com",
-        "sfin-url": "https://sfin.mybank.com/"
+        "sfin-url": "https://sfin.mybank.com"
       },
       "id": "2930002",
       "name": "Savings",
@@ -424,6 +424,8 @@ title: SimpleFIN
           Access tokens must not be based on, or have the potential to reveal <span class="term">Account holder</span> credentials for <span class="term">The Company</span>.  A stolen <span class="term">Access token</span> should not reveal anything to the attacker which would allow the attacker to access the <span class="term">Account holder's</span> account (other than through the SimpleFIN protocol).
         </li>
       </ul>
+
+
 
       <a name="setup-token"><h4>Setup token</h4></a>
 
@@ -565,7 +567,7 @@ title: SimpleFIN
     {
       "org": {
         "domain": "mybank.com",
-        "sfin-url": "https://sfin.mybank.com/"
+        "sfin-url": "https://sfin.mybank.com"
         },
       "id": "2930002",
       "name": "Savings",
