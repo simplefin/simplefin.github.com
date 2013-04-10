@@ -58,6 +58,7 @@ title: SimpleFIN
 
       <ul>
         <li><a href="#organization">Organization</a></li>
+        <li><a href="#currency">Currency</a></li>
         <li><a href="#account">Account</a></li>
         <li><a href="#transaction">Transaction</a></li>
         <li><a href="#account-set">Account Set</a></li>
@@ -72,7 +73,7 @@ title: SimpleFIN
         <h4>Example</h4>
         <div class="code-block">{
   "domain": "mybank.com",
-  "sfin-url": "https://sfin.mybank.com/"
+  "sfin-url": "https://sfin.mybank.com"
 }</div>
 
         <h4>Attributes</h4>
@@ -106,13 +107,84 @@ title: SimpleFIN
               <div class="attr-description">URL of organization's SimpleFIN root endpoint.  If provided,
             the domain of the URL must match <a href="#organization.domain" class="attr-ref">domain</a>.</div>
               
-              <div class="attr-example code-block">"https://www.example.com/sfin/"</div>
+              <div class="attr-example code-block">"https://www.example.com/sfin"</div>
               
             </div>
           </div>
         </div>
       
 
+      </div>
+
+      <div class="object">
+        <a name="currency"><h3 class="object-name">Currency</h3></a>
+
+
+        <h4>Examples</h4>
+        <div class="code-block">{
+  "code": "GBP"
+}</div>
+
+        <div class="code-block">{
+  "code": "Brownies",
+  "url": "https://example.com/currencies/brownie"
+}</div>
+
+        <h4>Attributes</h4>
+        
+        <div class="attr-def">
+          <div class="row-fluid">
+            <a name="currency.code">
+            <div class="span3 attr-name">code</div>
+            </a>
+            <div class="span9">
+              <div><span class="attr-type">string</span></div>
+              
+              <div class="attr-description"><p>
+              If the currency is a standard currency, use the currency code from the <a href="http://www.iso.org/iso/home/standards/currency_codes.htm" target="_blank">official ISO 4217</a> (or see <a href="http://en.wikipedia.org/wiki/ISO_4217" target="_blank">the Wikipedia article</a>)  For example:
+            </p>
+
+            <div class="attr-example code-block">"ZMW"</div>
+            <div class="attr-example code-block">"GBP"</div>
+
+            <p>
+              Custom currencies are supported.  For instance, rewards points or frequent flier miles are a type of "currency."  To indicate a custom currency, this will be a short name for the currency.  For example:
+            </p>
+
+            <div class="attr-example code-block">"SkyMiles"</div>
+
+            <p>
+              If this is a custom currency, then the <a class="attr-ref" href="#currency.url">url</a> attribute <em>must</em> be provided.
+            </p></div>
+              
+            </div>
+          </div>
+        </div>
+      
+
+        
+        <div class="attr-def">
+          <div class="row-fluid">
+            <a name="currency.url">
+            <div class="span3 attr-name">url</div>
+            </a>
+            <div class="span9">
+              <div><span class="attr-type">string</span></div>
+              <div class="attr-optional">optional</div>
+              <div class="attr-description"><p>
+              For standard currencies, this should not be provided.
+            </p>
+            <p>
+              This is the URL that defines a custom currency.  This should be unique for each custom currency.  The content returned when this URL is requested is not currently defined.  Example values include:
+            </p>
+
+            <div class="attr-example code-block">"https://example.com/currency/potatoes"</div>
+            <div class="attr-example code-block">"https://airline.com/defs/skymiles?v=1"</div></div>
+              
+            </div>
+          </div>
+        </div>
+      
       </div>
 
       <div class="object">
@@ -123,11 +195,13 @@ title: SimpleFIN
           <div class="code-block">{
   "org": {
     "domain": "mybank.com",
-    "sfin-url": "https://sfin.mybank.com/"
+    "sfin-url": "https://sfin.mybank.com"
   },
   "id": "2930002",
   "name": "Savings",
-  "currency": "USD",
+  "currency": {
+    "code": "USD"
+  },
   "balance": "100.23",
   "available-balance": "75.23",
   "balance-as-of": "AO334",
@@ -158,7 +232,7 @@ title: SimpleFIN
               
               <div class="attr-example code-block">{
   "domain": "example.com",
-  "sfin-url": "https://www.example.com/sfin/"
+  "sfin-url": "https://www.example.com/sfin"
 }</div>
               
             </div>
@@ -216,13 +290,15 @@ title: SimpleFIN
             <div class="span3 attr-name">currency</div>
             </a>
             <div class="span9">
-              <div><span class="attr-type">string</span></div>
+              <div><span class="attr-type"><a href="#currency" class="attr-ref">Currency</a></span></div>
               
-              <div class="attr-description">Currency of account.
-              TODO: find list of acceptable values.
-              TODO: Allow for custom currencies (for rewards points, for instance).</div>
-              
-              <div class="attr-example code-block">"GBP"</div>
+              <div class="attr-description"><p>
+                Currency of the account.
+              </p>
+
+              <div class="attr-example code-block">{
+  "code": "GBP"
+}</div></div>
               
             </div>
           </div>
@@ -457,11 +533,13 @@ title: SimpleFIN
     {
       "org": {
         "domain": "mybank.com",
-        "sfin-url": "https://sfin.mybank.com/"
+        "sfin-url": "https://sfin.mybank.com"
       },
       "id": "2930002",
       "name": "Savings",
-      "currency": "USD",
+      "currency": {
+        "code": "USD"
+      },
       "balance": "100.23",
       "available-balance": "75.23",
       "balance-as-of": "AO334",
@@ -586,6 +664,8 @@ title: SimpleFIN
           Access tokens must not be based on, or have the potential to reveal <span class="term">Account holder</span> credentials for <span class="term">The Company</span>.  A stolen <span class="term">Access token</span> should not reveal anything to the attacker which would allow the attacker to access the <span class="term">Account holder's</span> account (other than through the SimpleFIN protocol).
         </li>
       </ul>
+
+
 
       <a name="setup-token"><h4>Setup token</h4></a>
 
@@ -751,11 +831,13 @@ VFZ2TDJQdm9jaFlOLURoYw==
     {
       "org": {
         "domain": "mybank.com",
-        "sfin-url": "https://sfin.mybank.com/"
+        "sfin-url": "https://sfin.mybank.com"
         },
       "id": "2930002",
       "name": "Savings",
-      "currency": "USD",
+      "currency": {
+        "code": "USD"
+      },
       "balance": "100.23",
       "available-balance": "75.23",
       "balance-as-of": "AO334",
