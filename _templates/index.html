@@ -3,6 +3,7 @@ layout: default
 title: SimpleFIN
 ---
 
+
 <div class="title">SimpleFIN</div>
 
 <div class="container-fluid">
@@ -62,12 +63,12 @@ title: SimpleFIN
         <li><a href="#account-set">Account Set</a></li>
       </ul>
 
-      {% macro attribute(name, type, optional=False, anchor=None) %}
+      {% macro attribute(name, type, optional=False, object=None) %}
         <div class="attr-def">
           <div class="row-fluid">
-            {% if anchor %}<a name="{{ anchor }}">{% endif %}
+            {% if object %}<a name="{{ object }}.{{ name }}">{% endif %}
             <div class="span3 attr-name">{{ name }}</div>
-            {% if anchor %}</a>{% endif %}
+            {% if object %}</a>{% endif %}
             <div class="span9">
               <div><span class="attr-type">{{ type }}</span></div>
               {% if optional %}<div class="attr-optional">optional</div>{% endif %}
@@ -91,7 +92,7 @@ title: SimpleFIN
 }</div>
 
         <h4>Attributes</h4>
-        {% call(what) attribute('domain', 'string', anchor='organization-domain') %}
+        {% call(what) attribute('domain', 'string', object='organization') %}
           {%- if what == 'description' -%}
             The domain name of an organization with financial data.
           {%- elif what == 'example' -%}
@@ -99,10 +100,10 @@ title: SimpleFIN
           {%- endif -%}
         {% endcall %}
 
-        {% call(what) attribute('sfin-url', 'string', optional=True) %}
+        {% call(what) attribute('sfin-url', 'string', optional=True, object='organization') %}
           {%- if what == 'description' -%}
             URL of organization's SimpleFIN root endpoint.  If provided,
-            the domain of the URL must match <a href="#organization-domain" class="attr-name">domain</a>.
+            the domain of the URL must match <a href="#organization.domain" class="attr-ref">domain</a>.
           {%- elif what == 'example' -%}
             "https://www.example.com/sfin/"
           {%- endif -%}
@@ -125,7 +126,8 @@ title: SimpleFIN
   "currency": "USD",
   "balance": "100.23",
   "available-balance": "75.23",
-  "last-transaction-id": "AO334",
+  "balance-as-of": "AO334",
+  "last-transaction-posted": "1995-02-17T23:56:12.22239",
   "transactions": [
     {
       "id": "AO334",
@@ -137,7 +139,7 @@ title: SimpleFIN
 }</div>
 
           <h4>Attributes</h4>
-          {% call(what) attribute('org', '<a href="#organization">Organization</a>') %}
+          {% call(what) attribute('org', '<a href="#organization">Organization</a>', object='account') %}
             {%- if what == 'description' -%}
               Organization from which
               this account originates.  If this is a bank account,
@@ -150,7 +152,7 @@ title: SimpleFIN
             {%- endif -%}
           {% endcall %}
 
-          {% call(what) attribute('id', 'string') %}
+          {% call(what) attribute('id', 'string', object='account') %}
             {%- if what == 'description' -%}
               An ID that uniquely identifies an account within the
               account's organization.  It is recommended that this
@@ -160,7 +162,7 @@ title: SimpleFIN
             {%- elif what == 'example' -%}"123"{%- endif -%}
           {% endcall %}
 
-          {% call(what) attribute('name', 'string') %}
+          {% call(what) attribute('name', 'string', object='account') %}
             {%- if what == 'description' -%}
               A name that uniquely describes an account among all the
               users other accounts.
@@ -169,7 +171,7 @@ title: SimpleFIN
             {%- elif what == 'example' -%}"Money-Market Checking"{%- endif -%}
           {% endcall %}
 
-          {% call(what) attribute('currency', 'string') %}
+          {% call(what) attribute('currency', 'string', object='account') %}
             {%- if what == 'description' -%}
               Currency of account.
               TODO: find list of acceptable values.
@@ -177,34 +179,51 @@ title: SimpleFIN
             {%- elif what == 'example' -%}"GBP"{%- endif -%}
           {% endcall %}
 
-          {% call(what) attribute('balance', 'numeric string') %}
+          {% call(what) attribute('balance', 'numeric string', object='account') %}
             {%- if what == 'description' -%}
               The balance of the account as of
-              <code class="nobr">last-transaction-id</code>.
+              <a class="attr-ref" href="#account.balance-as-of">balance-as-of</a>.
             {%- elif what == 'example' -%}"22.33"{%- endif -%}
           {% endcall %}
 
-          {% call(what) attribute('available-balance', 'numeric string', optional=True) %}
+          {% call(what) attribute('available-balance', 'numeric string', optional=True, object='account') %}
             {%- if what == 'description' -%}
               The available balance of the account as of
-              <code class="nobr">last-transaction-id</code>.  This
-              may be omitted if it is the same as <code>balance</code>.
+              <a class="attr-ref" href="#account.balance-as-of">balance-as-of</a>.  This
+              may be omitted if it is the same as <a class="attr-ref" href="#account.balance">balance</a>.
             {%- elif what == 'example' -%}"15.33"{%- endif -%}
           {% endcall %}
 
-          {% call(what) attribute('last-transaction-id', 'string') %}
+          {% call(what) attribute('balance-as-of', 'string', object='account') %}
             {%- if what == 'description' -%}
-              ID of the most recently recorded Transaction on this
-              account.
+            <p>
+              The <a class="attr-ref" href="#transaction.id">Transaction.id</a> of the transaction that resulted in the <a class="attr-ref" href="#account.balance">balance</a> and <a class="attr-ref" href="#account.available-balance">available-balance</a> of this Account.
+            </p>
+
+            <p>
+              If <a class="attr-ref" href="#account.transactions">transactions</a> are included in this object, then <a class="attr-ref" href="#account.balance-as-of">balance-as-of</a> <em>must</em> be the <a class="attr-ref" href="#transaction.id">id</a> of the most recent <a href="#transaction">Transaction</a> in the list.
+            </p>
+
+            <p>
+              If <a class="attr-ref" href="#account.transactions">transactions</a> are <strong>not</strong> included in this object, then <a class="attr-ref" href="#account.balance-as-of">balance-as-of</a> <em>must</em> be the <a class="attr-ref" href="#transaction.id">id</a> of the most recent <a href="#transaction">Transaction</a> on record.
+            </p>
             {%- elif what == 'example' -%}
               "83940394098343ABCFKDSDF89"
             {%- endif -%}
           {% endcall %}
 
-          {% call(what) attribute('transactions', 'list of <a href="#transaction">Transactions</a>', optional=True) %}
+          {% call(what) attribute('last-transaction-posted', 'ISO string timestamp', object='account') %}
             {%- if what == 'description' -%}
-              List of <a href="#transaction">Transactions</a> for
-              this account.
+              This is always the <a class="attr-ref" href="#transaction.posted">posted</a> attribute of this account's most recent <a href="#transaction">Transaction</a> on record, regardless of what <a class="attr-ref" href="#account.transactions">transactions</a> is.
+            {%- elif what == 'example' -%}
+              "2001-01-17T22:59:33.9081"
+            {%- endif -%}
+          {% endcall %}
+
+          {% call(what) attribute('transactions', 'list of <a href="#transaction">Transactions</a>', optional=True, object='account') %}
+            {%- if what == 'description' -%}
+              List of a subset of <a href="#transaction">Transactions</a> for
+              this account, ordered by <a class="attr-ref" href="#transaction.posted">posted</a>.
             {%- elif what == 'example' -%}
 [{
   "id": "AO334",
@@ -231,7 +250,7 @@ title: SimpleFIN
 
           <h4>Attributes</h4>
 
-          {% call(what) attribute('id', 'string') %}
+          {% call(what) attribute('id', 'string', object='transaction') %}
             {%- if what == 'description' -%}
               An ID that uniquely describes a transaction within an
               Account.  An organization may reuse transaction ids
@@ -242,7 +261,7 @@ title: SimpleFIN
             {%- endif -%}
           {% endcall %}
 
-          {% call(what) attribute('posted', 'ISO string timestamp') %}
+          {% call(what) attribute('posted', 'ISO string timestamp', object='transaction') %}
             {%- if what == 'description' -%}
               This is when the transaction happened.
               The timezone must be GMT.
@@ -251,7 +270,7 @@ title: SimpleFIN
             {%- endif -%}
           {% endcall %}
 
-          {% call(what) attribute('amount', 'numeric string') %}
+          {% call(what) attribute('amount', 'numeric string', object='transaction') %}
             {%- if what == 'description' -%}
               Amount of transaction.  Positive numbers indicate money
               being deposited into the account.
@@ -260,7 +279,7 @@ title: SimpleFIN
             {%- endif -%}
           {% endcall %}
 
-          {% call(what) attribute('description', 'string') %}
+          {% call(what) attribute('description', 'string', object='transaction') %}
             {%- if what == 'description' -%}
               A human-readable description of what the transaction was for.
             {%- elif what == 'example' -%}
@@ -268,9 +287,9 @@ title: SimpleFIN
             {%- endif -%}
           {% endcall %}
 
-          {% call(what) attribute('sic', 'string', optional) %}
+          {% call(what) attribute('sic', 'string', optional=True, object='transaction') %}
             {%- if what == 'description' -%}
-              RESERVED
+            Not yet defined.
             {%- elif what == 'example' -%}
             {%- endif -%}
           {% endcall %}
@@ -292,7 +311,8 @@ title: SimpleFIN
       "currency": "USD",
       "balance": "100.23",
       "available-balance": "75.23",
-      "last-transaction-id": "AO334",
+      "balance-as-of": "AO334",
+      "last-transaction-posted": "2013-07-29T19:22:09.210",
       "transactions": []
     }
   ]
@@ -300,10 +320,9 @@ title: SimpleFIN
 
           <h4>Attributes</h4>
 
-          {% call(what) attribute('accounts', 'list of <a href="#account">Accounts</a>') %}
+          {% call(what) attribute('accounts', 'list of <a href="#account">Accounts</a>', object='account-set') %}
             {%- if what == 'description' -%}
-              A list of <a href="#account">Account</a> objects.  Order does
-              not matter.
+              A list of <a class="attr-ref" href="#account">Account</a> objects.  Order does not matter.
             {%- elif what == 'example' -%}
             {%- endif -%}
           {% endcall %}
@@ -439,7 +458,7 @@ title: SimpleFIN
       <h4>URL Endpoints</h4>
 
       <p>
-        <span class="term">The Company</span> may choose the root URL for their <span class="term">Server</span>.  The URLs defined here are relative to the root URL.  The <span class="attr-name">sfin-url</span> attribute of the <a href="#organization">Organization</a> object is the root URL.
+        <span class="term">The Company</span> may choose the root URL for their <span class="term">Server</span>.  The URLs defined here are relative to the root URL.  The <a class="attr-ref" href="#organization.sfin-url">sfin-url</a> attribute is the root URL.
       </p>
 
       {% macro urlsummary(method, url, whoitsfor) %}
@@ -468,12 +487,24 @@ title: SimpleFIN
 
       <a name="/auth"><h3 class="url">GET /auth</h3></a>
 
-      XXX TODO
+      <p>
+        This URL should land the <span class="term">Browser</span> on a web page that an <span class="term">Account holder</span> can use to generate and otherwise manage <span class="term">Setup tokens</span>.  The actual implementation of token management is up to <span class="term">The Company</span>.  However, please note the <a href="#recommendations">recommendations</a> below.
+      </p>
+
+      <p>
+        <span class="term">Readers</span> will direct users to this URL if tokens are needed.
+      </p>
+
+      <p>
+        <span class="term">Account holders</span> must be authenticated to access this page.  It is acceptable to redirect from this URL to
+        another URL (in fact, we suspect that many <span class="term">Servers</span> will simply redirect the user to a different URL).
+      </p>
       
       <a name="/accounts"><h3 class="url">GET /accounts</h3></a>
 
       <p>
-        Returns an <a href="#account-set">Account Set</a> containing all accounts the requester is authorized to see.
+        Returns an <a href="#account-set">Account Set</a> containing all accounts the requester is authorized to see.  This URL is intended
+        for <span class="term">Readers</span>.
       </p>
 
       <ul>
@@ -481,7 +512,7 @@ title: SimpleFIN
           The <span class="code">Content-Type</span> of the response is always <span class="code">application/json</span>.
         </li>
         <li>
-          If no query paramters are included in a request, then all the <span class="attr-name">transactions</span> attributes of the accounts will be empty lists.
+          If no query paramters are included in a request, then all the <a class="attr-ref" href="#account.transactions">Account.transactions</span> attributes of will all be empty lists.
         </li>
       </ul>
 
@@ -520,7 +551,7 @@ title: SimpleFIN
       {% endcall %}
 
       {% call queryparam('end-date', []) %}
-        If given, only transactions <em>before</em> the supplied date or timestamp will be returned.  Transactions with a <span class="attr-name">posted</span> date equal to this date/timestamp will <em>not</em> be returned.
+        If given, only transactions <em>before</em> the supplied date or timestamp will be returned.  Transactions with a <a class="attr-ref" href="#transaction.posted">posted</a> date equal to this date/timestamp will <em>not</em> be returned.
 
         For instance, querying for
         <div class="example code-block">?start-date=2001-05-01&end-date=2001-06-01</div>
@@ -541,7 +572,8 @@ title: SimpleFIN
       "currency": "USD",
       "balance": "100.23",
       "available-balance": "75.23",
-      "last-transaction-id": "AO334",
+      "balance-as-of": "AO334",
+      "last-transaction-posted": "2013-07-29T19:09:23.544"
     }
   ]
 }</div>

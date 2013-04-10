@@ -60,7 +60,7 @@ div.title .strong {
     vertical-align: middle;
 }
 .code {
-    font-family: monospace;
+    font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
     color: #08c;
 }
 table * {
@@ -72,7 +72,7 @@ table * {
 }
 
 .url {
-    font-family: monospace;
+    font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
     color: #08c;
 }
 
@@ -81,7 +81,16 @@ table * {
     margin-bottom: 2em;
 }
 .attr-name {
-    font-family: monospace;
+    font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+    color: #08c;
+}
+.attr-ref {
+    font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+    padding: 2px 4px;
+    background-color: #f7f7f9;
+    sborder: 1px solid #e1e1e8;
+    border-radius: 3px;
+    font-size: 12px;
     color: #08c;
 }
 .attr-def .attr-type {
@@ -115,7 +124,7 @@ table * {
 }
 
 .code-block {
-    font-family: monospace;
+    font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
     color: #d14;
     padding: 0.5em 0.75em;
     background: #f7f7f9;

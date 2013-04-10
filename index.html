@@ -3,6 +3,7 @@ layout: default
 title: SimpleFIN
 ---
 
+
 <div class="title">SimpleFIN</div>
 
 <div class="container-fluid">
@@ -78,7 +79,7 @@ title: SimpleFIN
         
         <div class="attr-def">
           <div class="row-fluid">
-            <a name="organization-domain">
+            <a name="organization.domain">
             <div class="span3 attr-name">domain</div>
             </a>
             <div class="span9">
@@ -96,14 +97,14 @@ title: SimpleFIN
         
         <div class="attr-def">
           <div class="row-fluid">
-            
+            <a name="organization.sfin-url">
             <div class="span3 attr-name">sfin-url</div>
-            
+            </a>
             <div class="span9">
               <div><span class="attr-type">string</span></div>
               <div class="attr-optional">optional</div>
               <div class="attr-description">URL of organization's SimpleFIN root endpoint.  If provided,
-            the domain of the URL must match <a href="#organization-domain" class="attr-name">domain</a>.</div>
+            the domain of the URL must match <a href="#organization.domain" class="attr-ref">domain</a>.</div>
               
               <div class="attr-example code-block">"https://www.example.com/sfin/"</div>
               
@@ -129,7 +130,8 @@ title: SimpleFIN
   "currency": "USD",
   "balance": "100.23",
   "available-balance": "75.23",
-  "last-transaction-id": "AO334",
+  "balance-as-of": "AO334",
+  "last-transaction-posted": "1995-02-17T23:56:12.22239",
   "transactions": [
     {
       "id": "AO334",
@@ -144,9 +146,9 @@ title: SimpleFIN
           
         <div class="attr-def">
           <div class="row-fluid">
-            
+            <a name="account.org">
             <div class="span3 attr-name">org</div>
-            
+            </a>
             <div class="span9">
               <div><span class="attr-type"><a href="#organization">Organization</a></span></div>
               
@@ -167,9 +169,9 @@ title: SimpleFIN
           
         <div class="attr-def">
           <div class="row-fluid">
-            
+            <a name="account.id">
             <div class="span3 attr-name">id</div>
-            
+            </a>
             <div class="span9">
               <div><span class="attr-type">string</span></div>
               
@@ -189,9 +191,9 @@ title: SimpleFIN
           
         <div class="attr-def">
           <div class="row-fluid">
-            
+            <a name="account.name">
             <div class="span3 attr-name">name</div>
-            
+            </a>
             <div class="span9">
               <div><span class="attr-type">string</span></div>
               
@@ -210,9 +212,9 @@ title: SimpleFIN
           
         <div class="attr-def">
           <div class="row-fluid">
-            
+            <a name="account.currency">
             <div class="span3 attr-name">currency</div>
-            
+            </a>
             <div class="span9">
               <div><span class="attr-type">string</span></div>
               
@@ -230,14 +232,14 @@ title: SimpleFIN
           
         <div class="attr-def">
           <div class="row-fluid">
-            
+            <a name="account.balance">
             <div class="span3 attr-name">balance</div>
-            
+            </a>
             <div class="span9">
               <div><span class="attr-type">numeric string</span></div>
               
               <div class="attr-description">The balance of the account as of
-              <code class="nobr">last-transaction-id</code>.</div>
+              <a class="attr-ref" href="#account.balance-as-of">balance-as-of</a>.</div>
               
               <div class="attr-example code-block">"22.33"</div>
               
@@ -249,15 +251,15 @@ title: SimpleFIN
           
         <div class="attr-def">
           <div class="row-fluid">
-            
+            <a name="account.available-balance">
             <div class="span3 attr-name">available-balance</div>
-            
+            </a>
             <div class="span9">
               <div><span class="attr-type">numeric string</span></div>
               <div class="attr-optional">optional</div>
               <div class="attr-description">The available balance of the account as of
-              <code class="nobr">last-transaction-id</code>.  This
-              may be omitted if it is the same as <code>balance</code>.</div>
+              <a class="attr-ref" href="#account.balance-as-of">balance-as-of</a>.  This
+              may be omitted if it is the same as <a class="attr-ref" href="#account.balance">balance</a>.</div>
               
               <div class="attr-example code-block">"15.33"</div>
               
@@ -269,14 +271,23 @@ title: SimpleFIN
           
         <div class="attr-def">
           <div class="row-fluid">
-            
-            <div class="span3 attr-name">last-transaction-id</div>
-            
+            <a name="account.balance-as-of">
+            <div class="span3 attr-name">balance-as-of</div>
+            </a>
             <div class="span9">
               <div><span class="attr-type">string</span></div>
               
-              <div class="attr-description">ID of the most recently recorded Transaction on this
-              account.</div>
+              <div class="attr-description"><p>
+              The <a class="attr-ref" href="#transaction.id">Transaction.id</a> of the transaction that resulted in the <a class="attr-ref" href="#account.balance">balance</a> and <a class="attr-ref" href="#account.available-balance">available-balance</a> of this Account.
+            </p>
+
+            <p>
+              If <a class="attr-ref" href="#account.transactions">transactions</a> are included in this object, then <a class="attr-ref" href="#account.balance-as-of">balance-as-of</a> <em>must</em> be the <a class="attr-ref" href="#transaction.id">id</a> of the most recent <a href="#transaction">Transaction</a> in the list.
+            </p>
+
+            <p>
+              If <a class="attr-ref" href="#account.transactions">transactions</a> are <strong>not</strong> included in this object, then <a class="attr-ref" href="#account.balance-as-of">balance-as-of</a> <em>must</em> be the <a class="attr-ref" href="#transaction.id">id</a> of the most recent <a href="#transaction">Transaction</a> on record.
+            </p></div>
               
               <div class="attr-example code-block">"83940394098343ABCFKDSDF89"</div>
               
@@ -288,14 +299,32 @@ title: SimpleFIN
           
         <div class="attr-def">
           <div class="row-fluid">
-            
+            <a name="account.last-transaction-posted">
+            <div class="span3 attr-name">last-transaction-posted</div>
+            </a>
+            <div class="span9">
+              <div><span class="attr-type">ISO string timestamp</span></div>
+              
+              <div class="attr-description">This is always the <a class="attr-ref" href="#transaction.posted">posted</a> attribute of this account's most recent <a href="#transaction">Transaction</a> on record, regardless of what <a class="attr-ref" href="#account.transactions">transactions</a> is.</div>
+              
+              <div class="attr-example code-block">"2001-01-17T22:59:33.9081"</div>
+              
+            </div>
+          </div>
+        </div>
+      
+
+          
+        <div class="attr-def">
+          <div class="row-fluid">
+            <a name="account.transactions">
             <div class="span3 attr-name">transactions</div>
-            
+            </a>
             <div class="span9">
               <div><span class="attr-type">list of <a href="#transaction">Transactions</a></span></div>
               <div class="attr-optional">optional</div>
-              <div class="attr-description">List of <a href="#transaction">Transactions</a> for
-              this account.</div>
+              <div class="attr-description">List of a subset of <a href="#transaction">Transactions</a> for
+              this account, ordered by <a class="attr-ref" href="#transaction.posted">posted</a>.</div>
               
               <div class="attr-example code-block">[{
   "id": "AO334",
@@ -328,9 +357,9 @@ title: SimpleFIN
           
         <div class="attr-def">
           <div class="row-fluid">
-            
+            <a name="transaction.id">
             <div class="span3 attr-name">id</div>
-            
+            </a>
             <div class="span9">
               <div><span class="attr-type">string</span></div>
               
@@ -349,9 +378,9 @@ title: SimpleFIN
           
         <div class="attr-def">
           <div class="row-fluid">
-            
+            <a name="transaction.posted">
             <div class="span3 attr-name">posted</div>
-            
+            </a>
             <div class="span9">
               <div><span class="attr-type">ISO string timestamp</span></div>
               
@@ -368,9 +397,9 @@ title: SimpleFIN
           
         <div class="attr-def">
           <div class="row-fluid">
-            
+            <a name="transaction.amount">
             <div class="span3 attr-name">amount</div>
-            
+            </a>
             <div class="span9">
               <div><span class="attr-type">numeric string</span></div>
               
@@ -387,9 +416,9 @@ title: SimpleFIN
           
         <div class="attr-def">
           <div class="row-fluid">
-            
+            <a name="transaction.description">
             <div class="span3 attr-name">description</div>
-            
+            </a>
             <div class="span9">
               <div><span class="attr-type">string</span></div>
               
@@ -405,13 +434,13 @@ title: SimpleFIN
           
         <div class="attr-def">
           <div class="row-fluid">
-            
+            <a name="transaction.sic">
             <div class="span3 attr-name">sic</div>
-            
+            </a>
             <div class="span9">
               <div><span class="attr-type">string</span></div>
-              
-              <div class="attr-description">RESERVED</div>
+              <div class="attr-optional">optional</div>
+              <div class="attr-description">Not yet defined.</div>
               
             </div>
           </div>
@@ -435,7 +464,8 @@ title: SimpleFIN
       "currency": "USD",
       "balance": "100.23",
       "available-balance": "75.23",
-      "last-transaction-id": "AO334",
+      "balance-as-of": "AO334",
+      "last-transaction-posted": "2013-07-29T19:22:09.210",
       "transactions": []
     }
   ]
@@ -446,14 +476,13 @@ title: SimpleFIN
           
         <div class="attr-def">
           <div class="row-fluid">
-            
+            <a name="account-set.accounts">
             <div class="span3 attr-name">accounts</div>
-            
+            </a>
             <div class="span9">
               <div><span class="attr-type">list of <a href="#account">Accounts</a></span></div>
               
-              <div class="attr-description">A list of <a href="#account">Account</a> objects.  Order does
-              not matter.</div>
+              <div class="attr-description">A list of <a class="attr-ref" href="#account">Account</a> objects.  Order does not matter.</div>
               
             </div>
           </div>
@@ -594,7 +623,7 @@ VFZ2TDJQdm9jaFlOLURoYw==
       <h4>URL Endpoints</h4>
 
       <p>
-        <span class="term">The Company</span> may choose the root URL for their <span class="term">Server</span>.  The URLs defined here are relative to the root URL.  The <span class="attr-name">sfin-url</span> attribute of the <a href="#organization">Organization</a> object is the root URL.
+        <span class="term">The Company</span> may choose the root URL for their <span class="term">Server</span>.  The URLs defined here are relative to the root URL.  The <a class="attr-ref" href="#organization.sfin-url">sfin-url</a> attribute is the root URL.
       </p>
 
       
@@ -632,12 +661,24 @@ VFZ2TDJQdm9jaFlOLURoYw==
 
       <a name="/auth"><h3 class="url">GET /auth</h3></a>
 
-      XXX TODO
+      <p>
+        This URL should land the <span class="term">Browser</span> on a web page that an <span class="term">Account holder</span> can use to generate and otherwise manage <span class="term">Setup tokens</span>.  The actual implementation of token management is up to <span class="term">The Company</span>.  However, please note the <a href="#recommendations">recommendations</a> below.
+      </p>
+
+      <p>
+        <span class="term">Readers</span> will direct users to this URL if tokens are needed.
+      </p>
+
+      <p>
+        <span class="term">Account holders</span> must be authenticated to access this page.  It is acceptable to redirect from this URL to
+        another URL (in fact, we suspect that many <span class="term">Servers</span> will simply redirect the user to a different URL).
+      </p>
       
       <a name="/accounts"><h3 class="url">GET /accounts</h3></a>
 
       <p>
-        Returns an <a href="#account-set">Account Set</a> containing all accounts the requester is authorized to see.
+        Returns an <a href="#account-set">Account Set</a> containing all accounts the requester is authorized to see.  This URL is intended
+        for <span class="term">Readers</span>.
       </p>
 
       <ul>
@@ -645,7 +686,7 @@ VFZ2TDJQdm9jaFlOLURoYw==
           The <span class="code">Content-Type</span> of the response is always <span class="code">application/json</span>.
         </li>
         <li>
-          If no query paramters are included in a request, then all the <span class="attr-name">transactions</span> attributes of the accounts will be empty lists.
+          If no query paramters are included in a request, then all the <a class="attr-ref" href="#account.transactions">Account.transactions</span> attributes of will all be empty lists.
         </li>
       </ul>
 
@@ -692,7 +733,7 @@ VFZ2TDJQdm9jaFlOLURoYw==
         </div>
         <div class="span9">
           <div class="description">
-        If given, only transactions <em>before</em> the supplied date or timestamp will be returned.  Transactions with a <span class="attr-name">posted</span> date equal to this date/timestamp will <em>not</em> be returned.
+        If given, only transactions <em>before</em> the supplied date or timestamp will be returned.  Transactions with a <a class="attr-ref" href="#transaction.posted">posted</a> date equal to this date/timestamp will <em>not</em> be returned.
 
         For instance, querying for
         <div class="example code-block">?start-date=2001-05-01&end-date=2001-06-01</div>
@@ -717,7 +758,8 @@ VFZ2TDJQdm9jaFlOLURoYw==
       "currency": "USD",
       "balance": "100.23",
       "available-balance": "75.23",
-      "last-transaction-id": "AO334",
+      "balance-as-of": "AO334",
+      "last-transaction-posted": "2013-07-29T19:09:23.544"
     }
   ]
 }</div>
