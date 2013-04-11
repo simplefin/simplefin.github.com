@@ -33,13 +33,7 @@ title: SimpleFIN
           <li>You don't have to pay anyone to use it (ahem, QFX).</li>
         </ul>
       </p>
-
-      <p>SimpleFIN data may be obtained either directly from a financial
-        institution <em>or</em> from a third party that previously obtained
-        the original data from a financial institution.  In other words,
-        both banks and financial aggregation services may provide SimpleFIN
-        data and sevices.
-      </p>
+      
     </div>
   </div>
 
@@ -58,7 +52,6 @@ title: SimpleFIN
 
       <ul>
         <li><a href="#organization">Organization</a></li>
-        <li><a href="#currency">Currency</a></li>
         <li><a href="#account">Account</a></li>
         <li><a href="#transaction">Transaction</a></li>
         <li><a href="#account-set">Account Set</a></li>
@@ -116,76 +109,6 @@ title: SimpleFIN
 
       </div>
 
-      <div class="object">
-        <a name="currency"><h3 class="object-name">Currency</h3></a>
-
-
-        <h4>Examples</h4>
-        <div class="code-block">{
-  "code": "GBP"
-}</div>
-
-        <div class="code-block">{
-  "code": "Brownies",
-  "url": "https://example.com/currencies/brownie"
-}</div>
-
-        <h4>Attributes</h4>
-        
-        <div class="attr-def">
-          <div class="row-fluid">
-            <a name="currency.code">
-            <div class="span3 attr-name">code</div>
-            </a>
-            <div class="span9">
-              <div><span class="attr-type">string</span></div>
-              
-              <div class="attr-description"><p>
-              If the currency is a standard currency, use the currency code from the <a href="http://www.iso.org/iso/home/standards/currency_codes.htm" target="_blank">official ISO 4217</a> (or see <a href="http://en.wikipedia.org/wiki/ISO_4217" target="_blank">the Wikipedia article</a>)  For example:
-            </p>
-
-            <div class="attr-example code-block">"ZMW"</div>
-            <div class="attr-example code-block">"GBP"</div>
-
-            <p>
-              Custom currencies are supported.  For instance, rewards points or frequent flier miles are a type of "currency."  To indicate a custom currency, this will be a short name for the currency.  For example:
-            </p>
-
-            <div class="attr-example code-block">"SkyMiles"</div>
-
-            <p>
-              If this is a custom currency, then the <a class="attr-ref" href="#currency.url">url</a> attribute <em>must</em> be provided.
-            </p></div>
-              
-            </div>
-          </div>
-        </div>
-      
-
-        
-        <div class="attr-def">
-          <div class="row-fluid">
-            <a name="currency.url">
-            <div class="span3 attr-name">url</div>
-            </a>
-            <div class="span9">
-              <div><span class="attr-type">string</span></div>
-              <div class="attr-optional">optional</div>
-              <div class="attr-description"><p>
-              For standard currencies, this should not be provided.
-            </p>
-            <p>
-              This is the URL that defines a custom currency.  This should be unique for each custom currency.  The content returned when this URL is requested is not currently defined.  Example values include:
-            </p>
-
-            <div class="attr-example code-block">"https://example.com/currency/potatoes"</div>
-            <div class="attr-example code-block">"https://airline.com/defs/skymiles?v=1"</div></div>
-              
-            </div>
-          </div>
-        </div>
-      
-      </div>
 
       <div class="object">
         <a name="account"><h3 class="object-name">Account</h3></a>
@@ -199,9 +122,7 @@ title: SimpleFIN
   },
   "id": "2930002",
   "name": "Savings",
-  "currency": {
-    "code": "USD"
-  },
+  "currency": "USD",
   "balance": "100.23",
   "available-balance": "75.23",
   "balance-as-of": "AO334",
@@ -290,15 +211,26 @@ title: SimpleFIN
             <div class="span3 attr-name">currency</div>
             </a>
             <div class="span9">
-              <div><span class="attr-type"><a href="#currency" class="attr-ref">Currency</a></span></div>
+              <div><span class="attr-type">string</span></div>
               
               <div class="attr-description"><p>
-                Currency of the account.
-              </p>
+              If the currency is a standard currency, use the currency code from the <a href="http://www.iso.org/iso/home/standards/currency_codes.htm" target="_blank">official ISO 4217</a> (or see <a href="http://en.wikipedia.org/wiki/ISO_4217" target="_blank">the Wikipedia article</a>)  For example:
+            </p>
 
-              <div class="attr-example code-block">{
-  "code": "GBP"
-}</div></div>
+            <div class="attr-example code-block">"ZMW"</div>
+            <div class="attr-example code-block">"GBP"</div>
+
+            <p>
+              Custom/proprietary currencies are also supported.  For instance, rewards points or frequent flier miles are a type of "currency."  To indicate a custom currency supply a URL as the value.  For example:
+            </p>
+
+            <div class="attr-example code-block">"https://www.example.com/currency/rewardpoints"</div>
+
+            <p>
+              Making an unauthenticated <span class="url">GET</span> request to the URL should return an <span class="url">application/json</span> response representing an object with at least a <span class="attr-ref">name</span> attribute with a human-readable string name for the currency as the value.  For example, here is an acceptable response:
+            </p>
+
+            <div class="attr-example code-block">{ "name": "Reward Points" }</div></div>
               
             </div>
           </div>
@@ -537,9 +469,7 @@ title: SimpleFIN
       },
       "id": "2930002",
       "name": "Savings",
-      "currency": {
-        "code": "USD"
-      },
+      "currency": "USD",
       "balance": "100.23",
       "available-balance": "75.23",
       "balance-as-of": "AO334",
@@ -835,9 +765,7 @@ VFZ2TDJQdm9jaFlOLURoYw==
         },
       "id": "2930002",
       "name": "Savings",
-      "currency": {
-        "code": "USD"
-      },
+      "currency": "USD",
       "balance": "100.23",
       "available-balance": "75.23",
       "balance-as-of": "AO334",

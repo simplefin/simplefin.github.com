@@ -1,12 +1,13 @@
 h1,h2,h3,h4,h5 {
     margin-top: 2em;
     color: #08c;
+    font-weight: normal;
 }
 h2 {
     margin-top: 0em;
-    color: #fff;
-    background: #08c;
-    padding-left: 0.3em;
+    color: #08c;
+    background: #eee;
+    padding: 0.25em 1em 0.25em 0.3em;
 }
 h3 {
     border-bottom: 3px solid #08c;
