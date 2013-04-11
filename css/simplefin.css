@@ -1,7 +1,14 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,300,700);
+
+* {
+    font-family: 'Open Sans';
+}
+
 h1,h2,h3,h4,h5 {
     margin-top: 2em;
     color: #08c;
     font-weight: normal;
+    font-family: 'Open Sans' !important;
 }
 h2 {
     margin-top: 0em;
@@ -10,12 +17,17 @@ h2 {
     padding: 0.25em 1em 0.25em 0.3em;
 }
 h3 {
-    border-bottom: 3px solid #08c;
+    border-bottom: 1px solid #08c;
 }
 h4,h5 {
-    font-size: 150%;
+    font-size: 175%;
     font-weight: normal;
     color: #999;
+    margin-top: 3em;
+    margin-bottom: 1em;
+}
+h4:first-child,h5:first-child {
+    margin-top: 1em;
 }
 ol,ul,dl {
     margin-bottom: 2em;
@@ -46,8 +58,8 @@ div.title {
     font-size: 42px;
     line-height: 43px;
     color: #08c;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 1.5em;
+    margin-bottom: 2em;
     text-align: center;
 }
 div.title .strong {
@@ -135,4 +147,13 @@ table * {
     word-break: break-all;
     word-wrap: break-word;
     margin-bottom: 1em;
+}
+a.clickanchor {
+    opacity: 0.2;
+    margin-left: -1em;
+    position: absolute;
+}
+a.clickanchor:hover {
+    opacity: 1.0;
+    text-decoration: none;
 }

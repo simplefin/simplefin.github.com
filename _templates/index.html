@@ -3,6 +3,9 @@ layout: default
 title: SimpleFIN
 ---
 
+{% macro anchor(name) -%}
+<a class="clickanchor" name="{{ name }}" href="#{{ name }}">&sect;</a>
+{%- endmacro %}
 
 <div class="title">SimpleFIN</div>
 
@@ -33,13 +36,13 @@ title: SimpleFIN
           <li>You don't have to pay anyone to use it (ahem, QFX).</li>
         </ul>
       </p>
-      
+
     </div>
   </div>
 
   <div class="row-fluid section">
     <div class="content span8 offset2">
-      <a name="data-format"><h2>Data format</h2></a>
+      <h2>{{ anchor('data-format') }}Data format</h2>
 
       <ul>
         <li>Data is encoded as JSON strings.</li>
@@ -60,9 +63,7 @@ title: SimpleFIN
       {% macro attribute(name, type, optional=False, object=None) %}
         <div class="attr-def">
           <div class="row-fluid">
-            {% if object %}<a name="{{ object }}.{{ name }}">{% endif %}
-            <div class="span3 attr-name">{{ name }}</div>
-            {% if object %}</a>{% endif %}
+            <div class="span3 attr-name">{% if object %}{{ anchor(object + '.' + name) }}{% endif %}{{ name }}</div>
             <div class="span9">
               <div><span class="attr-type">{{ type }}</span></div>
               {% if optional %}<div class="attr-optional">optional</div>{% endif %}
@@ -76,7 +77,7 @@ title: SimpleFIN
       {% endmacro %}
 
       <div class="object">
-        <a name="organization"><h3 class="object-name">Organization</h3></a>
+        <h3 class="object-name">{{ anchor('organization') }}Organization</h3>
 
 
         <h4>Example</h4>
@@ -107,7 +108,7 @@ title: SimpleFIN
 
 
       <div class="object">
-        <a name="account"><h3 class="object-name">Account</h3></a>
+        <h3 class="object-name">{{ anchor('account') }}Account</h3>
 
 
         <h4>Example</h4>
@@ -247,7 +248,7 @@ title: SimpleFIN
           {% endcall %}
         </div>
 
-          <a name="transaction"><h3>Transaction</h3></a>
+          <h3>{{ anchor('transaction') }}Transaction</h3>
 
           <h4>Example</h4>
 
@@ -306,7 +307,7 @@ title: SimpleFIN
           {% endcall %}
 
 
-          <a name="account-set"><h3>Account Set</h3></a>
+          <h3>{{ anchor('account-set') }}Account Set</h3>
 
           <h4>Example</h4>
 
@@ -343,7 +344,7 @@ title: SimpleFIN
 
   <div class="row-fluid section">
     <div class="content span8 offset2">
-      <a name="http-protocol"><h2>HTTP Protocol</h2></a>
+      <h2>{{ anchor('http-protocol') }}HTTP Protocol</h2>
 
       <h4>Players</h4>
 
@@ -415,7 +416,7 @@ title: SimpleFIN
         </li>
       </ol>
 
-      <a name="access-token"><h4>Access token</h4></a>
+      <h4>{{ anchor('access-token') }}Access token</h4>
 
       <ul>
         <li>
@@ -438,7 +439,7 @@ title: SimpleFIN
 
 
 
-      <a name="setup-token"><h4>Setup token</h4></a>
+      <h4>{{ anchor('setup-token') }}Setup token</h4>
 
       <p>
         Setup tokens are Base64 encoded strings containing the URL for a <span class="term">Server's</span> SimpleFIN root URL and an <a href="#access-token">Access token</a>.  Here is a generic code description of the format:
@@ -498,7 +499,7 @@ title: SimpleFIN
       </p>
 
 
-      <a name="/auth"><h3 class="url">GET /auth</h3></a>
+      <h3 class="url">{{ anchor('/auth') }}GET /auth</h3>
 
       <p>
         This URL should land the <span class="term">Browser</span> on a web page that an <span class="term">Account holder</span> can use to generate and otherwise manage <span class="term">Setup tokens</span>.  The actual implementation of token management is up to <span class="term">The Company</span>.  However, please note the <a href="#recommendations">recommendations</a> below.
@@ -513,7 +514,7 @@ title: SimpleFIN
         another URL (in fact, we suspect that many <span class="term">Servers</span> will simply redirect the user to a different URL).
       </p>
       
-      <a name="/accounts"><h3 class="url">GET /accounts</h3></a>
+      <h3 class="url">{{ anchor('/accounts') }}GET /accounts</h3>
 
       <p>
         Returns an <a href="#account-set">Account Set</a> containing all accounts the requester is authorized to see.  This URL is intended
@@ -529,7 +530,7 @@ title: SimpleFIN
         </li>
       </ul>
 
-      <a name="authentication"><h4>Authentication</h4></a>
+      <h4>{{ anchor('authentication') }}Authentication</h4>
 
       <p>
         HTTP Bearer Authentication is used.  In every request, the client
@@ -624,7 +625,7 @@ title: SimpleFIN
   <div class="row-fluid section">
     <div class="content span8 offset2">
 
-      <a name="recommendations"><h2>Recommendations</h2></a>
+      <h2>{{ anchor('recommendations') }}Recommendations</h2>
 
       <p>
         It is <em>recommended</em> that <span class="term">Account holders</span> have the following abilities regarding token management:
