@@ -4,6 +4,11 @@
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+.logo {
+    width: 64px;
+    height: 64px;
+}
+
 h1,h2,h3,h4,h5 {
     margin-top: 2em;
     color: #08c;
