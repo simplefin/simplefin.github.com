@@ -97,10 +97,9 @@ title: SimpleFIN
 
 
       <div class="object">
-        <h3 class="object-name"><a class="clickanchor" name="account" href="#account">&sect;</a>Account</h3>
-
-
         <div class="print-chunk">
+          <h3 class="object-name"><a class="clickanchor" name="account" href="#account">&sect;</a>Account</h3>
+
           <h4><a class="clickanchor" name="account-example" href="#account-example">&sect;</a>Example</h4>
           <div class="code-block">{
   "org": {
@@ -319,9 +318,9 @@ title: SimpleFIN
         </div>
 
         <div class="object">
-          <h3><a class="clickanchor" name="transaction" href="#transaction">&sect;</a>Transaction</h3>
-
           <div class="print-chunk">
+            <h3><a class="clickanchor" name="transaction" href="#transaction">&sect;</a>Transaction</h3>
+          
             <h4><a class="clickanchor" name="transaction-example" href="#transaction-example">&sect;</a>Example</h4>
 
             <div class="code-block">{
@@ -422,9 +421,9 @@ title: SimpleFIN
 
         <div class="object">
 
-          <h3><a class="clickanchor" name="account-set" href="#account-set">&sect;</a>Account Set</h3>
-
           <div class="print-chunk">
+            <h3><a class="clickanchor" name="account-set" href="#account-set">&sect;</a>Account Set</h3>
+          
             <h4><a class="clickanchor" name="account-set-example" href="#account-set-example">&sect;</a>Example</h4>
 
             <div class="code-block">{
@@ -642,36 +641,40 @@ VFZ2TDJQdm9jaFlOLURoYw==
       </p>
 
 
-      <h3 class="url"><a class="clickanchor" name="/auth" href="#/auth">&sect;</a>GET /auth</h3>
+      <div class="print-chunk">
+        <h3 class="url"><a class="clickanchor" name="/auth" href="#/auth">&sect;</a>GET /auth</h3>
 
-      <p>
-        This URL should land the <span class="term">Browser</span> on a web page that an <span class="term">Account holder</span> can use to generate and otherwise manage <span class="term">Setup tokens</span>.  The actual implementation of token management is up to <span class="term">The Company</span>.  However, please note the <a href="#recommendations">recommendations</a> below.
-      </p>
+        <p>
+          This URL should land the <span class="term">Browser</span> on a web page that an <span class="term">Account holder</span> can use to generate and otherwise manage <span class="term">Setup tokens</span>.  The actual implementation of token management is up to <span class="term">The Company</span>.  However, please note the <a href="#recommendations">recommendations</a> below.
+        </p>
 
-      <p>
-        <span class="term">Readers</span> will direct users to this URL if tokens are needed.
-      </p>
+        <p>
+          <span class="term">Readers</span> will direct users to this URL if tokens are needed.
+        </p>
 
-      <p>
-        <span class="term">Account holders</span> must be authenticated to access this page.  It is acceptable to redirect from this URL to
-        another URL (in fact, we suspect that many <span class="term">Servers</span> will simply redirect the user to a different URL).
-      </p>
+        <p>
+          <span class="term">Account holders</span> must be authenticated to access this page.  It is acceptable to redirect from this URL to
+          another URL (in fact, we suspect that many <span class="term">Servers</span> will simply redirect the user to a different URL).
+        </p>
+      </div>
       
-      <h3 class="url"><a class="clickanchor" name="/accounts" href="#/accounts">&sect;</a>GET /accounts</h3>
+      <div class="print-chunk">
+        <h3 class="url"><a class="clickanchor" name="/accounts" href="#/accounts">&sect;</a>GET /accounts</h3>
 
-      <p>
-        Returns an <a href="#account-set">Account Set</a> containing all accounts the requester is authorized to see.  This URL is intended
-        for <span class="term">Readers</span>.
-      </p>
+        <p>
+          Returns an <a href="#account-set">Account Set</a> containing all accounts the requester is authorized to see.  This URL is intended
+          for <span class="term">Readers</span>.
+        </p>
 
-      <ul class="std">
-        <li>
-          The <span class="code">Content-Type</span> of the response is always <span class="code">application/json</span>.
-        </li>
-        <li>
-          If no query paramters are included in a request, then all the <a class="attr-ref" href="#account.transactions">Account.transactions</span> attributes of will all be empty lists.
-        </li>
-      </ul>
+        <ul class="std">
+          <li>
+            The <span class="code">Content-Type</span> of the response is always <span class="code">application/json</span>.
+          </li>
+          <li>
+            If no query paramters are included in a request, then all the <a class="attr-ref" href="#account.transactions">Account.transactions</span> attributes of will all be empty lists.
+          </li>
+        </ul>
+      </div>
 
       <div class="print-chunk">
         <h4><a class="clickanchor" name="authentication" href="#authentication">&sect;</a>Authentication</h4>
@@ -751,40 +754,42 @@ VFZ2TDJQdm9jaFlOLURoYw==
 }</div>
       </div>
 
-      <h4><a class="clickanchor" name="accounts-errors" href="#accounts-errors">&sect;</a>Errors</h4>
+      <div class="print-chunk">
+        <h4><a class="clickanchor" name="accounts-errors" href="#accounts-errors">&sect;</a>Errors</h4>
 
-      <p>
-        Following are possible error responses:
-      </p>
+        <p>
+          Following are possible error responses:
+        </p>
 
-      
+        
 
-      
-      <div class="row-fluid error-response">
-        <div class="span3 code">
-          <a class="clickanchor" name="accounts-error-403 Forbidden" href="#accounts-error-403 Forbidden">&sect;</a>403 Forbidden
+        
+        <div class="row-fluid error-response">
+          <div class="span3 code">
+            <a class="clickanchor" name="accounts-error-403 Forbidden" href="#accounts-error-403 Forbidden">&sect;</a>403 Forbidden
+          </div>
+          <div class="span9">
+            
+          If the requester is not authenticated or an invalid token is used.
+        
+          </div>
         </div>
-        <div class="span9">
-          
-        If the requester is not authenticated or an invalid token is used.
-      
+        
+
+        
+        <div class="row-fluid error-response">
+          <div class="span3 code">
+            <a class="clickanchor" name="accounts-error-410 Gone" href="#accounts-error-410 Gone">&sect;</a>410 Gone
+          </div>
+          <div class="span9">
+            
+          If <span class="url">start-date</span> specifies a date for which
+          transaction data is no longer available (or was never available).
+        
+          </div>
         </div>
+        
       </div>
-      
-
-      
-      <div class="row-fluid error-response">
-        <div class="span3 code">
-          <a class="clickanchor" name="accounts-error-410 Gone" href="#accounts-error-410 Gone">&sect;</a>410 Gone
-        </div>
-        <div class="span9">
-          
-        If <span class="url">start-date</span> specifies a date for which
-        transaction data is no longer available (or was never available).
-      
-        </div>
-      </div>
-      
 
     </div>
   </div>

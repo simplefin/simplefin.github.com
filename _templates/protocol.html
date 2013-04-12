@@ -84,10 +84,9 @@ title: SimpleFIN
 
 
       <div class="object">
-        <h3 class="object-name">{{ anchor('account') }}Account</h3>
-
-
         <div class="print-chunk">
+          <h3 class="object-name">{{ anchor('account') }}Account</h3>
+
           <h4>{{ anchor('account-example') }}Example</h4>
           <div class="code-block">{
   "org": {
@@ -227,9 +226,9 @@ title: SimpleFIN
         </div>
 
         <div class="object">
-          <h3>{{ anchor('transaction') }}Transaction</h3>
-
           <div class="print-chunk">
+            <h3>{{ anchor('transaction') }}Transaction</h3>
+          
             <h4>{{ anchor('transaction-example') }}Example</h4>
 
             <div class="code-block">{
@@ -291,9 +290,9 @@ title: SimpleFIN
 
         <div class="object">
 
-          <h3>{{ anchor('account-set') }}Account Set</h3>
-
           <div class="print-chunk">
+            <h3>{{ anchor('account-set') }}Account Set</h3>
+          
             <h4>{{ anchor('account-set-example') }}Example</h4>
 
             <div class="code-block">{
@@ -492,36 +491,40 @@ title: SimpleFIN
       </p>
 
 
-      <h3 class="url">{{ anchor('/auth') }}GET /auth</h3>
+      <div class="print-chunk">
+        <h3 class="url">{{ anchor('/auth') }}GET /auth</h3>
 
-      <p>
-        This URL should land the <span class="term">Browser</span> on a web page that an <span class="term">Account holder</span> can use to generate and otherwise manage <span class="term">Setup tokens</span>.  The actual implementation of token management is up to <span class="term">The Company</span>.  However, please note the <a href="#recommendations">recommendations</a> below.
-      </p>
+        <p>
+          This URL should land the <span class="term">Browser</span> on a web page that an <span class="term">Account holder</span> can use to generate and otherwise manage <span class="term">Setup tokens</span>.  The actual implementation of token management is up to <span class="term">The Company</span>.  However, please note the <a href="#recommendations">recommendations</a> below.
+        </p>
 
-      <p>
-        <span class="term">Readers</span> will direct users to this URL if tokens are needed.
-      </p>
+        <p>
+          <span class="term">Readers</span> will direct users to this URL if tokens are needed.
+        </p>
 
-      <p>
-        <span class="term">Account holders</span> must be authenticated to access this page.  It is acceptable to redirect from this URL to
-        another URL (in fact, we suspect that many <span class="term">Servers</span> will simply redirect the user to a different URL).
-      </p>
+        <p>
+          <span class="term">Account holders</span> must be authenticated to access this page.  It is acceptable to redirect from this URL to
+          another URL (in fact, we suspect that many <span class="term">Servers</span> will simply redirect the user to a different URL).
+        </p>
+      </div>
       
-      <h3 class="url">{{ anchor('/accounts') }}GET /accounts</h3>
+      <div class="print-chunk">
+        <h3 class="url">{{ anchor('/accounts') }}GET /accounts</h3>
 
-      <p>
-        Returns an <a href="#account-set">Account Set</a> containing all accounts the requester is authorized to see.  This URL is intended
-        for <span class="term">Readers</span>.
-      </p>
+        <p>
+          Returns an <a href="#account-set">Account Set</a> containing all accounts the requester is authorized to see.  This URL is intended
+          for <span class="term">Readers</span>.
+        </p>
 
-      <ul class="std">
-        <li>
-          The <span class="code">Content-Type</span> of the response is always <span class="code">application/json</span>.
-        </li>
-        <li>
-          If no query paramters are included in a request, then all the <a class="attr-ref" href="#account.transactions">Account.transactions</span> attributes of will all be empty lists.
-        </li>
-      </ul>
+        <ul class="std">
+          <li>
+            The <span class="code">Content-Type</span> of the response is always <span class="code">application/json</span>.
+          </li>
+          <li>
+            If no query paramters are included in a request, then all the <a class="attr-ref" href="#account.transactions">Account.transactions</span> attributes of will all be empty lists.
+          </li>
+        </ul>
+      </div>
 
       <div class="print-chunk">
         <h4>{{ anchor('authentication') }}Authentication</h4>
@@ -589,31 +592,33 @@ title: SimpleFIN
 }</div>
       </div>
 
-      <h4>{{ anchor('accounts-errors') }}Errors</h4>
+      <div class="print-chunk">
+        <h4>{{ anchor('accounts-errors') }}Errors</h4>
 
-      <p>
-        Following are possible error responses:
-      </p>
+        <p>
+          Following are possible error responses:
+        </p>
 
-      {% macro error_response(code) %}
-      <div class="row-fluid error-response">
-        <div class="span3 code">
-          {{ anchor('accounts-error-' + code) }}{{ code }}
+        {% macro error_response(code) %}
+        <div class="row-fluid error-response">
+          <div class="span3 code">
+            {{ anchor('accounts-error-' + code) }}{{ code }}
+          </div>
+          <div class="span9">
+            {{ caller() }}
+          </div>
         </div>
-        <div class="span9">
-          {{ caller() }}
-        </div>
+        {% endmacro %}
+
+        {% call error_response('403 Forbidden') %}
+          If the requester is not authenticated or an invalid token is used.
+        {% endcall %}
+
+        {% call error_response('410 Gone') %}
+          If <span class="url">start-date</span> specifies a date for which
+          transaction data is no longer available (or was never available).
+        {% endcall %}
       </div>
-      {% endmacro %}
-
-      {% call error_response('403 Forbidden') %}
-        If the requester is not authenticated or an invalid token is used.
-      {% endcall %}
-
-      {% call error_response('410 Gone') %}
-        If <span class="url">start-date</span> specifies a date for which
-        transaction data is no longer available (or was never available).
-      {% endcall %}
 
     </div>
   </div>
