@@ -1,0 +1,14 @@
+{% macro navbar(selected) %}
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span8 offset2">
+      <div class="navlinks">
+        <div class="centerer">
+        <a href="/" {% if selected == 'home' %}class="active"{% endif %}>Home</a>
+        <a href="/protocol.html" {% if selected == 'protocol' %}class="active"{% endif %}>Protocol</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}

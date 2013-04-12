@@ -1,0 +1,16 @@
+a.clickanchor {
+	display: none !important;
+}
+div.navlinks {
+	display: none !important;
+}
+h1,h2,h3 {
+    border-bottom: 1px solid #08c !important;
+    padding-bottom: 0.2em !important;
+}
+h2 {
+	page-break-before: always;
+}
+.attr-def,.code-block,.print-chunk,.query-param {
+	page-break-inside: avoid;
+}

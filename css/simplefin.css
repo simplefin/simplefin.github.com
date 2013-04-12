@@ -1,14 +1,14 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,700italic,300,700);
 
 * {
-    font-family: 'Open Sans';
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 h1,h2,h3,h4,h5 {
     margin-top: 2em;
     color: #08c;
     font-weight: normal;
-    font-family: 'Open Sans' !important;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
 }
 h2 {
     margin-top: 0em;
@@ -29,7 +29,7 @@ h4,h5 {
 h4:first-child,h5:first-child {
     margin-top: 1em;
 }
-ol,ul,dl {
+ol.std,ul.std,dl {
     margin-bottom: 2em;
     margin-top: 2em;
 }
@@ -39,7 +39,7 @@ dt {
 dd {
     margin-bottom: 1em;
 }
-li {
+.std li {
     margin-bottom: 1em;
     margin-top: 1em;
 }
@@ -155,5 +155,31 @@ a.clickanchor {
 }
 a.clickanchor:hover {
     opacity: 1.0;
+    text-decoration: none;
+}
+div.navlinks {
+    padding: 0;
+    margin-bottom: 2em;
+    border: 0px solid #e1e1e8;
+    border-bottom-width: 1px;
+}
+div.navlinks a {
+    display: inline-block;
+    padding: 1em 2em 0;
+    border: 0px solid #fff;
+    color: #999;
+    border-width: 0px 0px 3px 0px;
+}
+div.navlinks .centerer {
+    text-align: center;
+}
+div.navlinks a.active {
+    border-bottom-color: #e1e1e8;
+    color: #08c;
+    font-weight: bold;
+}
+div.navlinks a:hover {
+    border-bottom-color: #08c;
+    color: #08c;
     text-decoration: none;
 }
