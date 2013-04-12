@@ -11,6 +11,9 @@ h1,h2,h3 {
 h2 {
 	page-break-before: always;
 }
+.no-page {
+	page-break-before: avoid;
+}
 .attr-def,.code-block,.print-chunk,.query-param {
 	page-break-inside: avoid;
 }

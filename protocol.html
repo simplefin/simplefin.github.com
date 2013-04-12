@@ -28,7 +28,7 @@ title: SimpleFIN
 
   <div class="row-fluid section">
     <div class="content span8 offset2">
-      <h2><a class="clickanchor" name="data-format" href="#data-format">&sect;</a>Data format</h2>
+      <h2 class="no-page"><a class="clickanchor" name="data-format" href="#data-format">&sect;</a>Data format</h2>
 
       <ul class="std">
         <li>Data is encoded as JSON strings.</li>
@@ -52,11 +52,13 @@ title: SimpleFIN
         <h3 class="object-name"><a class="clickanchor" name="organization" href="#organization">&sect;</a>Organization</h3>
 
 
-        <h4><a class="clickanchor" name="organization-example" href="#organization-example">&sect;</a>Example</h4>
-        <div class="code-block">{
+        <div class="print-chunk">
+          <h4><a class="clickanchor" name="organization-example" href="#organization-example">&sect;</a>Example</h4>
+          <div class="code-block">{
   "domain": "mybank.com",
   "sfin-url": "https://sfin.mybank.com"
 }</div>
+        </div>
 
         <h4><a class="clickanchor" name="organization-attributes" href="#organization-attributes">&sect;</a>Attributes</h4>
         
@@ -98,7 +100,8 @@ title: SimpleFIN
         <h3 class="object-name"><a class="clickanchor" name="account" href="#account">&sect;</a>Account</h3>
 
 
-        <h4><a class="clickanchor" name="account-example" href="#account-example">&sect;</a>Example</h4>
+        <div class="print-chunk">
+          <h4><a class="clickanchor" name="account-example" href="#account-example">&sect;</a>Example</h4>
           <div class="code-block">{
   "org": {
     "domain": "mybank.com",
@@ -120,6 +123,7 @@ title: SimpleFIN
     }
   ]
 }</div>
+        </div>
 
           <h4><a class="clickanchor" name="account-attributes" href="#account-attributes">&sect;</a>Attributes</h4>
           
@@ -317,14 +321,16 @@ title: SimpleFIN
         <div class="object">
           <h3><a class="clickanchor" name="transaction" href="#transaction">&sect;</a>Transaction</h3>
 
-          <h4><a class="clickanchor" name="transaction-example" href="#transaction-example">&sect;</a>Example</h4>
+          <div class="print-chunk">
+            <h4><a class="clickanchor" name="transaction-example" href="#transaction-example">&sect;</a>Example</h4>
 
-          <div class="code-block">{
+            <div class="code-block">{
   "id": "12394832938403",
   "posted": "1995-02-17T23:56:12.22239",
   "amount": "-33293.43",
   "description": "Uncle Frank's Bait Shop",
 }</div>
+          </div>
 
 
           <h4><a class="clickanchor" name="transaction-attributes" href="#transaction-attributes">&sect;</a>Attributes</h4>
@@ -418,9 +424,10 @@ title: SimpleFIN
 
           <h3><a class="clickanchor" name="account-set" href="#account-set">&sect;</a>Account Set</h3>
 
-          <h4><a class="clickanchor" name="account-set-example" href="#account-set-example">&sect;</a>Example</h4>
+          <div class="print-chunk">
+            <h4><a class="clickanchor" name="account-set-example" href="#account-set-example">&sect;</a>Example</h4>
 
-          <div class="code-block">{
+            <div class="code-block">{
   "accounts": [
     {
       "org": {
@@ -438,6 +445,7 @@ title: SimpleFIN
     }
   ]
 }</div>
+          </div>
 
           <h4><a class="clickanchor" name="account-set-attributes" href="#account-set-attributes">&sect;</a>Attributes</h4>
 
@@ -721,9 +729,10 @@ VFZ2TDJQdm9jaFlOLURoYw==
       </div>
       
 
-      <h4><a class="clickanchor" name="accounts-sample-response" href="#accounts-sample-response">&sect;</a>Sample response body</h4>
+      <div class="print-chunk">
+        <h4><a class="clickanchor" name="accounts-sample-response" href="#accounts-sample-response">&sect;</a>Sample response body</h4>
 
-      <div class="code-block">{
+        <div class="code-block">{
   "accounts": [
     {
       "org": {
@@ -740,6 +749,7 @@ VFZ2TDJQdm9jaFlOLURoYw==
     }
   ]
 }</div>
+      </div>
 
       <h4><a class="clickanchor" name="accounts-errors" href="#accounts-errors">&sect;</a>Errors</h4>
 

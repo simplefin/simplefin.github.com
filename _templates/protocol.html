@@ -17,7 +17,7 @@ title: SimpleFIN
 
   <div class="row-fluid section">
     <div class="content span8 offset2">
-      <h2>{{ anchor('data-format') }}Data format</h2>
+      <h2 class="no-page">{{ anchor('data-format') }}Data format</h2>
 
       <ul class="std">
         <li>Data is encoded as JSON strings.</li>
@@ -55,11 +55,13 @@ title: SimpleFIN
         <h3 class="object-name">{{ anchor('organization') }}Organization</h3>
 
 
-        <h4>{{ anchor('organization-example') }}Example</h4>
-        <div class="code-block">{
+        <div class="print-chunk">
+          <h4>{{ anchor('organization-example') }}Example</h4>
+          <div class="code-block">{
   "domain": "mybank.com",
   "sfin-url": "https://sfin.mybank.com"
 }</div>
+        </div>
 
         <h4>{{ anchor('organization-attributes') }}Attributes</h4>
         {% call(what) attribute('domain', 'string', object='organization') %}
@@ -85,7 +87,8 @@ title: SimpleFIN
         <h3 class="object-name">{{ anchor('account') }}Account</h3>
 
 
-        <h4>{{ anchor('account-example') }}Example</h4>
+        <div class="print-chunk">
+          <h4>{{ anchor('account-example') }}Example</h4>
           <div class="code-block">{
   "org": {
     "domain": "mybank.com",
@@ -107,6 +110,7 @@ title: SimpleFIN
     }
   ]
 }</div>
+        </div>
 
           <h4>{{ anchor('account-attributes') }}Attributes</h4>
           {% call(what) attribute('org', '<a href="#organization">Organization</a>', object='account') %}
@@ -225,14 +229,16 @@ title: SimpleFIN
         <div class="object">
           <h3>{{ anchor('transaction') }}Transaction</h3>
 
-          <h4>{{ anchor('transaction-example') }}Example</h4>
+          <div class="print-chunk">
+            <h4>{{ anchor('transaction-example') }}Example</h4>
 
-          <div class="code-block">{
+            <div class="code-block">{
   "id": "12394832938403",
   "posted": "1995-02-17T23:56:12.22239",
   "amount": "-33293.43",
   "description": "Uncle Frank's Bait Shop",
 }</div>
+          </div>
 
 
           <h4>{{ anchor('transaction-attributes') }}Attributes</h4>
@@ -287,9 +293,10 @@ title: SimpleFIN
 
           <h3>{{ anchor('account-set') }}Account Set</h3>
 
-          <h4>{{ anchor('account-set-example') }}Example</h4>
+          <div class="print-chunk">
+            <h4>{{ anchor('account-set-example') }}Example</h4>
 
-          <div class="code-block">{
+            <div class="code-block">{
   "accounts": [
     {
       "org": {
@@ -307,6 +314,7 @@ title: SimpleFIN
     }
   ]
 }</div>
+          </div>
 
           <h4>{{ anchor('account-set-attributes') }}Attributes</h4>
 
@@ -559,9 +567,10 @@ title: SimpleFIN
         will return all transactions from May, 2001.
       {% endcall %}
 
-      <h4>{{ anchor('accounts-sample-response') }}Sample response body</h4>
+      <div class="print-chunk">
+        <h4>{{ anchor('accounts-sample-response') }}Sample response body</h4>
 
-      <div class="code-block">{
+        <div class="code-block">{
   "accounts": [
     {
       "org": {
@@ -578,6 +587,7 @@ title: SimpleFIN
     }
   ]
 }</div>
+      </div>
 
       <h4>{{ anchor('accounts-errors') }}Errors</h4>
 
