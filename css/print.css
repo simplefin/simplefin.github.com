@@ -7,6 +7,12 @@ div.navlinks {
 h1,h2,h3 {
     border-bottom: 1px solid #08c !important;
     padding-bottom: 0.2em !important;
+    margin-bottom: 0.2em;
+    margin-top: 1em;
+}
+h4,h5 {
+	margin-top: 1.2em;
+	margin-bottom: 0.2em;
 }
 h2 {
 	page-break-before: always;
