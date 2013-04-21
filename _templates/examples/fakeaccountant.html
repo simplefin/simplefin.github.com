@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+  <title>FakeAccountant - SimpleFIN Demo Reader</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+  <style>
+  body {
+    background: #367;
+  }
+  .step {
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+  .step-number {
+    font-size: 3em;
+    line-height: 1em;
+  }
+  .main-row {
+    margin-top: 2em;
+    margin-bottom: 3em;
+  }
+  .subtitle {
+    color: #aaa;
+    font-style: italic;
+    margin-top: -1em;
+  }
+  .main-box {
+    padding: 1em 2em;
+    border-radius: 6px;
+    background: #fff;
+  }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row-fluid main-row">
+      <div class="span8 offset2">
+        <div class="main-box">
+          <div ng-app="reader">
+          <h1>FakeAccountant</h1>
+          <div class="subtitle">A demonstration of how simple it can be to access your bank acccount using SimpleFIN</div>
+
+          <div ng-show="!accounts">
+            <h2>Get started</h2>
+            <p>
+              Welcome to FakeAccountant!  Get started in 3 steps:
+            </p>
+
+            <div class="row-fluid step">
+              <div class="span1 step-number">1</div>
+              <div class="span11">
+                Choose your bank:
+                <div>
+                  <select>
+                    <option>FakeBank</option>
+                  </select>
+                  <div>
+                    (there's only one option because this is just a demo)
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row-fluid step">
+              <div class="span1 step-number">2</div>
+              <div class="span11">
+                Generate a SimpleFIN Setup Token on your bank's website.  Come back here once you have a token.
+                <div>
+                  <button class="btn btn-info">Go to FakeBank</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row-fluid step">
+              <div class="span1 step-number">3</div>
+              <div class="span11">
+                Paste the SimpleFIN Setup Token here to give us <b>read-only</b> access to your bank accounts:
+                <div>
+                  <textarea width="100%" rows=5></textarea>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/angular.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+    <head>
+        <title>SimpleFIN Examples</title>
+        <link href="/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+        <link href="/css/simplefin.css" rel="stylesheet" media="all" />
+        <link href="/css/print.css" rel="stylesheet" media="print" />
+    </head>
+    <body>
+        
+
+<div class="title"><img src="/img/logo.svg" class="logo"> SimpleFIN Examples</div>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span8 offset2">
+      <div class="navlinks">
+        <div class="centerer">
+        <a href="/" >Home</a>
+        <a href="/protocol.html" >Protocol</a>
+        <a href="/examples.html" class="active">Examples</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid">
+  <div class="row-fluid section">
+    <div class="content span8 offset2">
+
+      <h2>User Experience</h2>
+      <p>
+        To demonstrate an <a href="protocol.html#account-holder" class="term">account holder's</a> experience interacting with SimpleFIN, we have created a fake banking portal (for a ficticious bank named FakeBank) and a fake financial management tool named FakeAccountant.
+      </p>
+
+      <p>
+        Typically, an <a href="protocol.html#account-holder">account holder</a> will use a <a href="protocol.html#reader">SimpleFIN Reader</a> (FakeAccountant in this case), which will direct the user to the <a href="protocol.html#server">SimpleFIN Server</a> (FakeBank in this case) to acquire a token.
+      </p>
+      <p>
+        To begin the demo, <a href="examples/fakeaccountant.html" target="_blank">visit FakeAccountant</a>.
+      </p>
+
+      <p>
+        <b>Please note</b> that there is no backend server or database powering FakeBank or FakeAccountant; all information is stored in your browser and the SimpleFIN protocol is simulated.  The goal of this example is to indicate a user's experience, not how to implement the SimpleFIN protocol.
+      </p>
+    </div>
+  </div>
+</div>
+
+        <script src="/js/bootstrap.min.js"></script>
+    </body>
+</html>
