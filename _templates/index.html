@@ -1,7 +1,8 @@
----
-layout: default
-title: SimpleFIN
----
+{% extends 'base.html' %}
+
+{% block title %}SimpleFIN - Home{% endblock %}
+
+{% block content %}
 
 {% macro anchor(name) -%}
 <a class="clickanchor" name="{{ name }}" href="#{{ name }}">&sect;</a>
@@ -42,3 +43,4 @@ title: SimpleFIN
     </div>
   </div>
 </div>
+{% endblock %}
