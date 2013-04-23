@@ -202,7 +202,7 @@ bank_app.controller('BankCtrl', function($scope, LocalStorage, Server) {
 
 	$scope.startOver = function() {
 		LocalStorage.clear();
-		window.location.reload();
+		window.location = 'fakeaccountant.html';
 	};
 
 	$scope.reset = function() {
