@@ -17,7 +17,7 @@ examples:
 	mkdir examples
 
 examples/fakeaccountant.html: examples _templates/examples/fakeaccountant.html
-	python _util/render.py examples/fakeaccountant.html > examples/fakeaccountant.html
+	cp _templates/examples/fakeaccountant.html examples/fakeaccountant.html
 
 examples/fakebank.html: examples _templates/examples/fakebank.html
-	python _util/render.py examples/fakebank.html > examples/fakebank.html
+	cp _templates/examples/fakebank.html examples/fakebank.html

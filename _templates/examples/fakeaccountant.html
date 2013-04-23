@@ -8,6 +8,11 @@
   body {
     background: #367;
   }
+  .start-over {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+  }
   .step {
     margin-top: 2em;
     margin-bottom: 1em;
@@ -25,6 +30,10 @@
     font-style: italic;
     margin-top: -1em;
   }
+  .demo-note {
+    color: #aaa;
+    font-style: italic;
+  }
   .main-box {
     padding: 1em 2em;
     border-radius: 6px;
@@ -32,19 +41,19 @@
   }
   </style>
 </head>
-<body>
+<body ng-app="reader" ng-controller="ReaderCtrl">
   <div class="container-fluid">
     <div class="row-fluid main-row">
       <div class="span8 offset2">
         <div class="main-box">
-          <div ng-app="reader">
+          <div>
           <h1>FakeAccountant</h1>
-          <div class="subtitle">A demonstration of how simple it can be to access your bank account using SimpleFIN</div>
+          <div class="subtitle">A demonstration of how simple it can be to <strong>securely</strong> access your bank account <strong>without</strong> giving out your password!</div>
 
-          <div ng-show="!accounts">
+          <div ng-show="!tokens.length">
             <h2>Get started</h2>
             <p>
-              Welcome to FakeAccountant!  Get started in 3 steps:
+              Welcome to FakeAccountant!  Connect to your bank account in 3 steps:
             </p>
 
             <div class="row-fluid step">
@@ -53,9 +62,9 @@
                 Choose your bank:
                 <div>
                   <select>
-                    <option>FakeBank</option>
+                    <option>Example Bank</option>
                   </select>
-                  <div>
+                  <div class="demo-note">
                     (there's only one option because this is just a demo)
                   </div>
                 </div>
@@ -65,30 +74,58 @@
             <div class="row-fluid step">
               <div class="span1 step-number">2</div>
               <div class="span11">
-                Generate a SimpleFIN Setup Token on your bank's website.  Come back here once you have a token.
+                On your bank's website, generate a SimpleFIN Setup Token:
                 <div>
-                  <button class="btn btn-info">Go to FakeBank</button>
+                  <a href="fakebank.html" target="_blank">
+                    <button class="btn btn-info">Go to Example Bank website</button>
+                  </a>
                 </div>
+                Once you have a token, go to step 3.
               </div>
             </div>
 
             <div class="row-fluid step">
               <div class="span1 step-number">3</div>
               <div class="span11">
-                Paste the SimpleFIN Setup Token here to give us <b>read-only</b> access to your bank accounts:
+                Paste the SimpleFIN Setup Token here to give FakeAccountant <b>read-only</b> access to your bank accounts:
                 <div>
-                  <textarea width="100%" rows=5></textarea>
+                  <textarea width="100%" rows="6" ng-model="pastedToken"></textarea>
                 </div>
               </div>
             </div>
 
           </div>
+
+          <div ng-show="tokens.length">
+            <h2>Connected</h2>
+            <button ng-click="refresh()">Refresh</button>
+
+            <table class="table">
+              <tr>
+                <th>Organization</th>
+                <th>Account</th>
+                <th>Balance</th>
+              </tr>
+              <tr ng-repeat="account in accounts">
+                <td>Example Bank</td>
+                <td>{{ account.name }}</td>
+                <td>{{ account.balance }}</td>
+              </tr>
+            </table>
+          </div>
+
+
         </div>
       </div>
     </div>
   </div>
 
+  <div class="start-over">
+    <button class="btn btn-danger" ng-click="startOver()">Start Demo Over</button>
+  </div>
+
   <script src="/js/angular.js"></script>
+  <script src="/js/example-servers.js"></script>
   <script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

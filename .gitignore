@@ -2,3 +2,4 @@
 _site
 twistd.log
 twistd.pid
+twistd.log.*

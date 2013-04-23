@@ -1,1 +1,186 @@
+<!doctype html>
+<html>
+<head>
+  <title>Example Bank - SimpleFIN Demo Server</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+  <style>
+  body {
+    background: #733;
+  }
+  .start-over {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+  }
+  .step {
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+  .step-number {
+    font-size: 3em;
+    line-height: 1em;
+  }
+  .main-row {
+    margin-top: 2em;
+    margin-bottom: 3em;
+  }
+  .subtitle {
+    color: #aaa;
+    font-style: italic;
+    margin-top: -1em;
+  }
+  .demo-note {
+    color: #aaa;
+    font-style: italic;
+  }
+  .main-box {
+    padding: 1em 2em;
+    border-radius: 6px;
+    background: #fff;
+  }
+  .generated-token {
+    padding: 1em;
+    word-wrap: break-word;
+    border-radius: 6px;
+    background: #ff9;
+    font-family: monospace;
+  }
+  .token-enabled-false {
+    text-decoration: line-through;
+    color: #ccc;
+    font-style: italic;
+  }
+  </style>
+</head>
+<body ng-app="bank" ng-controller="BankCtrl">
+  <div class="container-fluid">
+    <div class="row-fluid main-row">
+      <div class="span8 offset2">
+        <div class="main-box">
+          <div>
+            <h1>Example Bank</h1>
+            <div class="subtitle">
+              Part of a demonstration of how simple it can be to <strong>securely</strong> access your bank account <strong>without</strong> giving out your password!
+            </div>
 
+            <div ng-show="!signedin">
+              <h2>Welcome back!</h2>
+              <p>
+                Please sign in:
+                <div class="demo-note">
+                  (You can put anything in here and we'll pretend to sign you in, because this is just a demo.)
+                </div>
+              </p>
+              <form class="form-horizontal">
+                <div class="control-group">
+                  <label class="control-label">Account number</label>
+                  <div class="controls">
+                    <input type="text" value="283934730">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Password</label>
+                  <div class="controls">
+                    <input type="password" value="password">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <div class="controls">
+                    <button class="btn" ng-click="signin()">Sign in</button>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+
+            <div ng-show="signedin">
+              <h2>Accounts</h2>
+              <table class="table">
+                <tr>
+                  <th>Account</th>
+                  <th>Balance</th>
+                  <th>SimpleFIN ID</th>
+                </tr>
+                <tr ng-repeat="account in accounts">
+                  <td>{{ account.name }}</td>
+                  <td>{{ account.balance }}</td>
+                  <td>{{ account.simplefin_id }}</td>
+                </tr>
+              </table>
+
+              <h2>SimpleFIN</h2>
+              <p>
+                Because we value your security, we support SimpleFIN, which allows you to control who can see your bank account information.
+              </p>
+
+              <h3>Generate a new token</h3>
+              <form class="form-horizontal">
+                <div class="control-group">
+                  <label class="control-label">Description</label>
+                  <div class="controls">
+                    <input type="text" placeholder="example.com" ng-model="description">
+                    <br/>(e.g. name/URL of the program that will use the token)
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Accessible accounts</label>
+                  <div class="controls">
+                    <select ng-model="accountChoice">
+                      <option value="">All accounts</option>
+                      <option ng-repeat="account in accounts" value="{{ account.simplefin_id }}">{{ account.name }} (#{{ account.number }})</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <div class="controls">
+                    <button class="btn" ng-click="generateToken()">Generate token</button>
+                  </div>
+                </div>
+              </form>
+
+              <div ng-show="generatedToken">
+                <h4>Token generated!</h4>
+                Give this token out to grant <strong>read-only</strong> access to your accounts
+                <div class="generated-token">{{ generatedToken }}</div>
+              </div>
+
+              <h3>Manage existing tokens</h3>
+
+              <table class="table">
+                <tr>
+                  <th>Description</th>
+                  <th>Accessible accounts</th>
+                  <th>Enabled</th>
+                  <th></th>
+                </tr>
+                <tr ng-repeat="token in tokens" class="token-enabled-{{token.enabled}}">
+                  <td>{{ token.description }}</td>
+                  <td>{{ token.accounts }}</td>
+                  <td><input type="checkbox" ng-model="token.enabled"></td>
+                  <td>
+                    <button class="btn" ng-click="deleteToken(token)">Delete</button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="start-over">
+    <button class="btn btn-danger" ng-click="startOver()">Start Demo Over</button>
+  </div>
+
+  <script src="/js/angular.js"></script>
+  <script src="/js/example-servers.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

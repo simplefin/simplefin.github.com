@@ -4,6 +4,10 @@
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+.content {
+    margin-bottom: 4em;
+}
+
 .logo {
     width: 64px;
     height: 64px;
