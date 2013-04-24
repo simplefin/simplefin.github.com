@@ -7,13 +7,13 @@ all: index.html protocol.html examples.html examples examples/fakeaccountant.htm
 date:
 	python _util/today.py > _templates/changedate.html
 
-index.html: _templates/index.html _templates/navbar.html _templates/base.html
+index.html: _templates/index.html _templates/navbar.html _templates/base.html _templates/changedate.html
 	python _util/render.py index.html > index.html
 
-protocol.html: _templates/protocol.html _templates/navbar.html _templates/base.html
+protocol.html: _templates/protocol.html _templates/navbar.html _templates/base.html _templates/changedate.html
 	python _util/render.py protocol.html > protocol.html
 
-examples.html: _templates/examples.html _templates/navbar.html _templates/base.html
+examples.html: _templates/examples.html _templates/navbar.html _templates/base.html _templates/changedate.html
 	python _util/render.py examples.html > examples.html
 
 examples:
