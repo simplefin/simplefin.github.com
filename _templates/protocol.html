@@ -17,9 +17,10 @@
 
 <div class="container-fluid">
 
+
   <div class="row-fluid section">
     <div class="content span8 offset2">
-
+      
       <div>Last updated: {% include 'changedate.html' %}</div>
       <p>Version: 1.0-draft</p>
 
@@ -28,10 +29,317 @@
       </p>
 
       <ol class="std">
-        <li><a href="#data-format">SimpleFIN data format</a></li>
         <li><a href="#http-protocol">SimpleFIN HTTP protocol</a></li>
+        <li><a href="#data-format">SimpleFIN data format</a></li>
         <li><a href="#recommendations">Recommendations for token management</a></li>
       </ol>
+
+      <h2>{{ anchor('http-protocol') }}HTTP Protocol</h2>
+
+      <h4>{{ anchor('players') }}Players</h4>
+
+      <dl>
+        <dt>{{ anchor('the-company') }}The Company</dt>
+        <dd>
+          This is a bank or other institution that people have accounts with.
+        </dd>
+        
+        <dt>{{ anchor('server') }}Server</dt>
+        <dd>
+          An HTTP server operated by <span class="term">The Company</span>.  The <span class="term">Server</span> must require SSL for all communication with both the <span class="term">Browser</span> and the <span class="term">Reader</span>.  Connection attempts not
+          over SSL must be dropped -- they must not be redirected to SSL.
+        </dd>
+        
+        <dt>{{ anchor('account-holder') }}Account holder</dt>
+        <dd>
+          This is a person (or business) that has an account with <span class="term">The Company</span>.
+        </dd>
+        
+        <dt>{{ anchor('browser') }}Browser</dt>
+        <dd>
+          A web browser being used by an <span class="term">Account holder</span>.
+        </dd>
+        
+        <dt>{{ anchor('reader') }}Reader</dt>
+        <dd>
+          A <span class="term">Reader</span> is a piece of software that connects to a <span class="term">Server</span> to retrieve financial information pertaining to an <span class="term">Account holder</span>.  The <span class="term">Reader</span> may be a web app or a locally-run application.  The <span class="term">Reader</span> <strong>only</strong> has read access to the <span class="term">Server</span>.  The <span class="term">Reader</span> <strong>can not</strong> alter the financial data on the <span class="term">Server</span> in any way.
+        </dd>
+
+      </dl>
+
+      <div class="print-chunk">
+        <h4>{{ anchor('pieces') }}Pieces</h4>
+
+        <dl>
+          <dt>Access token</dt>
+          <dd>
+            An <span class="term">Access token</span> is the string used by the <span class="term">Reader</span> to authenticate with the <span class="term">Server</span>.  See <a href="#access-token" class="term">Access token</a> for details.
+          </dd>
+
+          <dt>Setup token</dt>
+          <dd>
+            A <span class="term">Setup token</span> is the token given to the <span class="term">Reader</span> by the <span class="term">Account holder</span>.  It includes an <span class="term">Access token</span>.  See <a href="#setup-token" class="term">Setup token</a> for more details.
+          </dd>
+        </dl>
+      </div>
+
+      <div class="print-chunk">
+        <h4>{{ anchor('protocol-overview') }}Overview</h4>
+
+        <p>
+          Here is an overview of how the SimpleFIN protocol works:
+        </p>
+
+        <ol class="std">
+          <li>
+            The <span class="term">Account holder</span> uses a <span class="term">Browser</span> to visit the <span class="term">Server</span>, authenticate, and generate a new <span class="term">Setup token</span>.
+          </li>
+          
+          <li>
+            The <span class="term">Account holder</span> gives the <span class="term">Setup token</span> to the <span class="term">Reader</span>.  The <span class="term">Reader</span> extracts the <span class="term">Access token</span> from the <span class="term">Setup token</span>.
+          </li>
+
+          <li>
+            The <span class="term">Reader</span> connects to the <span class="term">Server</span> (authenticating with the <span class="term">Access token</span>) and requests some portion of the <span class="term">Account holder's</span> financial information.
+          </li>
+
+          <li>
+            The <span class="term">Reader</span> reuses the <span class="term">Access token</span> until it expires or is otherwise rendered invalid.
+          </li>
+        </ol>
+      </div>
+
+      <div class="print-chunk">
+        <h4>{{ anchor('access-token') }}Access token</h4>
+
+        <ul class="std">
+          <li>
+            Access tokens must be at least 40 characters in length.  <span class="term">The Company</span> may choose the length of token for their <span class="term">Server</span>.
+          </li>
+
+          <li>
+            Access tokens must be made up of only the following set of characters:
+            <div class="code-block">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-</div>
+          </li>
+
+          <li>
+            Access tokens must be mostly random.  Ideally, the token will be completely random.
+          </li>
+
+          <li>
+            Access tokens must not be based on, or have the potential to reveal <span class="term">Account holder</span> credentials for <span class="term">The Company</span>.  A stolen <span class="term">Access token</span> should not reveal anything to the attacker which would allow the attacker to access the <span class="term">Account holder's</span> account (other than through the SimpleFIN protocol).
+          </li>
+        </ul>
+      </div>
+
+
+      <div class="print-chunk">
+        <h4>{{ anchor('setup-token') }}Setup token</h4>
+
+        <p>
+          Setup tokens are Base64 encoded strings containing the URL for a <span class="term">Server's</span> SimpleFIN root URL and an <a href="#access-token">Access token</a>.  Here is a generic code description of the format:
+        </p>
+
+        <div class="code-block">base64encode(sfin_url + '\n' + access_token)</div>
+
+        {% set sfin_root = 'https://sfin.example.com/foo/bar' %}
+        {% set access_token = '18KadNuTXEnCS97rt3PGT9UjTVvL2PvochYN-Dhc' %}
+        <p>
+          For example, if my <span class="term">Server's</span> SimpleFIN root URL is:
+        </p>
+        <div class="code-block">{{ sfin_root }}</div>
+        <p>
+          and I have generated this <span class="term">Access token</span>:
+        </p>
+        <div class="code-block">{{ access_token }}</div>
+
+        <p>
+          then the decoded <span class="term">Setup token</span> is:
+        </p>
+        <div class="code-block">{{ sfin_root + '\n' + access_token }}</div>
+
+        <p>
+          and the Base64 encoded <span class="term">Setup token</span> is:
+        </p>
+        <div class="code-block">{{ (sfin_root + '\n' + access_token)|b64enc }}</div>
+      </div>
+
+
+      <h4>{{ anchor('url-endpoints') }}URL Endpoints</h4>
+
+      <p>
+        <span class="term">The Company</span> may choose the root URL for their <span class="term">Server</span>.  The URLs defined here are relative to the root URL.  The <a class="attr-ref" href="#organization.sfin-url">sfin-url</a> attribute is the root URL.
+      </p>
+
+      {% macro urlsummary(method, url, whoitsfor) %}
+      <div class="row-fluid url-endpoint">
+        <div class="span3 url">
+          {{ method }} {{ url }}
+        </div>
+        <div class="span9 description">
+          {{ caller() }}  This URL is used by the <span class="term">{{ whoitsfor }}</span>.
+        </div>
+      </div>
+      {% endmacro %}
+
+      {% call urlsummary('GET', '/auth', 'Browser' ) %}
+        Returns an HTML page that the <span class="term">Account holder</span> can use to manage <span class="term">Access Tokens</span>.
+      {% endcall %}
+
+      {% call urlsummary('GET', '/accounts', 'Reader' ) %}
+        Returns a list of available <a href="#account">Accounts</a>.
+      {% endcall %}
+
+      <p>
+        Following are the details of each of the above URLs:
+      </p>
+
+
+      <div class="print-chunk">
+        <h3 class="url">{{ anchor('/auth') }}GET /auth</h3>
+
+        <p>
+          This URL should land the <span class="term">Browser</span> on a web page that an <span class="term">Account holder</span> can use to generate and otherwise manage <span class="term">Setup tokens</span>.  The actual implementation of token management is up to <span class="term">The Company</span>.  However, please note the <a href="#recommendations">recommendations</a> below.
+        </p>
+
+        <p>
+          <span class="term">Readers</span> will direct users to this URL if tokens are needed.
+        </p>
+
+        <p>
+          <span class="term">Account holders</span> must be authenticated to access this page.  It is acceptable to redirect from this URL to
+          another URL (in fact, we suspect that many <span class="term">Servers</span> will simply redirect the user to a different URL).
+        </p>
+      </div>
+      
+      <div class="print-chunk">
+        <h3 class="url">{{ anchor('/accounts') }}GET /accounts</h3>
+
+        <p>
+          Returns an <a href="#account-set">Account Set</a> containing all accounts the requester is authorized to see.  This URL is intended
+          for <span class="term">Readers</span>.
+        </p>
+
+        <ul class="std">
+          <li>
+            The <span class="code">Content-Type</span> of the response is always <span class="code">application/json</span>.
+          </li>
+          <li>
+            If no query paramters are included in a request, then all the <a class="attr-ref" href="#account.transactions">Account.transactions</a> attributes will be empty lists.
+          </li>
+        </ul>
+      </div>
+
+      <div class="print-chunk">
+        <h4>{{ anchor('authentication') }}Authentication</h4>
+
+        <p>
+          HTTP Bearer Authentication is used.  In every request, the client
+          sends an <span class="code">Authentication</span> header of the format:
+        </p>
+
+        <div class="code-block">Authentication: Bearer ACCESS_TOKEN</div>
+
+        <p>
+          where <span class="code">ACCESS_TOKEN</span> is an <a href="#access-token">Access token</a>
+        </p>
+      </div>
+
+      <h4>{{ anchor('accounts-query') }}Optional query parameters</h4>
+
+      {% macro queryparam(name, examples) %}
+      <div class="row-fluid query-param">
+        <div class="span3 code">
+          {{ anchor('accounts-query-'+name) }}{{ name }}
+        </div>
+        <div class="span9">
+          <div class="description">{{ caller() }}</div>
+          {% for example in examples %}
+          <div class="example code-block">{{ example }}</div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endmacro %}
+
+
+      {% call queryparam('start-date', ['?start-date=2001-05-15', '?start-date=2001-05-15T09:08:35.234']) %}
+        If given, transactions <em>on or after</em> the supplied date or timestamp will be included in the response.
+      {% endcall %}
+
+      {% call queryparam('end-date', []) %}
+        If given, only transactions <em>before</em> the supplied date or timestamp will be returned.  Transactions with a <a class="attr-ref" href="#transaction.posted">posted</a> date equal to this date/timestamp will <em>not</em> be returned.
+
+        For instance, querying for
+        <div class="example code-block">?start-date=2001-05-01&end-date=2001-06-01</div>
+        will return all transactions from May, 2001.
+      {% endcall %}
+
+      <div class="print-chunk">
+        <h4>{{ anchor('accounts-sample-response') }}Sample response body</h4>
+
+        <div class="code-block">{
+  "accounts": [
+    {
+      "org": {
+        "domain": "mybank.com",
+        "sfin-url": "https://sfin.mybank.com"
+        },
+      "id": "2930002",
+      "name": "Savings",
+      "currency": "USD",
+      "balance": "100.23",
+      "available-balance": "75.23",
+      "balance-as-of": "AO334",
+      "last-transaction-posted": "2013-07-29T19:09:23.544"
+    }
+  ]
+}</div>
+      </div>
+
+      <div class="print-chunk">
+        <h4>{{ anchor('accounts-errors') }}Errors</h4>
+
+        <p>
+          Following are possible error responses:
+        </p>
+
+        {% macro error_response(code) %}
+        <div class="row-fluid error-response">
+          <div class="span3 code">
+            {{ anchor('accounts-error-' + code) }}{{ code }}
+          </div>
+          <div class="span9">
+            {{ caller() }}
+          </div>
+        </div>
+        {% endmacro %}
+
+        {% call error_response('403 Forbidden') %}
+          If the requester is not authenticated or an invalid token is used.
+        {% endcall %}
+
+        {% call error_response('410 Gone') %}
+          If <span class="url">start-date</span> specifies a date for which
+          transaction data is no longer available (or was never available).
+        {% endcall %}
+      </div>
+
+    </div>
+  </div>
+
+  {# comment #}
+  <!--
+  =============================================================================
+  =============================================================================
+  =============================================================================
+  =============================================================================
+  =============================================================================
+  -->
+  {# endcomment #}
+
+
+  <div class="row-fluid section">
+    <div class="content span8 offset2">
 
       <h2 class="no-page">{{ anchor('data-format') }}Data format</h2>
 
@@ -355,303 +663,6 @@
         </div>
     </div>
   </div>
-
-
-  <div class="row-fluid section">
-    <div class="content span8 offset2">
-      <h2>{{ anchor('http-protocol') }}HTTP Protocol</h2>
-
-      <h4>{{ anchor('players') }}Players</h4>
-
-      <dl>
-        <dt>{{ anchor('the-company') }}The Company</dt>
-        <dd>
-          This is a bank or other institution that people have accounts with.
-        </dd>
-        
-        <dt>{{ anchor('server') }}Server</dt>
-        <dd>
-          An HTTP server operated by <span class="term">The Company</span>.  The <span class="term">Server</span> must require SSL for all communication with both the <span class="term">Browser</span> and the <span class="term">Reader</span>.  Connection attempts not
-          over SSL must be dropped -- they must not be redirected to SSL.
-        </dd>
-        
-        <dt>{{ anchor('account-holder') }}Account holder</dt>
-        <dd>
-          This is a person (or business) that has an account with <span class="term">The Company</span>.
-        </dd>
-        
-        <dt>{{ anchor('browser') }}Browser</dt>
-        <dd>
-          A web browser being used by an <span class="term">Account holder</span>.
-        </dd>
-        
-        <dt>{{ anchor('reader') }}Reader</dt>
-        <dd>
-          A <span class="term">Reader</span> is a piece of software that connects to a <span class="term">Server</span> to retrieve financial information pertaining to an <span class="term">Account holder</span>.  The <span class="term">Reader</span> may be a web app or a locally-run application.  The <span class="term">Reader</span> <strong>only</strong> has read access to the <span class="term">Server</span>.  The <span class="term">Reader</span> <strong>can not</strong> alter the financial data on the <span class="term">Server</span> in any way.
-        </dd>
-
-      </dl>
-
-      <div class="print-chunk">
-        <h4>{{ anchor('pieces') }}Pieces</h4>
-
-        <dl>
-          <dt>Access token</dt>
-          <dd>
-            An <span class="term">Access token</span> is the string used by the <span class="term">Reader</span> to authenticate with the <span class="term">Server</span>.  See <a href="#access-token" class="term">Access token</a> for details.
-          </dd>
-
-          <dt>Setup token</dt>
-          <dd>
-            A <span class="term">Setup token</span> is the token given to the <span class="term">Reader</span> by the <span class="term">Account holder</span>.  It includes an <span class="term">Access token</span>.  See <a href="#setup-token" class="term">Setup token</a> for more details.
-          </dd>
-        </dl>
-      </div>
-
-      <div class="print-chunk">
-        <h4>{{ anchor('protocol-overview') }}Overview</h4>
-
-        <p>
-          Here is an overview of how the SimpleFIN protocol works:
-        </p>
-
-        <ol class="std">
-          <li>
-            The <span class="term">Account holder</span> uses a <span class="term">Browser</span> to visit the <span class="term">Server</span>, authenticate, and generate a new <span class="term">Setup token</span>.
-          </li>
-          
-          <li>
-            The <span class="term">Account holder</span> gives the <span class="term">Setup token</span> to the <span class="term">Reader</span>.  The <span class="term">Reader</span> extracts the <span class="term">Access token</span> from the <span class="term">Setup token</span>.
-          </li>
-
-          <li>
-            The <span class="term">Reader</span> connects to the <span class="term">Server</span> (authenticating with the <span class="term">Access token</span>) and requests some portion of the <span class="term">Account holder's</span> financial information.
-          </li>
-
-          <li>
-            The <span class="term">Reader</span> reuses the <span class="term">Access token</span> until it expires or is otherwise rendered invalid.
-          </li>
-        </ol>
-      </div>
-
-      <div class="print-chunk">
-        <h4>{{ anchor('access-token') }}Access token</h4>
-
-        <ul class="std">
-          <li>
-            Access tokens must be at least 40 characters in length.  <span class="term">The Company</span> may choose the length of token for their <span class="term">Server</span>.
-          </li>
-
-          <li>
-            Access tokens must be made up of only the following set of characters:
-            <div class="code-block">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-</div>
-          </li>
-
-          <li>
-            Access tokens must be mostly random.  Ideally, the token will be completely random.
-          </li>
-
-          <li>
-            Access tokens must not be based on, or have the potential to reveal <span class="term">Account holder</span> credentials for <span class="term">The Company</span>.  A stolen <span class="term">Access token</span> should not reveal anything to the attacker which would allow the attacker to access the <span class="term">Account holder's</span> account (other than through the SimpleFIN protocol).
-          </li>
-        </ul>
-      </div>
-
-
-      <div class="print-chunk">
-        <h4>{{ anchor('setup-token') }}Setup token</h4>
-
-        <p>
-          Setup tokens are Base64 encoded strings containing the URL for a <span class="term">Server's</span> SimpleFIN root URL and an <a href="#access-token">Access token</a>.  Here is a generic code description of the format:
-        </p>
-
-        <div class="code-block">base64encode(sfin_url + '\n' + access_token)</div>
-
-        {% set sfin_root = 'https://sfin.example.com/foo/bar' %}
-        {% set access_token = '18KadNuTXEnCS97rt3PGT9UjTVvL2PvochYN-Dhc' %}
-        <p>
-          For example, if my <span class="term">Server's</span> SimpleFIN root URL is:
-        </p>
-        <div class="code-block">{{ sfin_root }}</div>
-        <p>
-          and I have generated this <span class="term">Access token</span>:
-        </p>
-        <div class="code-block">{{ access_token }}</div>
-
-        <p>
-          then the decoded <span class="term">Setup token</span> is:
-        </p>
-        <div class="code-block">{{ sfin_root + '\n' + access_token }}</div>
-
-        <p>
-          and the Base64 encoded <span class="term">Setup token</span> is:
-        </p>
-        <div class="code-block">{{ (sfin_root + '\n' + access_token)|b64enc }}</div>
-      </div>
-
-
-      <h4>{{ anchor('url-endpoints') }}URL Endpoints</h4>
-
-      <p>
-        <span class="term">The Company</span> may choose the root URL for their <span class="term">Server</span>.  The URLs defined here are relative to the root URL.  The <a class="attr-ref" href="#organization.sfin-url">sfin-url</a> attribute is the root URL.
-      </p>
-
-      {% macro urlsummary(method, url, whoitsfor) %}
-      <div class="row-fluid url-endpoint">
-        <div class="span3 url">
-          {{ method }} {{ url }}
-        </div>
-        <div class="span9 description">
-          {{ caller() }}  This URL is used by the <span class="term">{{ whoitsfor }}</span>.
-        </div>
-      </div>
-      {% endmacro %}
-
-      {% call urlsummary('GET', '/auth', 'Browser' ) %}
-        Returns an HTML page that the <span class="term">Account holder</span> can use to manage <span class="term">Access Tokens</span>.
-      {% endcall %}
-
-      {% call urlsummary('GET', '/accounts', 'Reader' ) %}
-        Returns a list of available <a href="#account">Accounts</a>.
-      {% endcall %}
-
-      <p>
-        Following are the details of each of the above URLs:
-      </p>
-
-
-      <div class="print-chunk">
-        <h3 class="url">{{ anchor('/auth') }}GET /auth</h3>
-
-        <p>
-          This URL should land the <span class="term">Browser</span> on a web page that an <span class="term">Account holder</span> can use to generate and otherwise manage <span class="term">Setup tokens</span>.  The actual implementation of token management is up to <span class="term">The Company</span>.  However, please note the <a href="#recommendations">recommendations</a> below.
-        </p>
-
-        <p>
-          <span class="term">Readers</span> will direct users to this URL if tokens are needed.
-        </p>
-
-        <p>
-          <span class="term">Account holders</span> must be authenticated to access this page.  It is acceptable to redirect from this URL to
-          another URL (in fact, we suspect that many <span class="term">Servers</span> will simply redirect the user to a different URL).
-        </p>
-      </div>
-      
-      <div class="print-chunk">
-        <h3 class="url">{{ anchor('/accounts') }}GET /accounts</h3>
-
-        <p>
-          Returns an <a href="#account-set">Account Set</a> containing all accounts the requester is authorized to see.  This URL is intended
-          for <span class="term">Readers</span>.
-        </p>
-
-        <ul class="std">
-          <li>
-            The <span class="code">Content-Type</span> of the response is always <span class="code">application/json</span>.
-          </li>
-          <li>
-            If no query paramters are included in a request, then all the <a class="attr-ref" href="#account.transactions">Account.transactions</a> attributes will be empty lists.
-          </li>
-        </ul>
-      </div>
-
-      <div class="print-chunk">
-        <h4>{{ anchor('authentication') }}Authentication</h4>
-
-        <p>
-          HTTP Bearer Authentication is used.  In every request, the client
-          sends an <span class="code">Authentication</span> header of the format:
-        </p>
-
-        <div class="code-block">Authentication: Bearer ACCESS_TOKEN</div>
-
-        <p>
-          where <span class="code">ACCESS_TOKEN</span> is an <a href="#access-token">Access token</a>
-        </p>
-      </div>
-
-      <h4>{{ anchor('accounts-query') }}Optional query parameters</h4>
-
-      {% macro queryparam(name, examples) %}
-      <div class="row-fluid query-param">
-        <div class="span3 code">
-          {{ anchor('accounts-query-'+name) }}{{ name }}
-        </div>
-        <div class="span9">
-          <div class="description">{{ caller() }}</div>
-          {% for example in examples %}
-          <div class="example code-block">{{ example }}</div>
-          {% endfor %}
-        </div>
-      </div>
-      {% endmacro %}
-
-
-      {% call queryparam('start-date', ['?start-date=2001-05-15', '?start-date=2001-05-15T09:08:35.234']) %}
-        If given, transactions <em>on or after</em> the supplied date or timestamp will be included in the response.
-      {% endcall %}
-
-      {% call queryparam('end-date', []) %}
-        If given, only transactions <em>before</em> the supplied date or timestamp will be returned.  Transactions with a <a class="attr-ref" href="#transaction.posted">posted</a> date equal to this date/timestamp will <em>not</em> be returned.
-
-        For instance, querying for
-        <div class="example code-block">?start-date=2001-05-01&end-date=2001-06-01</div>
-        will return all transactions from May, 2001.
-      {% endcall %}
-
-      <div class="print-chunk">
-        <h4>{{ anchor('accounts-sample-response') }}Sample response body</h4>
-
-        <div class="code-block">{
-  "accounts": [
-    {
-      "org": {
-        "domain": "mybank.com",
-        "sfin-url": "https://sfin.mybank.com"
-        },
-      "id": "2930002",
-      "name": "Savings",
-      "currency": "USD",
-      "balance": "100.23",
-      "available-balance": "75.23",
-      "balance-as-of": "AO334",
-      "last-transaction-posted": "2013-07-29T19:09:23.544"
-    }
-  ]
-}</div>
-      </div>
-
-      <div class="print-chunk">
-        <h4>{{ anchor('accounts-errors') }}Errors</h4>
-
-        <p>
-          Following are possible error responses:
-        </p>
-
-        {% macro error_response(code) %}
-        <div class="row-fluid error-response">
-          <div class="span3 code">
-            {{ anchor('accounts-error-' + code) }}{{ code }}
-          </div>
-          <div class="span9">
-            {{ caller() }}
-          </div>
-        </div>
-        {% endmacro %}
-
-        {% call error_response('403 Forbidden') %}
-          If the requester is not authenticated or an invalid token is used.
-        {% endcall %}
-
-        {% call error_response('410 Gone') %}
-          If <span class="url">start-date</span> specifies a date for which
-          transaction data is no longer available (or was never available).
-        {% endcall %}
-      </div>
-
-    </div>
-  </div>
-
 
   <div class="row-fluid section">
     <div class="content span8 offset2">
