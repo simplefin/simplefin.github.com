@@ -39,6 +39,9 @@
   <div class="row-fluid section">
     <div class="content span8 offset2">
 
+      <div>Last updated: Apr 24, 2013  06:52:45</div>
+      <p>Version: 1.0-draft</p>
+
       <p>
         The SimpleFIN standard defines:
       </p>
@@ -329,13 +332,31 @@
   "posted": "2001-01-01T09:22:33.2343",
   "amount": "-22.33",
   "memo": "John's Pizza Pie Cafe and Spa",
-  "sic": "2354"
 }]</div>
               
             </div>
           </div>
         </div>
       
+
+          
+        <div class="attr-def">
+          <div class="row-fluid">
+            <div class="span3 attr-name"><a class="clickanchor" name="account.extra" href="#account.extra">&sect;</a>extra</div>
+            <div class="span9">
+              <div><span class="attr-type">object</span></div>
+              <div class="attr-optional">optional</div>
+              <div class="attr-description">This optional attribute may be used to include extra account-specific data that is not defined in this standard.  It is up to the <a href="#server" class="term">Server</a> to decide whether or not to include data in here.</div>
+              
+              <div class="attr-example code-block">{
+  "account_open_date": "2000-05-14"
+}</div>
+              
+            </div>
+          </div>
+        </div>
+      
+
         </div>
 
         <div class="object">
@@ -427,11 +448,15 @@
           
         <div class="attr-def">
           <div class="row-fluid">
-            <div class="span3 attr-name"><a class="clickanchor" name="transaction.sic" href="#transaction.sic">&sect;</a>sic</div>
+            <div class="span3 attr-name"><a class="clickanchor" name="transaction.extra" href="#transaction.extra">&sect;</a>extra</div>
             <div class="span9">
-              <div><span class="attr-type">string</span></div>
+              <div><span class="attr-type">object</span></div>
               <div class="attr-optional">optional</div>
-              <div class="attr-description">Not yet defined.</div>
+              <div class="attr-description">This optional attribute may be used to include extra transaction-specific data that is not defined in this standard.  It is up to the <a href="#server" class="term">Server</a> to decide whether or not to include data in here.</div>
+              
+              <div class="attr-example code-block">{
+  "sic": "2839"
+}</div>
               
             </div>
           </div>

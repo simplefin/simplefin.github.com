@@ -19,13 +19,9 @@
 
   <div class="row-fluid section">
     <div class="content span8 offset2">
-      Last updated: {% include 'changedate.html' %}
-      Version: 1.0-draft
-    </div>
-  </div>
 
-  <div class="row-fluid section">
-    <div class="content span8 offset2">
+      <div>Last updated: {% include 'changedate.html' %}</div>
+      <p>Version: 1.0-draft</p>
 
       <p>
         The SimpleFIN standard defines:
@@ -242,6 +238,17 @@
 }]
             {%- endif -%}
           {% endcall %}
+
+          {% call(what) attribute('extra', 'object', optional=True, object='account') %}
+            {%- if what == 'description' -%}
+              This optional attribute may be used to include extra account-specific data that is not defined in this standard.  It is up to the <a href="#server" class="term">Server</a> to decide whether or not to include data in here.
+            {%- elif what == 'example' -%}
+{
+  "account_open_date": "2000-05-14"
+}
+            {%- endif -%}
+          {% endcall %}
+
         </div>
 
         <div class="object">
@@ -295,6 +302,16 @@
               A human-readable description of what the transaction was for.
             {%- elif what == 'example' -%}
               "Bob's Grocery Store - 22 S. Main"
+            {%- endif -%}
+          {% endcall %}
+
+          {% call(what) attribute('extra', 'object', optional=True, object='transaction') %}
+            {%- if what == 'description' -%}
+              This optional attribute may be used to include extra transaction-specific data that is not defined in this standard.  It is up to the <a href="#server" class="term">Server</a> to decide whether or not to include data in here.
+            {%- elif what == 'example' -%}
+{
+  "sic": "2839"
+}
             {%- endif -%}
           {% endcall %}
 
