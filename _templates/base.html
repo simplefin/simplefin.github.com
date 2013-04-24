@@ -11,6 +11,15 @@
         <div class="content">
             {% block content %}{% endblock %}
         </div>
+        <footer>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span8 offset2 last-updated">
+                        Last updated: {% include 'changedate.html' %}
+                    </div>
+                </div>
+            </div>
+        </footer>
         <script src="/js/bootstrap.min.js"></script>
     </body>
 </html>

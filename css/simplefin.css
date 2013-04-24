@@ -4,6 +4,11 @@
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+.last-updated {
+    color: #ccc;
+    font-style: italic;
+}
+
 .content {
     margin-bottom: 4em;
 }

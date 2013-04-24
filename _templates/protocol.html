@@ -19,6 +19,13 @@
 
   <div class="row-fluid section">
     <div class="content span8 offset2">
+      Last updated: {% include 'changedate.html' %}
+      Version: 1.0-draft
+    </div>
+  </div>
+
+  <div class="row-fluid section">
+    <div class="content span8 offset2">
 
       <p>
         The SimpleFIN standard defines:
@@ -232,7 +239,6 @@
   "posted": "2001-01-01T09:22:33.2343",
   "amount": "-22.33",
   "memo": "John's Pizza Pie Cafe and Spa",
-  "sic": "2354"
 }]
             {%- endif -%}
           {% endcall %}
@@ -289,13 +295,6 @@
               A human-readable description of what the transaction was for.
             {%- elif what == 'example' -%}
               "Bob's Grocery Store - 22 S. Main"
-            {%- endif -%}
-          {% endcall %}
-
-          {% call(what) attribute('sic', 'string', optional=True, object='transaction') %}
-            {%- if what == 'description' -%}
-            Not yet defined.
-            {%- elif what == 'example' -%}
             {%- endif -%}
           {% endcall %}
 

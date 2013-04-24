@@ -1,8 +1,11 @@
 
-.PHONY: all
+.PHONY: all date
 
 
 all: index.html protocol.html examples.html examples examples/fakeaccountant.html examples/fakebank.html
+
+date:
+	python _util/today.py > _templates/changedate.html
 
 index.html: _templates/index.html _templates/navbar.html _templates/base.html
 	python _util/render.py index.html > index.html
