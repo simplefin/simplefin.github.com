@@ -1,6 +1,10 @@
 a.clickanchor {
 	display: none !important;
 }
+p,li,td,dd,dt,div,.attr-ref {
+    font-size: 14px;
+    line-height: 20px;
+}
 div.navlinks {
 	display: none !important;
 }
