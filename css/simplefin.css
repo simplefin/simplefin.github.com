@@ -4,6 +4,17 @@
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+p,li,td,dd,dt,div {
+    font-size: 20px;
+    line-height: 28px;
+}
+dt {
+    font-weight: normal;
+}
+p {
+    margin-bottom: 1em;
+}
+
 .last-updated {
     color: #aaa;
     font-style: italic;
@@ -23,6 +34,7 @@ h1,h2,h3,h4,h5 {
     color: #08c;
     font-weight: normal;
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    font-size: 175%;
 }
 h2 {
     margin-top: 0em;
@@ -34,13 +46,15 @@ h3 {
     border-bottom: 1px solid #08c;
 }
 h4,h5 {
-    font-size: 175%;
     font-weight: normal;
     color: #999;
     margin-top: 3em;
     margin-bottom: 1em;
 }
-h4:first-child,h5:first-child {
+h3+h4,
+h4:first-child,
+h4+h5,
+h5:first-child {
     margin-top: 1em;
 }
 ol.std,ul.std,dl {
@@ -49,9 +63,11 @@ ol.std,ul.std,dl {
 }
 dt {
     margin-top: 1em;
+    margin-bottom: 0.5em;
 }
 dd {
     margin-bottom: 1em;
+    margin-left: 2em;
 }
 .std li {
     margin-bottom: 1em;
@@ -115,9 +131,8 @@ table * {
     font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
     padding: 2px 4px;
     background-color: #f7f7f9;
-    sborder: 1px solid #e1e1e8;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 18px;
     color: #08c;
 }
 .attr-def .attr-type {
@@ -151,6 +166,8 @@ table * {
 }
 
 .code-block {
+    font-size: 14px;
+    line-height: 20px;
     font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
     color: #d14;
     padding: 0.5em 0.75em;

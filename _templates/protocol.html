@@ -21,7 +21,7 @@
   <div class="row-fluid section">
     <div class="content span8 offset2">
       
-      <div>Last updated: {% include 'changedate.html' %}</div>
+      <p>Last updated: {% include 'changedate.html' %}</p>
       <p>Version: 1.0-draft</p>
 
       <p>
@@ -172,14 +172,12 @@
       </p>
 
       {% macro urlsummary(method, url, whoitsfor) %}
-      <div class="row-fluid url-endpoint">
-        <div class="span3 url">
-          {{ method }} {{ url }}
-        </div>
-        <div class="span9 description">
-          {{ caller() }}  This URL is used by the <span class="term">{{ whoitsfor }}</span>.
-        </div>
-      </div>
+      <dt class="url">
+        {{ method }} {{ url }}
+      </dt>
+      <dd class="description">
+        {{ caller() }}  This URL is used by the <span class="term">{{ whoitsfor }}</span>.
+      </dd>
       {% endmacro %}
 
       {% call urlsummary('GET', '/auth', 'Browser' ) %}
@@ -203,7 +201,7 @@
         </p>
 
         <p>
-          <span class="term">Readers</span> will direct users to this URL if tokens are needed.
+          <span class="term">Readers</span> will direct users to this URL if tokens are needed.  In your implementation, you can assume that a user visiting this URL wants to make a new token.
         </p>
 
         <p>
