@@ -49,34 +49,26 @@ accountant_app.service('RemoteServer', function(LocalStorage) {
 	// This simulates requesting from the remote server.
 	this.dataForToken = function(token) {
 		// "Request" new account information for the tokens we have.
-		var bank_tokens = LocalStorage.get('bank-tokens');
-		var bank_accounts = LocalStorage.get('bank-accounts');
-		var all_accounts = false;
+		var bank = LocalStorage.get('bank-data');
 		var accounts = [];
 		// find matching tokens
-		angular.forEach(bank_tokens, function(bank_token) {
+		angular.forEach(bank.tokens, function(bank_token) {
 			if (bank_token.hash == token && bank_token.enabled) {
 				// match
-				if (bank_token.accounts == '') {
-					all_accounts = true;
-				} else {
-					accounts.push(bank_token.accounts);
-				}
+				angular.forEach(bank_token.accounts, function(account) {
+					if (accounts.indexOf(account) == -1) {
+						accounts.push(account);
+					}
+				});
 			}
 		});
-
-		if (all_accounts) {
-			return bank_accounts;
-		} else {
-			var ret_accounts = [];
-			// find matching accounts
-			angular.forEach(bank_accounts, function(bank_account) {
-				if (accounts.indexOf(bank_account.simplefin_id) != -1) {
-					ret_accounts.push(bank_account);
-				}
-			});
-			return ret_accounts;
-		}
+		
+		var ret_accounts = accounts.map(function(account_name) {
+			return bank.accounts.filter(function(bank_account) {
+				return bank_account.name == account_name;
+			})[0];
+		});
+		return ret_accounts;
 	}
 	return this;
 })
@@ -183,36 +175,38 @@ accountant_app.controller('GlobalCtrl', function($scope, $location, $timeout, Se
 //-----------------------------------------------------------------------------
 var bank_app = angular.module('bank', ['common']);
 
-bank_app.service('Server', function(LocalStorage) {
-	this.sfin_url = 'https://www.example.com/sfin';
-	this.ls = LocalStorage;
+bank_app.factory('Server', function($rootScope, LocalStorage) {
+	this.data = {
+		sfin_url: 'https://www.example.com/sfin',
+		accounts: [],
+		tokens: []
+	};
 
-	// Bank functions
-	this.getAccounts = function() {
-		var accounts = this.ls.get('bank-accounts');
-		if (!angular.isArray(accounts)) {
-			accounts = [
-				{name: 'Checking', number: '1238394', balance:'12.50', simplefin_id: 'SFIN-9000002'},
-				{name: 'Savings', number: '28398403', balance:'18.90', simplefin_id: 'SFIN-8840034'},
-			];
-			this.saveAccounts(accounts);
+	this.load = function() {
+		var data = LocalStorage.get('bank-data');
+		if (data == null) {
+			data = {
+				accounts: [
+					{name: 'Checking', number: '1238394', balance:'12.50', simplefin_id: 'SFIN-9000002'},
+					{name: 'Savings', number: '28398403', balance:'18.90', simplefin_id: 'SFIN-8840034'},
+				],
+				tokens: []
+			};
 		}
-		return accounts;
+		angular.extend(this.data, data);
 	}
-	this.saveAccounts = function(accounts) {
-		this.ls.put('bank-accounts', accounts);
-	}
-	this.getTokens = function() {
-		var tokens = this.ls.get('bank-tokens');
-		if (!angular.isArray(tokens)) {
-			tokens = [];
-			this.saveTokens(tokens);
-		}
-		return tokens;
-	}
-	this.saveTokens = function(tokens) {
-		this.ls.put('bank-tokens', tokens);
-	}
+	this.load();
+
+	this.save = function() {
+		LocalStorage.put('bank-data', this.data);
+	};
+
+	$rootScope.$watch(function() {
+		return this.data;
+	}.bind(this), function() {
+		this.save();
+	}.bind(this), true);
+
 	this.generateSetupToken = function() {
 		var charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 		var access_token = '';
@@ -229,60 +223,46 @@ bank_app.service('Server', function(LocalStorage) {
 			// pretend to hash right now
 			'hash': access_token
 		}
-	}
+	};
+	return this;
 });
 
 bank_app.controller('BankCtrl', function($scope, LocalStorage, Server) {
-	var ls = LocalStorage;
-	$scope.signedin = false;
-	$scope.accounts = Server.getAccounts();
-	$scope.tokens = Server.getTokens();
-	$scope.generatedToken = null;
-
-	$scope.$watch('tokens', function() {
-		Server.saveTokens($scope.tokens);
-	}, true);
-	$scope.$watch('accounts', function() {
-		Server.saveAccounts($scope.accounts);
-	}, true);
-
-	$scope.signin = function() {
-		$scope.signedin = true;
-	};
+	$scope.accounts = Server.data.accounts;
+	$scope.tokens = Server.data.tokens;
+	$scope.current_token = null;
 
 	$scope.startOver = function() {
 		LocalStorage.clear();
 		window.location = 'fakeaccountant.html';
 	};
 
-	$scope.reset = function() {
-		$scope.accountChoice = '';
-		$scope.description = '';
-	};
+	$scope.deleteToken = function(token) {
+		$scope.tokens.splice($scope.tokens.indexOf(token), 1);
+	}
 
 	$scope.generateToken = function() {
-		var accountChoice = $scope.accountChoice;
-		var description = $scope.description;
+		var accounts = [];
+		angular.forEach($scope.accounts, function(account) {
+			accounts.push(account.name);
+		});
 		var generated = Server.generateSetupToken();
+		var expiration = new Date();
+		expiration.setMonth(expiration.getMonth() + 12);
 
-		$scope.tokens.push({
+		$scope.current_token = {
 			hash: generated.hash,
 			sfin_url: generated.sfin_url,
-			accounts: accountChoice,
-			description: description,
-			enabled: true,
-			last_used_ip: null,
-			last_used: null
-		});
-		// reset form
-		$scope.reset();
-		$scope.generatedToken = generated.setup_token;
+			accounts: accounts,
+			setup_token: generated.setup_token,
+			name: '',
+			expiration: expiration,
+			enabled: true
+		};
+		$scope.tokens.push($scope.current_token);
 	};
 
-	$scope.deleteToken = function(token) {
-		var index = $scope.tokens.indexOf(token);
-		$scope.tokens.splice(index,1);
-	};
-
-	$scope.reset();
+	if ($scope.current_token == null) {
+		$scope.generateToken();
+	}
 });

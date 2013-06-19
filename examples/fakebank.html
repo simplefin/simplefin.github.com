@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>Example Bank - SimpleFIN Demo Server</title>
+  <title>Great Bank - SimpleFIN Demo Server</title>
   <link href="/css/bootstrap.min.css" rel="stylesheet" />
   <link href="/css/bootstrap-responsive.css" rel="stylesheet" />
   <style>
@@ -51,6 +51,13 @@
     color: #ccc;
     font-style: italic;
   }
+  .token-area {
+    border: 12px double #08c;
+    font-family: monospace;
+    padding: 1em;
+    border-radius: 4px;
+    word-wrap: break-word;
+  }
   a.white {
     color: #fff;
   }
@@ -72,20 +79,15 @@
       <div class="span8 offset2">
         <div class="main-box">
           <div>
-            <h1>Example Bank</h1>
-            <div class="subtitle">
-              Part of a demonstration of how simple it can be to <strong>securely</strong> access your bank account <strong>without</strong> giving out your password!
-            </div>
+            <h1>Great Bank</h1>
 
+            <!-- login -->
             <div ng-show="!signedin">
-              <h2>Welcome back!</h2>
-              <p>
-                Please sign in:
-                <div class="demo-note">
-                  (You can put anything in here and we'll pretend to sign you in, because this is just a demo.)
-                </div>
-              </p>
-              <form class="form-horizontal">
+              <h2>Welcome back, dear banking customer!</h2>
+              <div class="demo-note">
+                (You can put anything in here and we'll pretend to sign you in, because this is just a demo.)
+              </div>
+              <form class="form-horizontal" ng-submit="signedin=true">
                 <div class="control-group">
                   <label class="control-label">Account number</label>
                   <div class="controls">
@@ -102,85 +104,84 @@
 
                 <div class="control-group">
                   <div class="controls">
-                    <button class="btn" ng-click="signin()">Sign in</button>
+                    <button class="btn btn-primary" type="submit" autofocus>Sign in</button>
                   </div>
                 </div>
               </form>
-
             </div>
+
+
+
 
             <div ng-show="signedin">
-              <h2>Accounts</h2>
-              <table class="table">
-                <tr>
-                  <th>Account</th>
-                  <th>Balance</th>
-                  <th>SimpleFIN ID</th>
-                </tr>
-                <tr ng-repeat="account in accounts">
-                  <td>{{ account.name }}</td>
-                  <td>{{ account.balance }}</td>
-                  <td>{{ account.simplefin_id }}</td>
-                </tr>
-              </table>
 
-              <h2>SimpleFIN</h2>
-              <p>
-                Because we value your security, we support SimpleFIN, which allows you to control who can see your bank account information.
-              </p>
+              <ul class="nav nav-pills">
+                <li ng-class="{active: nav=='accounts'}"><a ng-click="nav='accounts'" href="#">Accounts</a></li>
+                <li ng-class="{active: nav!='accounts'}"><a ng-click="nav=''" href="#">SimpleFIN</a></li>
+              </ul>
 
-              <h3>Generate a new token</h3>
-              <form class="form-horizontal">
-                <div class="control-group">
-                  <label class="control-label">Description</label>
-                  <div class="controls">
-                    <input type="text" placeholder="example.com" ng-model="description">
-                    <br/>(e.g. name/URL of the program that will use the token)
-                  </div>
-                </div>
+              <div ng-show="nav=='accounts'">
 
-                <div class="control-group">
-                  <label class="control-label">Accessible accounts</label>
-                  <div class="controls">
-                    <select ng-model="accountChoice">
-                      <option value="">All accounts</option>
-                      <option ng-repeat="account in accounts" value="{{ account.simplefin_id }}">{{ account.name }} (#{{ account.number }})</option>
-                    </select>
-                  </div>
-                </div>
+                <h2>Accounts</h2>
+                <table class="table">
+                  <tr>
+                    <th>Account</th>
+                    <th>Balance</th>
+                  </tr>
+                  <tr ng-repeat="account in accounts">
+                    <td>{{ account.name }}</td>
+                    <td>{{ account.balance }}</td>
+                  </tr>
+                </table>
 
-                <div class="control-group">
-                  <div class="controls">
-                    <button class="btn" ng-click="generateToken()">Generate token</button>
-                  </div>
-                </div>
-              </form>
-
-              <div ng-show="generatedToken">
-                <h4>Token generated!</h4>
-                Give this token out to grant <strong>read-only</strong> access to your accounts
-                <div class="generated-token">{{ generatedToken }}</div>
               </div>
 
-              <h3>Manage existing tokens</h3>
+              <div ng-hide="nav=='accounts'">
 
-              <table class="table">
-                <tr>
-                  <th>Description</th>
-                  <th>Accessible accounts</th>
-                  <th>Enabled</th>
-                  <th></th>
-                </tr>
-                <tr ng-repeat="token in tokens" class="token-enabled-{{token.enabled}}">
-                  <td>{{ token.description }}</td>
-                  <td>{{ token.accounts }}</td>
-                  <td><input type="checkbox" ng-model="token.enabled"></td>
-                  <td>
-                    <button class="btn" ng-click="deleteToken(token)">Delete</button>
-                  </td>
-                </tr>
-              </table>
-            </div>
+                <h2>SimpleFIN</h2>
+
+                <p>
+                  Here is your new SimpleFIN token:
+                </p>
+                <div class="token-area">
+                  {{ current_token.setup_token }}
+                </div>
+
+                <p>
+                  After you give the above SimpleFIN token to another service (by copying and pasting),
+                  it will be able to read your Great Bank account information.
+                  Specifically, it will have access to these accounts:
+                </p>
+
+                <ul>
+                  <li ng-repeat="account in current_token.accounts">{{ account }}</li>
+                </ul>
+                <p>
+                  Access using this token will expire {{ current_token.expiration|date }}.
+                </p>
+                <p>
+                  You may optionally associate a name with this token: <input type="text" ng-model="current_token.name">
+                </p>
+
+                <h3>Existing tokens</h3>
+
+                <table class="table">
+                  <tr>
+                    <th>Name</th>
+                    <th>Accessible accounts</th>
+                    <th>Enabled</th>
+                    <th></th>
+                  </tr>
+                  <tr ng-repeat="token in tokens" class="token-enabled-{{token.enabled}}">
+                    <td>{{ token.name }}</td>
+                    <td><div ng-repeat="account in token.accounts">{{ account }}</div></td>
+                    <td><input type="checkbox" ng-model="token.enabled"></td>
+                    <td>
+                      <button class="btn" ng-click="deleteToken(token)">Delete</button>
+                    </td>
+                  </tr>
+                </table>
+              </div>
 
 
         </div>
