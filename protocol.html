@@ -328,8 +328,7 @@ VFZ2TDJQdm9jaFlOLURoYw==
       "currency": "USD",
       "balance": "100.23",
       "available-balance": "75.23",
-      "balance-as-of": "AO334",
-      "last-transaction-posted": "2013-07-29T19:09:23.544"
+      "balance-as-of": "2001-01-01T09:22:33.2343",
     }
   ]
 }</div>
@@ -472,8 +471,7 @@ VFZ2TDJQdm9jaFlOLURoYw==
   "currency": "USD",
   "balance": "100.23",
   "available-balance": "75.23",
-  "balance-as-of": "AO334",
-  "last-transaction-posted": "1995-02-17T23:56:12.22239",
+  "balance-as-of": "2001-01-01T09:22:33.2343",
   "transactions": [
     {
       "id": "AO334",
@@ -617,37 +615,13 @@ VFZ2TDJQdm9jaFlOLURoYw==
           <div class="row-fluid">
             <div class="span3 attr-name"><a class="clickanchor" name="account.balance-as-of" href="#account.balance-as-of">&sect;</a>balance-as-of</div>
             <div class="span9">
-              <div><span class="attr-type">string</span></div>
-              
-              <div class="attr-description"><p>
-              The <a class="attr-ref" href="#transaction.id">Transaction.id</a> of the transaction that resulted in the <a class="attr-ref" href="#account.balance">balance</a> and <a class="attr-ref" href="#account.available-balance">available-balance</a> of this Account.
-            </p>
-
-            <p>
-              If <a class="attr-ref" href="#account.transactions">transactions</a> are included in this object, then <a class="attr-ref" href="#account.balance-as-of">balance-as-of</a> <em>must</em> be the <a class="attr-ref" href="#transaction.id">id</a> of the most recent <a href="#transaction">Transaction</a> in the list.
-            </p>
-
-            <p>
-              If <a class="attr-ref" href="#account.transactions">transactions</a> are <strong>not</strong> included in this object, then <a class="attr-ref" href="#account.balance-as-of">balance-as-of</a> <em>must</em> be the <a class="attr-ref" href="#transaction.id">id</a> of the most recent <a href="#transaction">Transaction</a> on record.
-            </p></div>
-              
-              <div class="attr-example code-block">"83940394098343ABCFKDSDF89"</div>
-              
-            </div>
-          </div>
-        </div>
-      
-
-          
-        <div class="attr-def">
-          <div class="row-fluid">
-            <div class="span3 attr-name"><a class="clickanchor" name="account.last-transaction-posted" href="#account.last-transaction-posted">&sect;</a>last-transaction-posted</div>
-            <div class="span9">
               <div><span class="attr-type">ISO string timestamp</span></div>
               
-              <div class="attr-description">This is always the <a class="attr-ref" href="#transaction.posted">posted</a> attribute of this account's most recent <a href="#transaction">Transaction</a> on record, regardless of what <a class="attr-ref" href="#account.transactions">transactions</a> is.</div>
+              <div class="attr-description"><p>
+              The timestamp when the <a class="attr-ref" href="#account.balance">balance</a> and <a class="attr-ref" href="#account.available-balance">available-balance</a> became what they are.
+            </p></div>
               
-              <div class="attr-example code-block">"2001-01-17T22:59:33.9081"</div>
+              <div class="attr-example code-block">"2001-01-01T09:22:33.2343"</div>
               
             </div>
           </div>
@@ -821,8 +795,7 @@ VFZ2TDJQdm9jaFlOLURoYw==
       "currency": "USD",
       "balance": "100.23",
       "available-balance": "75.23",
-      "balance-as-of": "AO334",
-      "last-transaction-posted": "2013-07-29T19:22:09.210",
+      "balance-as-of": "2001-01-01T09:22:33.2343",
       "transactions": []
     }
   ]
