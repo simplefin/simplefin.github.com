@@ -1,96 +1,23 @@
-<!doctype html>
-<html>
-    <head>
-        <title>SimpleFIN - Home</title>
-        <link href="/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="/css/bootstrap-responsive.css" rel="stylesheet" />
-        <link href="/css/simplefin.css" rel="stylesheet" media="all" />
-        <link href="/css/print.css" rel="stylesheet" media="print" />
-    </head>
-    <body>
-        <div class="content">
-            
+---
+layout: default
+---
 
+<div class="home">
 
+  <h1 class="page-heading">Posts</h1>
 
-<div class="title"><img src="/img/logo.svg" class="logo"> SimpleFIN</div>
+  <ul class="post-list">
+    {% for post in site.posts %}
+      <li>
+        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 
+        <h2>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h2>
+      </li>
+    {% endfor %}
+  </ul>
 
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 
-
-
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span8 offset2">
-      <div class="navlinks">
-        <div class="centerer">
-        <a href="/" class="active">Home</a>
-        <a href="/protocol.html" >Protocol</a>
-        <a href="/examples.html" >Examples</a>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
-
-
-<div class="container-fluid">
-  
-  <div class="section row-fluid">
-    <div class="content span8 offset2">
-      <p>SimpleFIN (also SFIN) stands for Simple Financial Interchange and makes read-only financial interchange simple.  It's like <a href="http://en.wikipedia.org/wiki/RSS" target="_blank">RSS</a> for financial information.
-      </p>
-
-
-      <div class="row-fluid" style="margin-top: 3em;">
-        <div class="span7" style="font-size: 30px; line-height: 130%; color: #999;">
-          Why give them the combination to your safe...
-        </div>
-      </div>
-
-      <div class="row-fluid">
-        <div class="span8 offset2">
-          <img src="/img/safe.png">
-        </div>
-      </div>
-
-      <div class="row-fluid" style="margin-bottom: 3em;">
-        <div class="offset5 span7" style="font-size: 30px; line-height: 130%; color: #999; text-align: right;">
-          ...when they only need to look through a window?
-        </div>
-      </div>
-      
-      <p>SimpleFIN is like a window on a safe: it lets people look at, but not touch your financial information.  And you control <em>who</em> can look through the window!</p>
-
-      <p>You should use SimpleFIN because:
-        <ul class="std">
-          <li>All access is read-only.</li>
-          <li>You can read and comprehend the spec in a single day.</li>
-          <li>You don't have to <a href="http://en.wikipedia.org/wiki/QFX_(file_format)" target="_blank">pay anyone to use it.</a></li>
-          <li>Ubiquitous use will help train people that giving out their account credentials is unacceptable.</li>
-        </ul>
-      </p>
-
-    </div>
-  </div>
-  
-  <div class="section row-fluid">
-    <div class="span8 offset2">
-    Fork this on <a href="https://github.com/simplefin/simplefin.github.com" target="_blank">GitHub</a> join #simplefin on Freenode or send an email: matt@ (this domain)
-    </div>
-  </div>
-</div>
-
-        </div>
-        <footer>
-            <div class="container-fluid">
-                <div class="row-fluid">
-                    <div class="span8 offset2 last-updated">
-                        Last updated: Jun 17, 2013  22:41:04
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <script src="/js/bootstrap.min.js"></script>
-    </body>
-</html>
