@@ -260,15 +260,15 @@
       {% endmacro %}
 
 
-      {% call queryparam('start-date', ['?start-date=2001-05-15', '?start-date=2001-05-15T09:08:35.234']) %}
-        If given, transactions <em>on or after</em> the supplied date or timestamp will be included in the response.
+      {% call queryparam('start-date', ['?start-date=989906400']) %}
+        If given, transactions <em>on or after</em> the supplied timestamp will be included in the response.
       {% endcall %}
 
       {% call queryparam('end-date', []) %}
         If given, only transactions <em>before</em> the supplied date or timestamp will be returned.  Transactions with a <a class="attr-ref" href="#transaction.posted">posted</a> date equal to this date/timestamp will <em>not</em> be returned.
 
         For instance, querying for
-        <div class="example code-block">?start-date=2001-05-01&end-date=2001-06-01</div>
+        <div class="example code-block">?start-date=988696800&end-date=991375200</div>
         will return all transactions from May, 2001.
       {% endcall %}
 
@@ -287,7 +287,7 @@
       "currency": "USD",
       "balance": "100.23",
       "available-balance": "75.23",
-      "balance-as-of": "2001-01-01T09:22:33.2343",
+      "balance-date": 978366153,
     }
   ]
 }</div>
@@ -343,6 +343,7 @@
       <ul class="std">
         <li>Data is encoded as JSON strings.</li>
         <li>All attributes are required unless otherwise noted.</li>
+        <li>All times are Unix epoch timestamps (long).</li>
       </ul>
 
       <p>
@@ -419,11 +420,11 @@
   "currency": "USD",
   "balance": "100.23",
   "available-balance": "75.23",
-  "balance-as-of": "2001-01-01T09:22:33.2343",
+  "balance-date": 978366153,
   "transactions": [
     {
       "id": "AO334",
-      "posted": "1995-02-17T23:56:12.22239",
+      "posted": 793090572,
       "amount": "-33293.43",
       "description": "Uncle Frank's Bait Shop",
     }
@@ -491,25 +492,25 @@
           {% call(what) attribute('balance', 'numeric string', object='account') %}
             {%- if what == 'description' -%}
               The balance of the account as of
-              <a class="attr-ref" href="#account.balance-as-of">balance-as-of</a>.
+              <a class="attr-ref" href="#account.balance-date">balance-date</a>.
             {%- elif what == 'example' -%}"22.33"{%- endif -%}
           {% endcall %}
 
           {% call(what) attribute('available-balance', 'numeric string', optional=True, object='account') %}
             {%- if what == 'description' -%}
               The available balance of the account as of
-              <a class="attr-ref" href="#account.balance-as-of">balance-as-of</a>.  This
+              <a class="attr-ref" href="#account.balance-date">balance-date</a>.  This
               may be omitted if it is the same as <a class="attr-ref" href="#account.balance">balance</a>.
             {%- elif what == 'example' -%}"15.33"{%- endif -%}
           {% endcall %}
 
-          {% call(what) attribute('balance-as-of', 'ISO string timestamp', object='account') %}
+          {% call(what) attribute('balance-date', 'UNIX epoch timestamp', object='account') %}
             {%- if what == 'description' -%}
             <p>
               The timestamp when the <a class="attr-ref" href="#account.balance">balance</a> and <a class="attr-ref" href="#account.available-balance">available-balance</a> became what they are.
             </p>
             {%- elif what == 'example' -%}
-              "2001-01-01T09:22:33.2343"
+              978366153
             {%- endif -%}
           {% endcall %}
 
@@ -520,7 +521,7 @@
             {%- elif what == 'example' -%}
 [{
   "id": "AO334",
-  "posted": "2001-01-01T09:22:33.2343",
+  "posted": 978366153,
   "amount": "-22.33",
   "memo": "John's Pizza Pie Cafe and Spa",
 }]
@@ -532,7 +533,7 @@
               This optional attribute may be used to include extra account-specific data that is not defined in this standard.  It is up to the <a href="#server" class="term">Server</a> to decide whether or not to include data in here.
             {%- elif what == 'example' -%}
 {
-  "account_open_date": "2000-05-14"
+  "account_open_date": 958284000
 }
             {%- endif -%}
           {% endcall %}
@@ -547,7 +548,7 @@
 
             <div class="code-block">{
   "id": "12394832938403",
-  "posted": "1995-02-17T23:56:12.22239",
+  "posted": 793090572,
   "amount": "-33293.43",
   "description": "Uncle Frank's Bait Shop",
 }</div>
@@ -567,12 +568,12 @@
             {%- endif -%}
           {% endcall %}
 
-          {% call(what) attribute('posted', 'ISO string timestamp', object='transaction') %}
+          {% call(what) attribute('posted', 'UNIX epoch timestamp', object='transaction') %}
             {%- if what == 'description' -%}
               This is when the transaction happened.
               The timezone must be GMT.
             {%- elif what == 'example' -%}
-              "2015-01-01T10:00:03.23434"
+              1420131603
             {%- endif -%}
           {% endcall %}
 
@@ -624,7 +625,7 @@
       "currency": "USD",
       "balance": "100.23",
       "available-balance": "75.23",
-      "balance-as-of": "2001-01-01T09:22:33.2343",
+      "balance-date": 978366153,
       "transactions": []
     }
   ]
