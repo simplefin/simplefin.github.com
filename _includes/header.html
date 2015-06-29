@@ -2,7 +2,10 @@
 
   <div class="wrapper">
 
-    <a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
+    <a class="site-title" href="{{ site.baseurl }}/">
+      <img src="/img/logo.svg" style="width: 64px; height: 64px;">
+      {{ site.title }}
+    </a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -16,9 +19,10 @@
       <div class="trigger">
         {% for page in site.pages %}
           {% if page.title %}
-          <a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
+          <a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.link_title or page.title }}</a>
           {% endif %}
         {% endfor %}
+        <a class="page-link" href="https://bridge.simplefin.org">Bridge</a>
       </div>
     </nav>
 

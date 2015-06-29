@@ -36,6 +36,15 @@ ul, ol, dl, figure,
 }
 
 
+dl {
+}
+dt {
+
+}
+dd {
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+}
 
 /**
  * Images
@@ -79,10 +88,28 @@ li {
 /**
  * Headings
  */
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 300;
+.protocol {
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 300;
+        margin-top: 2rem;
+        margin-bottom: 0rem;
+    }
+    h1 {
+        margin-top: 4rem;
+    }
+    h2 {
+        background: lightsteelblue;
+        padding: 0.5rem;
+    }
+    h3 {
+        border-bottom: 1px solid gray;
+    }
+    h4,h5,h6 {
+        font-family: Times;
+        font-style: italic;
+        font-size: 1.2rem;
+    }
 }
-
 
 
 /**

@@ -1,0 +1,104 @@
+organization:
+  attributes:
+    - name: domain
+      type: string
+      examples:
+        - '"example.com"'
+      description: The domain name of an institution.
+    - name: sfin-url
+      type: string
+      examples:
+        - '"https://example.com/sfin"'
+      optional: true
+      description: >
+        An Institution's SimpleFIN Root Consumer URL.  If provided, the
+        domain of the URL must match the domain.
+account:
+  attributes:
+    - name: org
+      type: Organization
+      description: >
+        Organization from which this account originates.
+        If this is a bank account, this field will be the bank's organization.
+      example: '{ "domain": "example.com", "sfin-url": "https://www.example.com/sfin" }'
+    - name: id
+      type: string
+      description: >
+        An ID that uniquely identifies an account within the account's organization. It is recommended that this id be chosen such that it does not reveal any sensitive data (login information for the bank's web banking portal, for instance).
+      examples:
+        - '"123"'
+    - name: name
+      type: string
+      description: >
+        A name that uniquely describes an account among all the users other accounts. This name should be chosen so that a person can easily associate it with only one of their accounts within an organization.
+      examples:
+        - '"Money-Markey Checking"'
+    - name: currency
+      type: string
+      description: >
+        If the currency is a standard currency, use the currency code from the official ISO 4217 (or see the Wikipedia article).  For example `"ZMW"` or `"USD"`.
+        <br/><br/>Custom/proprietary currencies are also supported. For instance, rewards points or frequent flier miles are a type of "currency." To indicate a custom currency supply a URL as the value. Making an unauthenticated GET request to that URL should return an application/json response representing an object with at least a name attribute with a human-readable string name for the currency as the value. For example, here is an acceptable response: `{"name": "Reward Points"}`
+      examples:
+        - '"ZMW"'
+        - '"GBP"'
+        - '"https://www.example.com/currency/rewardpoints"'
+    - name: balance
+      type: numeric string
+      description: The balance of the account as of balance-date.
+      examples:
+        - "22.33"
+    - name: available-balance
+      type: numeric string
+      optional: true
+      description: The available balance of the account as of balance-date. This may be omitted if it is the same as balance.
+      examples:
+        - "15.34"
+    - name: balance-date
+      type: UNIX epoch timestamp
+      description: The timestamp when the balance and available-balance became what they are.
+      examples:
+        - 978366153
+    - name: transactions
+      type: "array of [Transactions](#transaction)"
+      optional: true
+      description: List of a subset of Transactions for this account, ordered by posted.
+    - name: extra
+      type: object
+      optional: true
+      description: This optional attribute may be used to include extra account-specific data that is not defined in this standard. It is up to the Server to decide whether or not to include data in here.
+      examples:
+        - '{ "account_open_date": 958284000 }'
+transaction:
+  attributes:
+    - name: id
+      type: string
+      description: An ID that uniquely describes a transaction within an Account. An organization may reuse transaction ids for different accounts, but may never reuse a transaction id within an account.
+      examples:
+        - '"9990203-3840394"'
+    - name: posted
+      type: UNIX epoch timestamp
+      description: This is when the transaction happened.
+      examples:
+        - 1420131603
+    - name: amount
+      type: numeric string
+      description: Amount of transaction. Positive numbers indicate money being deposited into the account.
+      examples:
+        - "90.28"
+    - name: description
+      type: string
+      description: A human-readable description of what the transaction was for.
+      examples:
+        - '"Big Grocery Store - 22 S. Main"'
+    - name: extra
+      type: object
+      optional: true
+      description: >
+        This optional attribute may be used to include extra transaction-specific data that is not defined in this standard. It is up to the Server to decide whether or not to include data in here.
+      examples:
+        - '{ "sic": "2839" }'
+accountset:
+  attributes:
+    - name: accounts
+      type: "array of [Accounts](#account)"
+      description: A list of Account objects. Order does not matter.

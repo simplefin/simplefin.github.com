@@ -1,10 +1,11 @@
 ---
 layout: default
 title: SimpleFIN Protocol
-last_modified: 2015-06-22
+link_title: Protocol
+last_modified: 2015-06-29
 proto_version: "1.0-draft.1"
+page_classes: protocol
 ---
-
 
 Last updated: {{ page.last_modified }}
 
@@ -13,7 +14,7 @@ Version: {{ page.proto_version }}
 The SimpleFIN standard defines:
 
 1. [SimpleFIN HTTP protocol](#simplefin-http-protocol)
-2. [SimpleFIN data format](#data-format)
+2. [SimpleFIN data format](#simplefin-data-format)
 3. [Recommendations for token management](#recommendations)
 
 
@@ -21,55 +22,52 @@ The SimpleFIN standard defines:
 
 ## Players ##
 
-### Institution ###
-
-This is a bank or other institution that people have accounts with.
-
-
-### SimpleFIN Server ###
-
-An HTTP server operated by the Institution.  The SimpleFIN Server **must** require SSL for all communication with both the Account Holder and the Consumer.  Connection attempts not over SSL must be dropped -- they **must not** be redirected to SSL.
+Institution
+:   This is a bank or other institution that people have accounts with.
 
 
-### Account Holder ###
-
-This is a person (or business) that has an account with the Institution.
-
+SimpleFIN Server
+:   An HTTP server operated by the Institution.  The SimpleFIN Server **must** require SSL for all communication with both the Account Holder and the Consumer.  Connection attempts not over SSL must be dropped -- they **must not** be redirected to SSL.
 
 
-### Consumer ###
+Account Holder
+:   This is a person (or business) that has an account with the Institution.
 
-A Consumer is an application that connects to a SimpleFIN Server to retrieve financial information pertaining to an Account Holder.  The Consumer may be a hosted service or a locally-run application.  The Consumer **only** has read access to the SimpleFIN Server.  The Consumer **can not** alter the financial data on the SimpleFIN Server in any way.
+Consumer
+:   A Consumer is an application that connects to a SimpleFIN Server to retrieve financial information pertaining to an Account Holder.  The Consumer may be a hosted service or a locally-run application.  The Consumer **only** has read access to the SimpleFIN Server.  The Consumer **can not** alter the financial data on the SimpleFIN Server in any way.
 
 
 ## Overview ##
 
-1. A Consumer directs an Account Holder to a SimpleFIN Server to obtain a Setup Token.
+1. A Consumer directs an Account Holder to a SimpleFIN Server to obtain an Access Token.
 
-2. The Account Holder exchanges their Institution credentials for a Setup Token.
+2. The Account Holder exchanges their Institution credentials for a newly-generated Access Token.
 
-3. The Account Holder gives the Setup Token to the Consumer.
+3. The Account Holder gives the Access Token to the Consumer.
 
-4. The Consumer stores the Setup Token.
+4. The Consumer stores the Access Token.
 
-5. The Consumer uses the Setup Token to generate an Access Token.
-
-6. The Consumer gets financial data from the SimpleFIN Server using an Access Token.
+5. The Consumer gets financial data from the SimpleFIN Server using the Access Token.
 
 
 ## URLS ##
 
-The SimpleFIN Server chooses a Root Consumer URL.  The SimpleFin Server must then implement the following standard endpoints based off of the Root Consumer URL:
+The SimpleFIN Server chooses a Root Consumer URL.  The SimpleFin Server must then implement the following standard endpoints as child resources to the Root Consumer URL:
 
-### `GET /info` ###
 
-Requests to this endpoint require **no authentication**.
+### GET /info ###
 
-The response is a JSON document with this information:
+This returns a JSON document with this information:
 
 - `versions` - An array of strings indicating the versions supported by this server.
 
-Sample response:
+
+#### Authentication
+
+None required.
+
+
+#### Success response ####
 
 {% highlight json %}
 {
@@ -78,90 +76,238 @@ Sample response:
 {% endhighlight %}
 
 
-### `GET /auth` ###
+### GET /auth ###
 
-Requests to this endpoint require **no authentication**.
+Requests to this endpoint must return a web page that will allow Account Holders to create new Setup Tokens.  The specifics are left up to the SimpleFIN Server.
 
-Requests to this endpoint must direct users to create new Setup Tokens.  How this is achieved is left up to the SimpleFIN Server.  Typically, the Browser will be redirected to a different URL.
+#### Authentication
 
-Account Holders **should** be prompted for their Institution credentials prior to creating any Setup Tokens.
+No SimpleFIN authentication is required.  Account Holders **should** be prompted for their Institution credentials prior to creating any Setup Tokens.
 
-### `GET /accounts?id=<id>` ###
 
-Requests to this endpoint **require authentication** as described below.
 
-Parameters:
 
-- `id` - A string identifier previously given out in a Setup Token.
 
-Successful response will be a JSON-encoded Account Set (as described below).
+### GET /accounts ###
 
-If auth
+#### Authentication
+
+HTTP Digest Authentication as described [below](#http-digest-authentication).
+
+#### Response codes and content ####
+
+- `200` - A successful response will be a JSON-encoded [Account Set](#account-set).
+- `403` - Authentication failed.
+
+
 
 ## Authentication ##
 
-### Setup Token ###
-
-A Setup Token is generated by the SimpleFIN Server and delivered to a Consumer by the Account Holder (copy and paste).  It is a JWT signed with the `none` algorithm.  The body of the JWT contains the following:
-
-- `url` - The SimpleFIN Server's Root Consumer URL.
-- `secret` - A random string to be used as the secret for generating Access Tokens.
-- `id` - A random string identifying a set of accounts for an Account Holder on the SimpleFIN Server.
-
-For example, this:
-
-{% highlight json %}
-{
-  "url": "https://example.com/simplefin",
-  "secret": "6bb4da2b-9ac3-44e1-8328-9aa61d24cc79",
-  "id": "a652be0a-21e5-4e6a-8db7-bd6c334e2aa6"
-}
-{% endhighlight %}
-
-would be encoded as this Setup Token:
-
-{% highlight text %}
-eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1cmwiOiJodHRwczovL2V4YW1wbGUuY29tL3NpbXBsZWZpbiIsInNlY3JldCI6IjZiYjRkYTJiLTlhYzMtNDRlMS04MzI4LTlhYTYxZDI0Y2M3OSIsImlkIjoiYTY1MmJlMGEtMjFlNS00ZTZhLThkYjctYmQ2YzMzNGUyYWE2In0.
-{% endhighlight %}
-
-
 ### Access Token ###
 
-An Access Token is a short-lived token generated by a Consumer and used to authenticate with a SimpleFIN Server.  It is a JWT signed with the `HS256` algorithm using a `secret` from a Setup Token.  The body of the token contains this:
-
-- `nonce` - A random string nonce.  Consumers **must not** reuse nonces.
-- `exp` - (Expiration Time) A UNIX epoch timestamp indicating the time after which this token is no longer valid.  This **must be** within 60 seconds after `iat`.
-- `iat` - (Issued At) A UNIX epoch timestamp indicating the time before which this token is not valid.  This **must be** within 60 seconds before `exp`.
-
-For example, this:
-
-{% highlight json %}
-{
-  "nonce": "b3342e92-4280-483a-856d-09e61b835112",
-  "exp": 1435598230,
-  "iat": 1435598290
-}
-{% endhighlight %}
-
-would be encoded as this Access Token using the secret `"6bb4da2b-9ac3-44e1-8328-9aa61d24cc79"`:
+An Access Token is generated by the SimpleFIN Server and delivered to a Consumer by the Account Holder (copy and paste).  It is a Base64 encoded URL with embedded credentials.  It follows this form:
 
 {% highlight text %}
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6ImIzMzQyZTkyLTQyODAtNDgzYS04NTZkLTA5ZTYxYjgzNTExMiIsImlhdCI6MTQzNTU5ODI5MCwiZXhwIjoxNDM1NTk4MjMwfQ.7d8AAb-VUvcNC-sJiyVJI4HrdKHxF7tgm3q0OYeJI1Y
+https://<user>:<secret>@<host>/<path>
 {% endhighlight %}
 
-### HTTP Authentication ###
+where
 
-Consumers authenticate to SimpleFIN Servers by providing an Access Token as the value of the `Authentication` HTTP header in requests.
+- `user` - is a random string associated with a set of accounts (typically, a subset of an Account Holder's accounts).  This string **must not** be derived from any user data.  It **must** be random.
+- `secret` - is a random string password for accessing the accounts.  This string **must not** be derived from any user data.  It **must** be random.
+- `host` - the SimpleFIN Server hostname
+- `path` - an optional path.
+
+For example, this valid URL:
+
+{% highlight text %}
+https://abc:def@simplefin.org
+{% endhighlight %}
+
+would be encoded as this Access Token:
+
+{% highlight text %}
+aHR0cHM6Ly9hYmM6ZGVmQHNpbXBsZWZpbi5vcmc=
+{% endhighlight %}
+
+
+### HTTP Digest Authentication ###
+
+Consumers authenticate to SimpleFIN Servers by using **HTTP Digest Authentication** with the credentials embedded in the decoded Access Token.  For example, using a Consumer using `curl` with the above credentials could access the `/accounts` endpoint with this command:
 
 For example, using the Access Token from above, a Consumer could make an authenticated request to the `/accounts` endpoint using `curl` like this:
 
 {% highlight bash %}
-curl \
-  -H 'Authentication: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6ImIzMzQyZTkyLTQyODAtNDgzYS04NTZkLTA5ZTYxYjgzNTExMiIsImlhdCI6MTQzNTU5ODI5MCwiZXhwIjoxNDM1NTk4MjMwfQ.7d8AAb-VUvcNC-sJiyVJI4HrdKHxF7tgm3q0OYeJI1Y' \
-  https://example.com/simplefin/accounts?id=a652be0a-21e5-4e6a-8db7-bd6c334e2aa6
+curl --digest https://abc:def@simplefin.org
 {% endhighlight %}
 
-The SimpleFIN Server **must**:
+The SimpleFIN Server:
 
-1. Verify the signature of the token using the secret associated with the `id`
-2. Verify that `exp` is no more than 60 seconds after `iat`.
+1. **Must** use Digest Authentication.
+2. **Must not** use Basic Authentication.
+
+
+# SimpleFIN Data Format #
+
+- Data is encoded as JSON strings.
+- All attributes are required unless otherwise noted.
+
+These objects are defined by SimpleFIN (more details below):
+
+- [Organization](#organization)
+- [Account](#account)
+- [Transaction](#transaction)
+- [Account Set](#account-set)
+
+
+## Organization ##
+
+{% highlight json %}
+{
+  "domain": "mybank.com",
+  "sfin-url": "https://sfin.mybank.com"
+}
+{% endhighlight %}
+
+{% for attr in site.data.sfindata.organization.attributes %}
+`{{ attr.name }}`
+:   *{{ attr.type }}*
+    
+    {% if attr.optional %}(OPTIONAL) {% endif %}
+    {{ attr.description }}
+    {% for example in attr.examples %}
+    - `{{ example }}`
+    {% endfor %}
+
+{% endfor %}
+
+
+
+## Account ##
+
+{% highlight json %}
+{
+  "org": {
+    "domain": "mybank.com",
+    "sfin-url": "https://sfin.mybank.com"
+  },
+  "id": "2930002",
+  "name": "Savings",
+  "currency": "USD",
+  "balance": "100.23",
+  "available-balance": "75.23",
+  "balance-date": "2001-01-01T09:22:33.2343",
+  "transactions": [
+    {
+      "id": "AO334",
+      "posted": "1995-02-17T23:56:12.22239",
+      "amount": "-33293.43",
+      "description": "Uncle Frank's Bait Shop",
+    }
+  ]
+}
+{% endhighlight %}
+
+{% for attr in site.data.sfindata.account.attributes %}
+`{{ attr.name }}`
+:   *{{ attr.type }}*
+    
+    {% if attr.optional %}(OPTIONAL) {% endif %}
+    {{ attr.description }}
+    {% for example in attr.examples %}
+    - `{{ example }}`
+    {% endfor %}
+
+{% endfor %}
+
+
+
+## Transaction ##
+{% highlight json %}
+{
+  "id": "12394832938403",
+  "posted": 793090572,
+  "amount": "-33293.43",
+  "description": "Uncle Frank's Bait Shop",
+}
+{% endhighlight %}
+
+{% for attr in site.data.sfindata.transaction.attributes %}
+`{{ attr.name }}`
+:   *{{ attr.type }}*
+    
+    {% if attr.optional %}(OPTIONAL) {% endif %}
+    {{ attr.description }}
+    {% for example in attr.examples %}
+    - `{{ example }}`
+    {% endfor %}
+
+{% endfor %}
+
+
+## Account Set ##
+{% highlight json %}
+{
+  "accounts": [
+    {
+      "org": {
+        "domain": "mybank.com",
+        "sfin-url": "https://sfin.mybank.com"
+      },
+      "id": "2930002",
+      "name": "Savings",
+      "currency": "USD",
+      "balance": "100.23",
+      "available-balance": "75.23",
+      "balance-date": 978366153,
+      "transactions": []
+    }
+  ]
+}
+{% endhighlight %}
+
+{% for attr in site.data.sfindata.accountset.attributes %}
+`{{ attr.name }}`
+:   *{{ attr.type }}*
+    
+    {% if attr.optional %}(OPTIONAL) {% endif %}
+    {{ attr.description }}
+    {% for example in attr.examples %}
+    - `{{ example }}`
+    {% endfor %}
+
+{% endfor %}
+
+
+# Recommendations #
+
+It is *recommended* that Account Holders have the following abilities regarding Access Token management:
+
+1. Users can associate user-provided names with tokens (e.g. "This is the token being used by example.com").
+2. Users can create many tokens (for providing to multiple third party services).
+3. Users can choose an expiration date for tokens when creating them.
+4. Users can manually invalidate/expire existing tokens at will.  This is useful in the case of stolen tokens or abuse by third parties to whom tokens were given.
+
+Additionally, consider the following when implementing a token management system:
+
+1. It may be nice to notify users prior to token expiration.
+2. It may be nice to allow users to temporarily disable all tokens and later re-enable them.  This can be used to prevent access while doing research into abuse.
+3. Consider providing logging/audit information regarding token use, including the time tokens were used and the IPs from which requests came.
+4. Allow tokens to be associated with a subset of available accounts.  For instance, allow the user to create one token for access to just their checking account, and another token for access to just their savings account.
+
+
+<script src="/js/anchor.min.js"></script>
+<script>
+/**
+ * AnchorJS v1.1.1 options and selector
+ */
+
+(function () {
+  'use strict';
+
+  anchors.options.placement = 'right';
+
+  anchors.add('h1, h2, h3, h4, h5, h6, dt');
+
+})();
+</script>
