@@ -1,0 +1,165 @@
+html,
+body,
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+body {
+  font-size: 1rem;
+  font-family: Helvetica;
+}
+a {
+  color: steelblue;
+}
+a:hover {
+  color: coral;
+}
+.error {
+  color: #f00;
+}
+table.bordered {
+  border-collapse: collapse;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+table.bordered td,
+table.bordered th {
+  text-align: left;
+  border: 1px solid lightgray;
+  padding: 2px 6px;
+}
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  text-align: center;
+  border-bottom: 1px solid lightgrey;
+  margin: 0 auto 1rem;
+  max-width: 30rem;
+}
+header .linkset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+header .logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+header .logo img {
+  width: 32px;
+  height: 32px;
+}
+header .logo-title {
+  font-family: Helvetica;
+  font-size: 1.2rem;
+  font-weight: lighter;
+  margin-left: 0.5rem;
+  color: steelblue;
+}
+header a {
+  margin: 0 0.5rem;
+  text-decoration: none;
+  font-family: Helvetica;
+  font-weight: lighter;
+  font-size: 0.9rem;
+}
+footer {
+  display: block;
+  text-align: center;
+  padding: 0.5rem;
+  text-align: center;
+  border-top: 1px solid lightgrey;
+  margin: 6rem auto 1rem;
+  max-width: 30rem;
+}
+
+h1,h2,h3,h4,h5 {
+  font-family: Helvetica;
+  font-weight: lighter;
+}
+h1.grand {
+  text-align: center;
+  margin-bottom: 0;
+}
+.grand-subtext {
+  text-align: center;
+  max-width: 30rem;
+  margin: 0 auto;
+  font-size: 1.3rem;
+  font-style: italic;
+  font-family: Times;
+}
+.content {
+  max-width: 30rem;
+  margin: 0 auto;
+}
+
+.how-it-works {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.how-it-works div {
+}
+.how-it-works .arrow {
+  color: lightgrey;
+}
+.how-it-works .bridge-section {
+  text-align: center;
+}
+.how-it-works .group {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  border-radius: 2px;
+}
+.how-it-works .group div {
+  padding: 0.4rem;
+}
+
+header a
+footer {
+  margin-top: 6rem;
+}
+fieldset {
+  display: inline-block;
+  border: 1px solid lightgrey;
+  border-radius: 2px;
+  padding: 1rem;
+  width: 100%;
+}
+fieldset legend {
+  padding: 0rem -0.5rem;
+  font-size: 1rem;
+  color: darkgoldenrod;
+}
+
+form {
+  display: inline;
+}
+p {
+  line-height: 1.5rem;
+}
+li {
+  line-height: 1.5rem;
+}
+hr {
+  border: 0;
+  border-top: 1px solid lightgrey;
+  height: 1px;
+}
+hr.invisible {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border: 0;
+}
