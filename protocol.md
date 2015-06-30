@@ -92,7 +92,7 @@ No SimpleFIN authentication is required.  Account Holders **should** be prompted
 
 #### Authentication
 
-HTTP Digest Authentication as described [below](#http-digest-authentication).
+HTTP Basic Authentication as described [below](#http-basic-authentication).
 
 #### Response codes and content ####
 
@@ -131,20 +131,21 @@ aHR0cHM6Ly9hYmM6ZGVmQHNpbXBsZWZpbi5vcmc=
 {% endhighlight %}
 
 
-### HTTP Digest Authentication ###
+### HTTP Basic Authentication ###
 
-Consumers authenticate to SimpleFIN Servers by using **HTTP Digest Authentication** with the credentials embedded in the decoded Access Token.  For example, using a Consumer using `curl` with the above credentials could access the `/accounts` endpoint with this command:
+Consumers authenticate to SimpleFIN Servers by using **HTTP Basic Authentication** with the credentials embedded in the decoded Access Token.  For example, using a Consumer using `curl` with the above credentials could access the `/accounts` endpoint with this command:
 
 For example, using the Access Token from above, a Consumer could make an authenticated request to the `/accounts` endpoint using `curl` like this:
 
 {% highlight bash %}
-curl --digest https://abc:def@simplefin.org
+curl https://abc:def@simplefin.org
 {% endhighlight %}
 
 The SimpleFIN Server:
 
-1. **Must** use Digest Authentication.
-2. **Must not** use Basic Authentication.
+1. **Must** use Basic Authentication.
+2. **Must** use HTTPS (SSL).
+3. **Must drop** HTTP connections (non-SSL).
 
 
 # SimpleFIN Data Format #
