@@ -1,5 +1,10 @@
 bundle jekyll serve
 
+Remake table of contents:
+
+  # npm install doctoc
+  doctoc protocol.md
+
 #### Python Reference
 
 Here's an example of using the [`ecdsa`](https://pypi.python.org/pypi/ecdsa/) and [`pyjwt`](https://github.com/jpadilla/pyjwt) Python libraries to generate a setup token:

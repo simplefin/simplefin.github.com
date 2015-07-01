@@ -7,6 +7,43 @@ proto_version: "1.0-draft.2"
 page_classes: protocol
 ---
 
+# Table of Contents #
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Introduction](#introduction)
+- [SimpleFIN HTTP Protocol](#simplefin-http-protocol)
+  - [Players](#players)
+  - [Overview](#overview)
+  - [URLS](#urls)
+    - [GET /info](#get-info)
+      - [Authentication](#authentication)
+      - [Success response](#success-response)
+    - [GET /create](#get-create)
+      - [Authentication](#authentication-1)
+    - [POST /claim/&lt;token&gt;](#post-claim&lttoken&gt)
+      - [Authentication](#authentication-2)
+      - [Response codes and content](#response-codes-and-content)
+    - [GET /accounts](#get-accounts)
+      - [Query parameters](#query-parameters)
+      - [Authentication](#authentication-3)
+      - [Response codes and content](#response-codes-and-content-1)
+  - [Authentication Pieces](#authentication-pieces)
+    - [Setup Token](#setup-token)
+    - [Access URL](#access-url)
+- [SimpleFIN Data Format](#simplefin-data-format)
+  - [Organization](#organization)
+  - [Account](#account)
+  - [Transaction](#transaction)
+  - [Account Set](#account-set)
+- [Recommendations](#recommendations)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# Introduction #
+
 Last updated: {{ page.last_modified }}
 
 Version: {{ page.proto_version }}
