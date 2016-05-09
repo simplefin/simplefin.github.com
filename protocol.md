@@ -2,8 +2,8 @@
 layout: default
 title: SimpleFIN Protocol
 link_title: Protocol
-last_modified: 2015-06-29
-proto_version: "1.0-draft.2"
+last_modified: 2016-05-09
+proto_version: "1.0-draft.3"
 page_classes: protocol
 ---
 
@@ -152,9 +152,7 @@ Get an Account Holder's transaction data.
 
 #### Authentication
 
-HTTP Digest authentication using credentisl in an [Access URL](#access-url).
-
-- HTTP Basic authentication **must not** be used.
+HTTP Basic authentication using credentials in an [Access URL](#access-url).
 
 #### Response codes and content ####
 
@@ -197,18 +195,17 @@ NDI0MjM3MzRkOWM=
 A Consumer exchanges a Setup Token for an Access URL by issuing an HTTP POST request to the URL encoded in the Setup Token.  The SimpleFIN Server will respond to the POST request with an Access URL in the body.  The Access URL will be in the following format:
 
 {% highlight text %}
-https://<id>-<password>:<secret>@<root_consumer_url_without_scheme>
+https://<id>:<key>@<root_consumer_url_without_scheme>
 {% endhighlight %}
 
 - `id` - a 32+ character, alphanumeric, random string used by the SimpleFIN Server to identify an Account Holder's accounts
-- `password` - a 32+ character, alphanumeric, random string password.
-- `secret` - a 32+ character, alphanumeric, random string shared secret.
+- `key` - a 32+ character, alphanumeric, random string password/key.
 - `root_consumer_url_without_scheme` - The SimpleFIN Server's Root Consumer URL without the scheme.  But notice that the scheme is `https:` for the Access URL.
 
 For example:
 
 {% highlight text %}
-https://37a5706bbe944e6284220dbe03545b80-d021e4bee73f4d98be63a41792f80780:c09d3b69211c4262b911e8917da56688@simplefin.example.com
+https://37a5706bbe944e6284220dbe03545b80:c09d3b69211c4262b911e8917da56688@simplefin.example.com
 {% endhighlight %}
 
 The SimpleFIN Server **must only** respond to this request once for a given Setup Token `token`.  Future POSTs with the same `token` **must** return 403 Forbidden.
