@@ -1,0 +1,13 @@
+* {
+    box-sizing: border-box;
+}
+
+nav.toc {
+
+}
+section {
+    display: flex;
+}
+section .right {
+    background-color: grey;
+}
