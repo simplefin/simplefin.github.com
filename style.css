@@ -172,3 +172,47 @@ warning::before {
     font-weight: bold;
     display: block;
 }
+@media screen and (max-width: 1200px) {
+    nav.toc {
+        display: block;
+        position: relative;
+        left: auto;
+        top: auto;
+        bottom: auto;
+        width: auto;
+    }
+    .page-wrap {
+        margin-left: 0;
+    }
+    .right-column {
+        width: 100vw;
+        display: none;
+    }
+    .main-column {
+        width: 100vw;
+        padding: 1rem 2rem 1rem 1rem;
+    }
+    .main-column > * {
+        width: 100%;
+    }
+    .main-column > section {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        padding: 0;
+    }
+    section .main {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+    section .example {
+        flex-basis: 100%;
+        max-width: 100%;
+        background-color: #333;
+        border-radius: 3px;
+    }
+    .main-column h1 {
+        width: 100vw;
+        margin-right: 0;
+    }
+}

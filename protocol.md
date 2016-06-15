@@ -1,5 +1,5 @@
 
-<img src="/img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol
+<img src="img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol
 
 - Version: 1.0-draft.4
 - Last modified: 15 Jun 2016
