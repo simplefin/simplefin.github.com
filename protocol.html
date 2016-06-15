@@ -53,18 +53,17 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 <div class="layout">
 <nav class="toc">
 <ul>
-<li><a href="#introduction">Introduction</a></li>
+<li><a href="/">Home</a></li>
+</ul>
+<ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#simplefin-bridge">SimpleFIN Bridge</a></li>
+</ul></li>
 <li><a href="#app-quickstart">App Quickstart</a><ul>
 <li><a href="#start-a-connection">1. Start a connection</a></li>
 <li><a href="#receive-a-simplefin-token">2. Receive a SimpleFIN Token</a></li>
 <li><a href="#claim-the-access-url">3. Claim the Access URL</a></li>
 <li><a href="#get-data">4. Get Data</a></li>
-</ul></li>
-<li><a href="#http-endpoints">HTTP Endpoints</a><ul>
-<li><a href="#server-info">Server Info</a></li>
-<li><a href="#create-simplefin-token">Create SimpleFIN Token</a></li>
-<li><a href="#claim-access-key">Claim Access Key</a></li>
-<li><a href="#get-account-data">Get account data</a></li>
 </ul></li>
 <li><a href="#data">Data</a><ul>
 <li><a href="#account-set">Account Set</a></li>
@@ -72,13 +71,23 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 <li><a href="#transaction">Transaction</a></li>
 <li><a href="#organization">Organization</a></li>
 </ul></li>
+<li><a href="#http-endpoints">HTTP Endpoints</a><ul>
+<li><a href="#server-info">Server Info</a></li>
+<li><a href="#create-simplefin-token">Create SimpleFIN Token</a></li>
+<li><a href="#claim-access-key">Claim Access Key</a></li>
+<li><a href="#get-account-data">Get account data</a></li>
+<li><a href="#server-implementation-guide">Server Implementation Guide</a></li>
+</ul></li>
 </ul>
 </nav>
 <div class="page-wrap">
 <div class="right-column"></div>
 <div class="main-column">
-<p>SimpleFIN version: 1.0-draft.3</p>
-<p>Last modified: 15 Jun 2016</p>
+<p><img src="/img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol</p>
+<ul>
+<li>Version: 1.0-draft.3</li>
+<li>Last modified: 15 Jun 2016</li>
+</ul>
 <h1 id="introduction">Introduction</h1>
 <p>The SimpleFIN protocol allows users to share read-only financial data with third parties. It’s similar to RSS for financial data.</p>
 <p>Three parties are involved in SimpleFIN:</p>
@@ -95,15 +104,19 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 <td>A person using a web browser. They have an account at a bank or other institution.</td>
 </tr>
 <tr class="even">
-<td>Server</td>
-<td>A SimpleFIN Server operated by a bank or other financial institution.</td>
-</tr>
-<tr class="odd">
 <td>Application</td>
 <td>Third party software that wants read-only access to a <em>User</em>’s financial data.</td>
 </tr>
+<tr class="odd">
+<td>Server</td>
+<td>A SimpleFIN Server operated by a bank or other financial institution.</td>
+</tr>
 </tbody>
 </table>
+<p>Users should visit the <a href="https://bridge.simplefin.org">SimpleFIN Bridge</a>.</p>
+<p>Application developers should start with the <a href="#app-quickstart">App Quickstart</a>.</p>
+<p>Banks/Financial Institutions wanting to host their own SimpleFIN Server should start at the <a href="#server-implementation-guide">TODO: Server Implementation Guide</a>.</p>
+<h2 id="simplefin-bridge">SimpleFIN Bridge</h2>
 <p>For optimal privacy, banks ought to implement SimpleFIN Servers. In some cases, where banks haven’t yet implemented SimpleFIN, the <a href="https://bridge.simplefin.org">SimpleFIN Bridge</a> can be used.</p>
 <h1 id="app-quickstart">App Quickstart</h1>
 <p>This guide is for application developers that want to integrate financial data (bank account balances/transactions) into their application.</p>
@@ -162,190 +175,6 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 <p>Sample response:</p>
 <div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
   <span class="dt">&quot;errors&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;You must reauthenticate.&quot;</span><span class="ot">]</span><span class="fu">,</span>
-  <span class="dt">&quot;accounts&quot;</span><span class="fu">:</span> <span class="ot">[</span>
-    <span class="fu">{</span>
-      <span class="dt">&quot;org&quot;</span><span class="fu">:</span> <span class="fu">{</span>
-        <span class="dt">&quot;domain&quot;</span><span class="fu">:</span> <span class="st">&quot;mybank.com&quot;</span><span class="fu">,</span>
-        <span class="dt">&quot;sfin-url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sfin.mybank.com&quot;</span>
-      <span class="fu">},</span>
-      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;2930002&quot;</span><span class="fu">,</span>
-      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Savings&quot;</span><span class="fu">,</span>
-      <span class="dt">&quot;currency&quot;</span><span class="fu">:</span> <span class="st">&quot;USD&quot;</span><span class="fu">,</span>
-      <span class="dt">&quot;balance&quot;</span><span class="fu">:</span> <span class="st">&quot;100.23&quot;</span><span class="fu">,</span>
-      <span class="dt">&quot;available-balance&quot;</span><span class="fu">:</span> <span class="st">&quot;75.23&quot;</span><span class="fu">,</span>
-      <span class="dt">&quot;balance-date&quot;</span><span class="fu">:</span> <span class="dv">978366153</span><span class="fu">,</span>
-      <span class="dt">&quot;transactions&quot;</span><span class="fu">:</span> <span class="ot">[]</span>
-    <span class="fu">}</span>
-  <span class="ot">]</span>
-<span class="fu">}</span></code></pre></div>
-</div>
-</section>
-<h1 id="http-endpoints">HTTP Endpoints</h1>
-<section>
-<div class="main">
-<p>A SimpleFIN Server has a root URL. All the resources below are relative to this root URL.</p>
-<p>Following are a list of all the endpoints a SimpleFIN Server must implement.</p>
-</div>
-<div class="example">
-<p>Here’s an example root URL, set to the shell environment variable <code>ROOT</code>.</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">ROOT=</span><span class="st">&quot;https://bridge.simplefin.org/simplefin&quot;</span></code></pre></div>
-</div>
-</section>
-<h2 id="server-info">Server Info</h2>
-<section>
-<div class="main">
-<p>Find out what versions of the SimpleFIN Protocol the server supports.</p>
-<h3 id="http-request">HTTP Request</h3>
-<p><code>GET /info</code></p>
-<h3 id="response-json">Response JSON</h3>
-<table>
-<thead>
-<tr class="header">
-<th>Attribute</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>versions</td>
-<td>An array of version strings that this server supports.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="example">
-<p>Request:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> https://bridge.simplefin.org/simplefin/info</code></pre></div>
-<p>Response:</p>
-<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
-    <span class="dt">&quot;versions&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;1.0-draft&quot;</span><span class="ot">]</span><span class="fu">,</span>
-<span class="fu">}</span></code></pre></div>
-</div>
-</section>
-<h2 id="create-simplefin-token">Create SimpleFIN Token</h2>
-<section>
-<div class="main">
-<p>An application directs a user to this URL to initiate a bank-app connection. When a user visits this URL the server:</p>
-<ol type="1">
-<li>Authenticates the user</li>
-<li>Guides the user to create a SimpleFIN Token.</li>
-<li>Tells the user to give the SimpleFIN Token to the application requesting it.</li>
-</ol>
-<p>This process could happen all at once with a single response (if the user is already authenticated) or it could be more involved. Either way, the end result is a copyable SimpleFIN Token.</p>
-<h3 id="http-request-1">HTTP Request</h3>
-<p><code>GET /create</code></p>
-</div>
-<div class="example">
-<p>For example, an application that wants to access a user’s transaction data could present the following in a web page:</p>
-<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">To connect your bank to this application,
-<span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;https://bridge.simplefin.org/simplefin/create&quot;</span><span class="kw">&gt;</span>click here<span class="kw">&lt;/a&gt;</span></code></pre></div>
-<p>An example SimpleFIN Token looks like this:</p>
-<pre><code>aHR0cHM6Ly9icmlkZ2Uuc2ltcGxlZmluLm9yZy9zaW1wbGVmaW4vY2xhaW0vZGVtbw==</code></pre>
-</div>
-</section>
-<h2 id="claim-access-key">Claim Access Key</h2>
-<section>
-<div class="main">
-<p>An application receives a SimpleFIN Token from a user. SimpleFIN Tokens are Base64-encoded URLs. A decoded SimpleFIN Token will point to this resource.</p>
-<h3 id="http-request-2">HTTP Request</h3>
-<p><code>POST /claim/:token</code></p>
-<table>
-<thead>
-<tr class="header">
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>:token</td>
-<td>A one-time use code embedded within the SimpleFIN Token.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="successful-response-body">Successful response body</h3>
-<p>Response is an Access Key, which is just a URL with included Basic Auth credentials.</p>
-<h3 id="responses">Responses</h3>
-<table>
-<thead>
-<tr class="header">
-<th>Code</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>200</td>
-<td>Successful response</td>
-</tr>
-<tr class="even">
-<td>403</td>
-<td>The claim token either does not exist or has already been used claimed by someone else. Receiving this could mean that the user’s transaction information has been compromised.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="example">
-<p>The following example uses a demo token that can be reused:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">TOKEN=</span><span class="st">&quot;aHR0cHM6Ly9icmlkZ2Uuc2ltcGxlZmluLm9yZy9zaW1wbGVmaW4vY2xhaW0vZGVtbw==&quot;</span></code></pre></div>
-<p>Decode the token:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">DECODED_TOKEN=$(</span><span class="kw">echo</span> <span class="st">&quot;</span><span class="ot">${TOKEN}</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="kw">base64</span> -D<span class="ot">)</span></code></pre></div>
-<p>Claim the Access Key associated with this SimpleFIN Token:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">ACCESS_KEY=$(</span><span class="kw">curl</span> -X POST <span class="st">&quot;</span><span class="ot">${DECODED_TOKEN}</span><span class="st">&quot;</span><span class="ot">)</span>
-<span class="co"># https://demo:demo@bridge.simplefin.org/simplefin</span></code></pre></div>
-</div>
-</section>
-<h2 id="get-account-data">Get account data</h2>
-<section>
-<div class="main">
-<h3 id="http-request-3">HTTP Request</h3>
-<p><code>GET /accounts</code></p>
-<table>
-<thead>
-<tr class="header">
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>start-date</td>
-<td>XXX</td>
-</tr>
-<tr class="even">
-<td>end-date</td>
-<td>XXX</td>
-</tr>
-</tbody>
-</table>
-<h3 id="successful-response">Successful response</h3>
-<p>A successful response will be a JSON <a href="#account-set">Account Set</a>.</p>
-<h3 id="responses-1">Responses</h3>
-<table>
-<thead>
-<tr class="header">
-<th>Code</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>200</td>
-<td>Successful response</td>
-</tr>
-<tr class="even">
-<td>403</td>
-<td>Authentication failed. This could be because access has been revoked or if the credentials are incorrect.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="example">
-<p>Request:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> <span class="st">&quot;https://demo:demo@bridge.simplefin.org/simplefin/accounts&quot;</span></code></pre></div>
-<p>Sample response:</p>
-<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
-  <span class="dt">&quot;errors&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span>
   <span class="dt">&quot;accounts&quot;</span><span class="fu">:</span> <span class="ot">[</span>
     <span class="fu">{</span>
       <span class="dt">&quot;org&quot;</span><span class="fu">:</span> <span class="fu">{</span>
@@ -624,6 +453,204 @@ Though the array of strings are meant for users, you <strong>must</strong> sanit
 <span class="fu">}</span></code></pre></div>
 </div>
 </section>
+<h1 id="http-endpoints">HTTP Endpoints</h1>
+<section>
+<div class="main">
+<p>A SimpleFIN Server has a root URL. All the resources below are relative to this root URL.</p>
+<p>Following are all 4 the endpoints a SimpleFIN Server must implement.</p>
+<ul>
+<li><a href="#server-info"><code>GET /info</code></a></li>
+<li><a href="#create-simplefin-token"><code>GET /create</code></a></li>
+<li><a href="#claim-access-key"><code>POST /claim/:token</code></a></li>
+<li><a href="#get-account-data"><code>GET /accounts</code></a></li>
+</ul>
+</div>
+<div class="example">
+<p>Here’s an example root URL, set to the shell environment variable <code>ROOT</code>.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">ROOT=</span><span class="st">&quot;https://bridge.simplefin.org/simplefin&quot;</span></code></pre></div>
+</div>
+</section>
+<h2 id="server-info">Server Info</h2>
+<section>
+<div class="main">
+<p>Find out what versions of the SimpleFIN Protocol the server supports.</p>
+<h3 id="http-request">HTTP Request</h3>
+<p><code>GET /info</code></p>
+<h3 id="response-json">Response JSON</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>versions</td>
+<td>An array of version strings that this server supports.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="example">
+<p>Request:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> https://bridge.simplefin.org/simplefin/info</code></pre></div>
+<p>Response:</p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+    <span class="dt">&quot;versions&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;1.0-draft&quot;</span><span class="ot">]</span><span class="fu">,</span>
+<span class="fu">}</span></code></pre></div>
+</div>
+</section>
+<h2 id="create-simplefin-token">Create SimpleFIN Token</h2>
+<section>
+<div class="main">
+<p>An application directs a user to this URL to initiate a bank-app connection. When a user visits this URL the server:</p>
+<ol type="1">
+<li>Authenticates the user</li>
+<li>Guides the user to create a SimpleFIN Token.</li>
+<li>Tells the user to give the SimpleFIN Token to the application requesting it.</li>
+</ol>
+<p>This process could happen all at once with a single response (if the user is already authenticated) or it could be more involved. Either way, the end result is a copyable SimpleFIN Token.</p>
+<h3 id="http-request-1">HTTP Request</h3>
+<p><code>GET /create</code></p>
+</div>
+<div class="example">
+<p>For example, an application that wants to access a user’s transaction data could present the following in a web page:</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">To connect your bank to this application,
+<span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;https://bridge.simplefin.org/simplefin/create&quot;</span><span class="kw">&gt;</span>click here<span class="kw">&lt;/a&gt;</span></code></pre></div>
+<p>An example SimpleFIN Token looks like this:</p>
+<pre><code>aHR0cHM6Ly9icmlkZ2Uuc2ltcGxlZmluLm9yZy9zaW1wbGVmaW4vY2xhaW0vZGVtbw==</code></pre>
+</div>
+</section>
+<h2 id="claim-access-key">Claim Access Key</h2>
+<section>
+<div class="main">
+<p>An application receives a SimpleFIN Token from a user. SimpleFIN Tokens are Base64-encoded URLs. A decoded SimpleFIN Token will point to this resource.</p>
+<h3 id="http-request-2">HTTP Request</h3>
+<p><code>POST /claim/:token</code></p>
+<table>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>:token</td>
+<td>A one-time use code embedded within the SimpleFIN Token.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="successful-response-body">Successful response body</h3>
+<p>Response is an Access Key, which is just a URL with included Basic Auth credentials.</p>
+<h3 id="responses">Responses</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>200</td>
+<td>Successful response</td>
+</tr>
+<tr class="even">
+<td>403</td>
+<td>The claim token either does not exist or has already been used claimed by someone else. Receiving this could mean that the user’s transaction information has been compromised.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="example">
+<p>The following example uses a demo token that can be reused:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">TOKEN=</span><span class="st">&quot;aHR0cHM6Ly9icmlkZ2Uuc2ltcGxlZmluLm9yZy9zaW1wbGVmaW4vY2xhaW0vZGVtbw==&quot;</span></code></pre></div>
+<p>Decode the token:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">DECODED_TOKEN=$(</span><span class="kw">echo</span> <span class="st">&quot;</span><span class="ot">${TOKEN}</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="kw">base64</span> -D<span class="ot">)</span></code></pre></div>
+<p>Claim the Access Key associated with this SimpleFIN Token:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">ACCESS_KEY=$(</span><span class="kw">curl</span> -X POST <span class="st">&quot;</span><span class="ot">${DECODED_TOKEN}</span><span class="st">&quot;</span><span class="ot">)</span>
+<span class="co"># https://demo:demo@bridge.simplefin.org/simplefin</span></code></pre></div>
+</div>
+</section>
+<h2 id="get-account-data">Get account data</h2>
+<section>
+<div class="main">
+<p>Retrieve account and transaction data.</p>
+<h3 id="http-request-3">HTTP Request</h3>
+<p><code>GET /accounts</code></p>
+<table>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>start-date</td>
+<td>optional</td>
+<td>If given, transactions will be restricted to those on or after this Unix epoch timestamp.</td>
+</tr>
+<tr class="even">
+<td>end-date</td>
+<td>optional</td>
+<td>If given, transactions will be restricted to those before (<strong>but not on</strong>) this Unix epoch timestamp.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="authentication">Authentication</h3>
+<p>HTTP Basic Authentication using credentials obtained from the <a href="#claim-access-key">Claim Access Key</a> endpoint are used.</p>
+<h3 id="successful-response">Successful response</h3>
+<p>A successful response will be a JSON <a href="#account-set">Account Set</a>.</p>
+<h3 id="responses-1">Responses</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>200</td>
+<td>Successful response</td>
+</tr>
+<tr class="even">
+<td>403</td>
+<td>Authentication failed. This could be because access has been revoked or if the credentials are incorrect.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="example">
+<p>Request:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> <span class="st">&quot;https://demo:demo@bridge.simplefin.org/simplefin/accounts?start-date=978360153&quot;</span></code></pre></div>
+<p>Sample response:</p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+  <span class="dt">&quot;errors&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span>
+  <span class="dt">&quot;accounts&quot;</span><span class="fu">:</span> <span class="ot">[</span>
+    <span class="fu">{</span>
+      <span class="dt">&quot;org&quot;</span><span class="fu">:</span> <span class="fu">{</span>
+        <span class="dt">&quot;domain&quot;</span><span class="fu">:</span> <span class="st">&quot;mybank.com&quot;</span><span class="fu">,</span>
+        <span class="dt">&quot;sfin-url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sfin.mybank.com&quot;</span>
+      <span class="fu">},</span>
+      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;2930002&quot;</span><span class="fu">,</span>
+      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Savings&quot;</span><span class="fu">,</span>
+      <span class="dt">&quot;currency&quot;</span><span class="fu">:</span> <span class="st">&quot;USD&quot;</span><span class="fu">,</span>
+      <span class="dt">&quot;balance&quot;</span><span class="fu">:</span> <span class="st">&quot;100.23&quot;</span><span class="fu">,</span>
+      <span class="dt">&quot;available-balance&quot;</span><span class="fu">:</span> <span class="st">&quot;75.23&quot;</span><span class="fu">,</span>
+      <span class="dt">&quot;balance-date&quot;</span><span class="fu">:</span> <span class="dv">978366153</span><span class="fu">,</span>
+      <span class="dt">&quot;transactions&quot;</span><span class="fu">:</span> <span class="ot">[]</span>
+    <span class="fu">}</span>
+  <span class="ot">]</span>
+<span class="fu">}</span></code></pre></div>
+</div>
+</section>
+<h2 id="server-implementation-guide">Server Implementation Guide</h2>
+<p>TODO</p>
 </div>
 
 </div>

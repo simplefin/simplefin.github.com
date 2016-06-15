@@ -1,7 +1,8 @@
 
-SimpleFIN version: 1.0-draft.3
+<img src="/img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol
 
-Last modified: 15 Jun 2016
+- Version: 1.0-draft.3
+- Last modified: 15 Jun 2016
 
 # Introduction
 
@@ -12,8 +13,18 @@ Three parties are involved in SimpleFIN:
 | Party | Description |
 |---|---|
 | User | A person using a web browser.  They have an account at a bank or other institution. |
-| Server | A SimpleFIN Server operated by a bank or other financial institution. |
 | Application | Third party software that wants read-only access to a *User*'s financial data. |
+| Server | A SimpleFIN Server operated by a bank or other financial institution. |
+
+Users should visit the [SimpleFIN Bridge](https://bridge.simplefin.org).
+
+Application developers should start with the [App Quickstart](#app-quickstart).
+
+Banks/Financial Institutions wanting to host their own SimpleFIN Server should start at the [TODO: Server Implementation Guide](#server-implementation-guide).
+
+
+
+## SimpleFIN Bridge
 
 For optimal privacy, banks ought to implement SimpleFIN Servers.  In some cases, where banks haven't yet implemented SimpleFIN, the [SimpleFIN Bridge](https://bridge.simplefin.org) can be used.
 
@@ -150,225 +161,6 @@ Sample response:
 
 </div>
 
-</section>
-
-# HTTP Endpoints
-
-<section>
-
-<div class="main">
-A SimpleFIN Server has a root URL.  All the resources below are relative to this root URL.
-
-Following are a list of all the endpoints a SimpleFIN Server must implement.
-</div>
-
-<div class="example">
-Here's an example root URL, set to the shell environment variable `ROOT`.
-
-~~~{.bash}
-ROOT="https://bridge.simplefin.org/simplefin"
-~~~
-</div>
-
-</section>
-
-
-## Server Info
-
-<section>
-
-<div class="main">
-Find out what versions of the SimpleFIN Protocol the server supports.
-
-### HTTP Request
-
-`GET /info`
-
-### Response JSON
-
-| Attribute | Description |
-|---|---|
-| versions | An array of version strings that this server supports. |
-
-</div>
-
-<div class="example">
-
-Request:
-
-~~~{.bash}
-curl https://bridge.simplefin.org/simplefin/info
-~~~
-
-Response:
-
-~~~{.json}
-{
-    "versions": ["1.0-draft"],
-}
-~~~
-</div>
-
-
-</section>
-
-## Create SimpleFIN Token
-
-<section>
-
-<div class="main">
-An application directs a user to this URL to initiate a bank-app connection.  When a user visits this URL the server:
-
-1. Authenticates the user
-2. Guides the user to create a SimpleFIN Token.
-3. Tells the user to give the SimpleFIN Token to the application requesting it.
-
-This process could happen all at once with a single response (if the user is already authenticated) or it could be more involved.  Either way, the end result is a copyable SimpleFIN Token.
-
-### HTTP Request
-
-`GET /create`
-
-
-
-</div>
-
-<div class="example">
-For example, an application that wants to access a user's transaction data could present the following in a web page:
-
-~~~{.html}
-To connect your bank to this application,
-<a href="https://bridge.simplefin.org/simplefin/create">click here</a>
-~~~
-
-An example SimpleFIN Token looks like this:
-
-~~~
-aHR0cHM6Ly9icmlkZ2Uuc2ltcGxlZmluLm9yZy9zaW1wbGVmaW4vY2xhaW0vZGVtbw==
-~~~
-
-</div>
-
-</section>
-
-
-## Claim Access Key
-
-<section>
-
-<div class="main">
-
-An application receives a SimpleFIN Token from a user.  SimpleFIN Tokens are Base64-encoded URLs.  A decoded SimpleFIN Token will point to this resource.
-
-### HTTP Request
-
-`POST /claim/:token`
-
-| Parameter | Description |
-|---|---|
-| :token | A one-time use code embedded within the SimpleFIN Token. |
-
-### Successful response body
-
-Response is an Access Key, which is just a URL with included Basic Auth credentials.
-
-### Responses
-
-| Code | Description |
-|---|---|
-| 200 | Successful response |
-| 403 | The claim token either does not exist or has already been used claimed by someone else.  Receiving this could mean that the user's transaction information has been compromised. |
-
-    
-</div>
-
-<div class="example">
-
-The following example uses a demo token that can be reused:
-
-~~~{.bash}
-TOKEN="aHR0cHM6Ly9icmlkZ2Uuc2ltcGxlZmluLm9yZy9zaW1wbGVmaW4vY2xhaW0vZGVtbw=="
-~~~
-
-Decode the token:
-
-~~~{.bash}
-DECODED_TOKEN=$(echo "${TOKEN}" | base64 -D)
-~~~
-
-Claim the Access Key associated with this SimpleFIN Token:
-
-~~~{.bash}
-ACCESS_KEY=$(curl -X POST "${DECODED_TOKEN}")
-# https://demo:demo@bridge.simplefin.org/simplefin
-~~~
-
-
-</div>
-
-</section>
-
-
-## Get account data
-
-
-<section>
-
-<div class="main">
-### HTTP Request
-
-`GET /accounts`
-
-| Parameter | Description |
-|---|---|
-| start-date | XXX |
-| end-date | XXX |
-
-
-### Successful response
-
-A successful response will be a JSON [Account Set](#account-set).
-
-### Responses
-
-| Code | Description |
-|---|---|
-| 200 | Successful response |
-| 403 | Authentication failed.  This could be because access has been revoked or if the credentials are incorrect. |
-
-</div>
-
-<div class="example">
-Request:
-
-~~~{.bash}
-curl "https://demo:demo@bridge.simplefin.org/simplefin/accounts"
-~~~
-
-Sample response:
-
-~~~{.json}
-{
-  "errors": [],
-  "accounts": [
-    {
-      "org": {
-        "domain": "mybank.com",
-        "sfin-url": "https://sfin.mybank.com"
-      },
-      "id": "2930002",
-      "name": "Savings",
-      "currency": "USD",
-      "balance": "100.23",
-      "available-balance": "75.23",
-      "balance-date": 978366153,
-      "transactions": []
-    }
-  ]
-}
-~~~
-
-</div>
 </section>
 
 
@@ -550,3 +342,238 @@ Though the array of strings are meant for users, you **must** sanitize the strin
 </div>
 
 </section>
+
+
+# HTTP Endpoints
+
+<section>
+
+<div class="main">
+A SimpleFIN Server has a root URL.  All the resources below are relative to this root URL.
+
+Following are all 4 the endpoints a SimpleFIN Server must implement.
+
+- [`GET /info`](#server-info)
+- [`GET /create`](#create-simplefin-token)
+- [`POST /claim/:token`](#claim-access-key)
+- [`GET /accounts`](#get-account-data)
+
+</div>
+
+<div class="example">
+Here's an example root URL, set to the shell environment variable `ROOT`.
+
+~~~{.bash}
+ROOT="https://bridge.simplefin.org/simplefin"
+~~~
+</div>
+
+</section>
+
+
+## Server Info
+
+<section>
+
+<div class="main">
+Find out what versions of the SimpleFIN Protocol the server supports.
+
+### HTTP Request
+
+`GET /info`
+
+### Response JSON
+
+| Attribute | Description |
+|---|---|
+| versions | An array of version strings that this server supports. |
+
+</div>
+
+<div class="example">
+
+Request:
+
+~~~{.bash}
+curl https://bridge.simplefin.org/simplefin/info
+~~~
+
+Response:
+
+~~~{.json}
+{
+    "versions": ["1.0-draft"],
+}
+~~~
+</div>
+
+
+</section>
+
+## Create SimpleFIN Token
+
+<section>
+
+<div class="main">
+An application directs a user to this URL to initiate a bank-app connection.  When a user visits this URL the server:
+
+1. Authenticates the user
+2. Guides the user to create a SimpleFIN Token.
+3. Tells the user to give the SimpleFIN Token to the application requesting it.
+
+This process could happen all at once with a single response (if the user is already authenticated) or it could be more involved.  Either way, the end result is a copyable SimpleFIN Token.
+
+### HTTP Request
+
+`GET /create`
+
+
+
+</div>
+
+<div class="example">
+For example, an application that wants to access a user's transaction data could present the following in a web page:
+
+~~~{.html}
+To connect your bank to this application,
+<a href="https://bridge.simplefin.org/simplefin/create">click here</a>
+~~~
+
+An example SimpleFIN Token looks like this:
+
+~~~
+aHR0cHM6Ly9icmlkZ2Uuc2ltcGxlZmluLm9yZy9zaW1wbGVmaW4vY2xhaW0vZGVtbw==
+~~~
+
+</div>
+
+</section>
+
+
+## Claim Access Key
+
+<section>
+
+<div class="main">
+
+An application receives a SimpleFIN Token from a user.  SimpleFIN Tokens are Base64-encoded URLs.  A decoded SimpleFIN Token will point to this resource.
+
+### HTTP Request
+
+`POST /claim/:token`
+
+| Parameter | Description |
+|---|---|
+| :token | A one-time use code embedded within the SimpleFIN Token. |
+
+### Successful response body
+
+Response is an Access Key, which is just a URL with included Basic Auth credentials.
+
+### Responses
+
+| Code | Description |
+|---|---|
+| 200 | Successful response |
+| 403 | The claim token either does not exist or has already been used claimed by someone else.  Receiving this could mean that the user's transaction information has been compromised. |
+
+    
+</div>
+
+<div class="example">
+
+The following example uses a demo token that can be reused:
+
+~~~{.bash}
+TOKEN="aHR0cHM6Ly9icmlkZ2Uuc2ltcGxlZmluLm9yZy9zaW1wbGVmaW4vY2xhaW0vZGVtbw=="
+~~~
+
+Decode the token:
+
+~~~{.bash}
+DECODED_TOKEN=$(echo "${TOKEN}" | base64 -D)
+~~~
+
+Claim the Access Key associated with this SimpleFIN Token:
+
+~~~{.bash}
+ACCESS_KEY=$(curl -X POST "${DECODED_TOKEN}")
+# https://demo:demo@bridge.simplefin.org/simplefin
+~~~
+
+
+</div>
+
+</section>
+
+
+## Get account data
+
+
+<section>
+
+<div class="main">
+Retrieve account and transaction data.
+
+### HTTP Request
+
+`GET /accounts`
+
+| Parameter | Required | Description |
+|---|---|---|
+| start-date | optional | If given, transactions will be restricted to those on or after this Unix epoch timestamp. |
+| end-date | optional | If given, transactions will be restricted to those before (**but not on**) this Unix epoch timestamp. |
+
+### Authentication
+
+HTTP Basic Authentication using credentials obtained from the [Claim Access Key](#claim-access-key) endpoint are used.
+
+### Successful response
+
+A successful response will be a JSON [Account Set](#account-set).
+
+### Responses
+
+| Code | Description |
+|---|---|
+| 200 | Successful response |
+| 403 | Authentication failed.  This could be because access has been revoked or if the credentials are incorrect. |
+
+</div>
+
+<div class="example">
+Request:
+
+~~~{.bash}
+curl "https://demo:demo@bridge.simplefin.org/simplefin/accounts?start-date=978360153"
+~~~
+
+Sample response:
+
+~~~{.json}
+{
+  "errors": [],
+  "accounts": [
+    {
+      "org": {
+        "domain": "mybank.com",
+        "sfin-url": "https://sfin.mybank.com"
+      },
+      "id": "2930002",
+      "name": "Savings",
+      "currency": "USD",
+      "balance": "100.23",
+      "available-balance": "75.23",
+      "balance-date": 978366153,
+      "transactions": []
+    }
+  ]
+}
+~~~
+
+</div>
+</section>
+
+## Server Implementation Guide
+
+TODO
