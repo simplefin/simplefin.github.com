@@ -6,6 +6,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #cccccc; background-color: #303030; }
+code > span.kw { color: #f0dfaf; } /* Keyword */
+code > span.dt { color: #dfdfbf; } /* DataType */
+code > span.dv { color: #dcdccc; } /* DecVal */
+code > span.bn { color: #dca3a3; } /* BaseN */
+code > span.fl { color: #c0bed1; } /* Float */
+code > span.ch { color: #dca3a3; } /* Char */
+code > span.st { color: #cc9393; } /* String */
+code > span.co { color: #7f9f7f; } /* Comment */
+code > span.ot { color: #efef8f; } /* Other */
+code > span.al { color: #ffcfaf; } /* Alert */
+code > span.fu { color: #efef8f; } /* Function */
+code > span.er { color: #c3bf9f; } /* Error */
+code > span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+code > span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code > span.sc { color: #dca3a3; } /* SpecialChar */
+code > span.vs { color: #cc9393; } /* VerbatimString */
+code > span.ss { color: #cc9393; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #f0dfaf; } /* ControlFlow */
+code > span.op { color: #f0efd0; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code > span.at { } /* Attribute */
+code > span.do { color: #7f9f7f; } /* Documentation */
+code > span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code > span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+  </style>
   <link rel="stylesheet" href="style.css">
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
@@ -16,18 +54,97 @@
 <nav class="toc">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
+<li><a href="#http-endpoints">HTTP Endpoints</a><ul>
+<li><a href="#server-info">Server Info</a></li>
+<li><a href="#start-connecting">Start connecting</a></li>
+<li><a href="#claim-access">Claim access</a></li>
+</ul></li>
+<li><a href="#guides">Guides</a><ul>
+<li><a href="#application-developers">Application Developers</a></li>
+<li><a href="#banksproviders">Banks/Providers</a></li>
+</ul></li>
 </ul>
 </nav>
-<div class="content">
+<div class="page-wrap">
+<div class="right-column"></div>
+<div class="main-column">
 <h1 id="introduction">Introduction</h1>
+<p>The SimpleFIN protocol allows users to share read-only financial data with third parties.</p>
+<h1 id="http-endpoints">HTTP Endpoints</h1>
 <section>
-<p>hello</p>
-<div class="right">
-<p>foo</p>
-<p>bar</p>
+<div class="main">
+<p>A SimpleFIN Server has a root URL. All the resources below are relative to this root URL.</p>
+</div>
+<div class="example">
+<p>Here’s an example root URL, set to the shell environment variable <code>ROOT</code>.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">ROOT=</span><span class="st">&quot;https://bridge.simplefin.org/simplefin&quot;</span></code></pre></div>
 </div>
 </section>
+<h2 id="server-info">Server Info</h2>
+<section>
+<div class="main">
+<p>Find out what versions of the SimpleFIN Protocol the server supports.</p>
+<h3 id="http-request">HTTP Request</h3>
+<p><code>GET /info</code></p>
+<h3 id="response-json">Response JSON</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>versions</td>
+<td>An array of version strings that this server supports.</td>
+</tr>
+</tbody>
+</table>
 </div>
+<div class="example">
+<p>Request:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">curl</span> https://bridge.simplefin.org/simplefin/info</code></pre></div>
+<p>Response:</p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+    <span class="dt">&quot;versions&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;1.0-draft&quot;</span><span class="ot">]</span><span class="fu">,</span>
+<span class="fu">}</span></code></pre></div>
+</div>
+</section>
+<h2 id="start-connecting">Start connecting</h2>
+<section>
+<div class="main">
+<p>An application directs a user to this URL to initiate connecting.</p>
+<h3 id="http-request-1">HTTP Request</h3>
+<p><code>GET /create</code></p>
+<h3 id="response-html">Response HTML</h3>
+<p>The response is a web page that:</p>
+<ol type="1">
+<li>Authenticates the user</li>
+<li>Guides the user to create a SimpleFIN Token</li>
+</ol>
+</div>
+<div class="example">
+<p>For example, an application that wants to access a user’s transaction data could present the following in a web page:</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html">To connect your bank to this application,
+<span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;https://bridge.simplefin.org/simplefin/create&quot;</span><span class="kw">&gt;</span>click here<span class="kw">&lt;/a&gt;</span></code></pre></div>
+</div>
+</section>
+<h2 id="claim-access">Claim access</h2>
+<section>
+<div class="main">
+
+</div>
+<div class="example">
+
+</div>
+</section>
+<h1 id="guides">Guides</h1>
+<h2 id="application-developers">Application Developers</h2>
+<h2 id="banksproviders">Banks/Providers</h2>
+<p>More words.</p>
+</div>
+
 </div>
 </body>
 </html>

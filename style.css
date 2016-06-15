@@ -1,13 +1,146 @@
+@import 'https://fonts.googleapis.com/css?family=Work+Sans';
+
 * {
     box-sizing: border-box;
+    font-family: 'Work Sans', sans-serif;
+}
+pre,
+code,
+code * {
+    font-family: monospace;
+}
+code {
+    background-color: transparent;
+}
+.main code,
+.main-column code {
+    background: rgba(0,0,0,0.1);
+    color: steelblue;
+    padding: 0.1rem 0.2rem;
+    border-radius: 2px;
+}
+pre {
+    border-radius: 2px;
+    padding: 0.5rem;
+}
+pre,
+pre code,
+pre * {
+    color: #333;
+}
+body {
+    padding: 0;
+    margin: 0;
 }
 
 nav.toc {
-
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 14vw;
+    padding: 1rem;
+    position: fixed;
+    background-color: #333;
+    color: #fff;
 }
-section {
+nav.toc li {
+    margin-bottom: 0.25rem;
+}
+nav.toc ul {
+    margin: 0;
+    padding: 0;
+    margin-left: 0.5rem;
+    list-style: none;
+}
+nav.toc li ul {
+    margin-top: 0.25rem;
+    margin-left: 1rem;
+}
+nav.toc a {
+    color: #fff;
+    text-decoration: none;
+}
+nav.toc a:visited {
+    color: #08c;
+}
+.page-wrap {
+    margin-left: 14vw;
+    position: relative;
+    background: #fff;
+    min-height: 100vh;
+    color: #333;
+    overflow-x: hidden;
+}
+.right-column {
+    width: 42vw;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    background-color: #333;
+    min-height: 100vh;
+}
+.main-column {
+    position: relative;
+    width: 86vw;
+    padding: 1rem;
+}
+.main-column > * {
+    width: 42vw;
+}
+.main-column > section {
+    position: relative;
     display: flex;
+    width: 83vw;
 }
-section .right {
-    background-color: grey;
+section .main {
+    flex-basis: 50%;
+}
+section .example {
+    flex-basis: 50%;
+    padding: 0 1rem 0 2rem;
+    color: #eee;
+}
+
+.main-column h2 {
+    background-color: #eee;
+    margin-left: -1rem;
+    width: 86vw;
+    padding: 1rem;
+}
+
+table {
+    border-collapse: collapse;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+table th {
+    text-align: left;
+}
+table tbody {
+    border: 1px solid lightgrey;
+}
+table th,
+table td {
+    padding: 0.25rem 0.75rem;
+}
+
+h1, h2, h3, h4, h5 {
+    margin-top: 3rem;
+    margin-bottom: 0rem;
+}
+h1 {
+    font-size: 2rem;
+    border: 1px solid orange;
+    border-width: 0 0 3px;
+    margin-right: 45vw;
+    margin-top: 4rem;
+}
+h2 {
+    font-size: 1.5rem;
+}
+h3 {
+    font-size: 1.1rem;
 }
