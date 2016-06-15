@@ -1,19 +1,23 @@
 @import 'https://fonts.googleapis.com/css?family=Work+Sans';
+@import 'https://fonts.googleapis.com/css?family=Open+Sans';
 
 * {
     box-sizing: border-box;
-    font-family: 'Work Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 pre,
 code,
 code * {
     font-family: monospace;
 }
+pre {
+    max-width: 100%;
+    overflow: auto;
+}
 code {
     background-color: transparent;
 }
-.main code,
-.main-column code {
+.main code {
     background: rgba(0,0,0,0.1);
     color: steelblue;
     padding: 0.1rem 0.2rem;
@@ -22,11 +26,6 @@ code {
 pre {
     border-radius: 2px;
     padding: 0.5rem;
-}
-pre,
-pre code,
-pre * {
-    color: #333;
 }
 body {
     padding: 0;
@@ -42,6 +41,7 @@ nav.toc {
     position: fixed;
     background-color: #333;
     color: #fff;
+    overflow-y: auto;
 }
 nav.toc li {
     margin-bottom: 0.25rem;
@@ -96,18 +96,29 @@ nav.toc a:visited {
 }
 section .main {
     flex-basis: 50%;
+    max-width: 50%;
 }
 section .example {
     flex-basis: 50%;
     padding: 0 1rem 0 2rem;
     color: #eee;
+    max-width: 50%;
 }
 
-.main-column h2 {
+.main-column h1 {
     background-color: #eee;
     margin-left: -1rem;
     width: 86vw;
     padding: 1rem;
+}
+
+.main-column h2 {
+    sbackground-color: #eee;
+    margin-left: -1rem;
+    width: 86vw;
+    padding: 1rem;
+    border: 3px solid #444;
+    border-width: 0 0 2px;
 }
 
 table {
@@ -125,6 +136,10 @@ table tbody {
 table th,
 table td {
     padding: 0.25rem 0.75rem;
+    min-width: 15%;
+}
+table tr:nth-child(even) td {
+    background-color: #eee;
 }
 
 h1, h2, h3, h4, h5 {
@@ -133,9 +148,6 @@ h1, h2, h3, h4, h5 {
 }
 h1 {
     font-size: 2rem;
-    border: 1px solid orange;
-    border-width: 0 0 3px;
-    margin-right: 45vw;
     margin-top: 4rem;
 }
 h2 {
@@ -143,4 +155,21 @@ h2 {
 }
 h3 {
     font-size: 1.1rem;
+}
+
+
+warning {
+    border: 1px solid orange;
+    border-width: 0 0 0 12px;
+    background-color: #eee;
+    padding: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+warning::before {
+    content: 'WARNING';
+    color: orange;
+    font-weight: bold;
+    display: block;
 }
