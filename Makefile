@@ -1,7 +1,7 @@
 
 .PHONY: all watch
 
-all: protocol.html img/flow.svg
+all: protocol.html diagrams
 
 protocol.html: protocol.md style.css pandoc_template.html
 	cat protocol.md | pandoc \
@@ -12,8 +12,10 @@ protocol.html: protocol.md style.css pandoc_template.html
 		--columns=10000 \
 		--template pandoc_template.html > $@
 
-img/flow.svg: flow.seqdiag
-	seqdiag flow.seqdiag -o $@ -Tsvg -a
+diagrams: $(patsubst %,img/%.svg, $(basename $(notdir $(wildcard diag/*.seqdiag))))
+
+img/%.svg: diag/%.seqdiag
+	seqdiag $^ -o $@ -Tsvg -a
 
 watch:
 	watchmedo shell-command \

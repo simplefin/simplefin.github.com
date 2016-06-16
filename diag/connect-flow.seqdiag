@@ -1,4 +1,5 @@
 seqdiag {
+  User; App; Server;
   autonumber = True;
   default_note_color = lightblue;
   default_fontsize = 14;

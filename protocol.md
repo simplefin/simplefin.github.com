@@ -6,7 +6,9 @@
 
 # Introduction
 
-The SimpleFIN protocol allows users to share read-only financial data with third parties.  It's similar to RSS for financial data.
+The SimpleFIN protocol allows users to share read-only financial data with third parties.  It's similar to RSS, but for financial data.
+
+Though intended mostly for banks, it can also be used for reward points or gift certificate balances (e.g. Frequent Flyer Miles, Amazon gift card balance, etc...)
 
 Three parties are involved in SimpleFIN:
 
@@ -16,19 +18,22 @@ Three parties are involved in SimpleFIN:
 | Application | Third party software that wants read-only access to a *User*'s financial data. |
 | Server | A SimpleFIN Server operated by a bank or other financial institution. |
 
-Users should visit the [SimpleFIN Bridge](https://bridge.simplefin.org).
-
 Application developers should start with the [App Quickstart](#app-quickstart).
 
-Banks/Financial Institutions wanting to host their own SimpleFIN Server should start at the [TODO: Server Implementation Guide](#server-implementation-guide).
+Banks or financial institutions wanting to host their own SimpleFIN Server should start at the [Server Implementation Guide](#server-implementation-guide).
 
+Users should visit the [SimpleFIN Bridge](https://bridge.simplefin.org).
 
 
 ## Flow
 
 This diagram shows how a User gives read-only bank account access to an App:
 
-![](img/flow.svg)
+![](img/connect-flow.svg)
+
+And this diagram shows how a User can revoke an App's access:
+
+![](img/revoke-flow.svg)
 
 
 ## SimpleFIN Bridge
@@ -112,7 +117,7 @@ CLAIM_URL=$(echo "${SIMPLEFIN_TOKEN}" | base64 --decode)
 # https://bridge.simplefin.org/simplefin/claim/demo
 ~~~
 
-Make a POST request to the decoded URL to get an Access Key:
+Make a POST request to the decoded URL to get an Access URL:
 
 ~~~{.bash}
 ACCESS_URL=$(curl -X POST "${CLAIM_URL}")
@@ -172,6 +177,36 @@ Sample response:
 
 </section>
 
+
+## Checklist
+
+<section>
+
+<div class="main">
+
+The following checklists can help make sure your SimpleFIN-capable application is implemented correctly:
+
+### Required
+
+The application:
+
+1. Handles a 403 response when claiming an Access URL.
+2. When claiming an Access URL fails, notifies the customer that the token may be compromised so they can disable the token.
+3. Stores Access URLs at least as securely as the user's financial data.
+3. Handles a 403 response from `/accounts`.
+4. Displays error messages from `/accounts` to the user.
+5. Sanitizes all error messages from `/accounts` that are displayed to the user.
+
+### Recommended
+
+The application:
+
+1. Handles [custom currencies](#custom-currencies).
+
+
+
+</div>
+</section>
 
 # Data
 
@@ -240,7 +275,7 @@ Though the array of strings are meant for users, you **must** sanitize the strin
 | org | [Organization](#organization) | **yes** | Organization from which this account originates. |
 | id | string | **yes** | String that uniquely identifies the account within the organization.  It is recommended that this id be chosen such that it does not reveal any sensitive data (login information for the bank's web banking portal, for instance). |
 | name | string | **yes** | A name that uniquely describes an account among all the users other accounts. This name should be chosen so that a person can easily associate it with only one of their accounts within an organization. |
-| currency | string | **yes** | If the currency is a standard currency, this is the currency code from the official ISO 4217.  For example `"ZMW"` or `"USD"`. |
+| currency | string | **yes** | If the currency is a standard currency, this is the currency code from the official ISO 4217.  For example `"ZMW"` or `"USD"`.  If this is a custom currency, see the [Custom Currencies section](#custom-currencies) below. |
 | balance | numeric string | **yes** | The balance of the account as of `balance-date`. |
 | available-balance | numeric string | optional | The available balance of the account as of balance-date. This may be omitted if it is the same as balance. |
 | balance-date | UNIX epoch timestamp | **yes** | The timestamp when the balance and available-balance became what they are. |
@@ -281,6 +316,58 @@ Though the array of strings are meant for users, you **must** sanitize the strin
 
 </section>
 
+### Custom Currencies
+
+<section>
+
+<div class="main">
+
+SimpleFIN supports custom currencies such as: Frequent Flyer Miles, Rewards Points, brownie points, etc...
+
+Custom currencies are identified by a unique URL.  When an HTTP GET request is made to the URL, it should return a JSON object with the following attributes:
+
+| Attribute | Type | Required | Description |
+|---|---|---|---|
+| name | string | **yes** | Human-readable name of the currency. |
+| abbr | string | **yes** | Human-readable short name of the currency. |
+
+</div>
+
+<div class="example">
+
+The following Account's currency is `https://www.example.com/fake-currency`
+
+~~~{.json}
+{
+  ...
+  "id": "2930002",
+  "name": "Savings",
+  "currency": "https://www.example.com/flight-miles",
+  "balance": "100.23",
+  "available-balance": "75.23",
+  "balance-date": 978366153,
+  "transactions": []
+}
+~~~
+
+Making a request to the currency URL:
+
+~~~{.bash}
+curl https://www.example.com/flight-miles
+~~~
+
+Returns the following:
+
+~~~{.json}
+{
+  "name": "Example Airline Miles",
+  "abbr": "miles"
+}
+~~~
+
+</div>
+
+</section>
 
 
 
@@ -360,11 +447,11 @@ Though the array of strings are meant for users, you **must** sanitize the strin
 <div class="main">
 A SimpleFIN Server has a root URL.  All the resources below are relative to this root URL.
 
-Following are all 4 the endpoints a SimpleFIN Server must implement.
+Following are all 4 HTTP endpoints a SimpleFIN Server must implement.
 
 - [`GET /info`](#server-info)
 - [`GET /create`](#create-simplefin-token)
-- [`POST /claim/:token`](#claim-access-key)
+- [`POST /claim/:token`](#claim-access-url)
 - [`GET /accounts`](#get-account-data)
 
 </div>
@@ -385,7 +472,7 @@ ROOT="https://bridge.simplefin.org/simplefin"
 <section>
 
 <div class="main">
-Find out what versions of the SimpleFIN Protocol the server supports.
+Used by Applications to find out what versions of the SimpleFIN Protocol the server supports.
 
 ### HTTP Request
 
@@ -459,12 +546,11 @@ aHR0cHM6Ly9icmlkZ2Uuc2ltcGxlZmluLm9yZy9zaW1wbGVmaW4vY2xhaW0vZGVtbw==
 </section>
 
 
-## Claim Access Key
+## Claim Access URL
 
 <section>
 
 <div class="main">
-
 An application receives a SimpleFIN Token from a user.  SimpleFIN Tokens are Base64-encoded URLs.  A decoded SimpleFIN Token will point to this resource.
 
 ### HTTP Request
@@ -477,7 +563,7 @@ An application receives a SimpleFIN Token from a user.  SimpleFIN Tokens are Bas
 
 ### Successful response body
 
-Response is an Access Key, which is just a URL with included Basic Auth credentials.
+Response is an Access URL, which is just a URL with included Basic Auth credentials.
 
 ### Responses
 
@@ -503,10 +589,10 @@ Decode the token:
 DECODED_TOKEN=$(echo "${TOKEN}" | base64 -D)
 ~~~
 
-Claim the Access Key associated with this SimpleFIN Token:
+Claim the Access URL associated with this SimpleFIN Token:
 
 ~~~{.bash}
-ACCESS_KEY=$(curl -X POST "${DECODED_TOKEN}")
+ACCESS_URL=$(curl -X POST "${DECODED_TOKEN}")
 # https://demo:demo@bridge.simplefin.org/simplefin
 ~~~
 
@@ -535,7 +621,7 @@ Retrieve account and transaction data.
 
 ### Authentication
 
-HTTP Basic Authentication using credentials obtained from the [Claim Access Key](#claim-access-key) endpoint are used.
+HTTP Basic Authentication using credentials obtained from the [Claim Access URL](#claim-access-url) endpoint are used.
 
 ### Successful response
 

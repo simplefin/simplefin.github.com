@@ -1,0 +1,18 @@
+seqdiag {
+  User; App; Server;
+  autonumber = True;
+  default_note_color = lightblue;
+  default_fontsize = 14;
+
+  User  => Server [
+    label = "I want to revoke App's access.",
+    return = "OK"
+  ];
+  App -> Server [
+    label = "Here's my Access Key"
+  ];
+  App <- Server [
+    label = "Nope, forbidden",
+    color = "red"
+  ];
+}
