@@ -32,6 +32,7 @@ body {
     margin: 0;
 }
 nav.toc {
+    font-size: 13px;
     top: 0;
     left: 0;
     bottom: 0;
@@ -60,7 +61,7 @@ nav.toc a {
     text-decoration: none;
 }
 nav.toc a:visited {
-    color: #08c;
+    color: steelblue;
 }
 nav.toc a:hover {
     background-color: steelblue;

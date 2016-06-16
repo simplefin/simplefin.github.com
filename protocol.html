@@ -136,7 +136,7 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 <h2 id="start-a-connection">1. Start a connection</h2>
 <section>
 <div class="main">
-<p>First, direct your user to create a SimpleFIN Token. Do this by sending them to their institution’s SimpleFIN Server <code>/create</code> URL. If you don’t have that, you can use the <a href="https://bridge.simplefin.org/simplefin/create">SimpleFIN Bridge</a>.</p>
+<p>First, direct your user to create a SimpleFIN Token. Do this by sending them to their institution’s SimpleFIN Server <code>/create</code> URL. If their institution doesn’t have a SimpleFIN Server, you can use the <a href="https://bridge.simplefin.org/simplefin/create">SimpleFIN Bridge</a>.</p>
 </div>
 <div class="example">
 <p>Here’s an example HTML snippet:</p>
@@ -255,7 +255,7 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 </tbody>
 </table>
 <warning>
-Though the array of strings are meant for users, you <strong>must</strong> sanitize the strings when displaying them (to prevent Cross-Site Scripting or other attacks).
+Though the array of strings are meant for users, you <strong>must</strong> sanitize the strings when displaying them.
 </warning>
 </div>
 <div class="example">

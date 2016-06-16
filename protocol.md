@@ -53,7 +53,7 @@ If you are a programmer, and want programmatic access to your financial data, yo
 <section>
 
 <div class="main">
-First, direct your user to create a SimpleFIN Token.  Do this by sending them to their institution's SimpleFIN Server `/create` URL.  If you don't have that, you can use the [SimpleFIN Bridge](https://bridge.simplefin.org/simplefin/create).
+First, direct your user to create a SimpleFIN Token.  Do this by sending them to their institution's SimpleFIN Server `/create` URL.  If their institution doesn't have a SimpleFIN Server, you can use the [SimpleFIN Bridge](https://bridge.simplefin.org/simplefin/create).
 </div>
 
 <div class="example">
@@ -222,7 +222,7 @@ The application:
 | accounts | array of [Accounts](#accounts) | **yes** | List of accounts. |
 
 <warning>
-Though the array of strings are meant for users, you **must** sanitize the strings when displaying them (to prevent Cross-Site Scripting or other attacks).
+Though the array of strings are meant for users, you **must** sanitize the strings when displaying them.
 </warning>
 
 </div>
