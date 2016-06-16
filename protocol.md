@@ -191,11 +191,13 @@ The following checklists can help make sure your SimpleFIN-capable application i
 The application:
 
 1. Handles a 403 response when claiming an Access URL.
-2. When claiming an Access URL fails, notifies the customer that the token may be compromised so they can disable the token.
-3. Stores Access URLs at least as securely as the user's financial data.
-3. Handles a 403 response from `/accounts`.
-4. Displays error messages from `/accounts` to the user.
-5. Sanitizes all error messages from `/accounts` that are displayed to the user.
+1. When claiming an Access URL fails, notifies the customer that the token may be compromised so they can disable the token.
+1. Only makes requests to SSL/TLS URLs (i.e. HTTPS and never HTTP).
+1. Stores Access URLs at least as securely as the user's financial data.
+1. Handles a 403 response from `/accounts`.
+1. Displays error messages from `/accounts` to the user.
+1. Sanitizes all error messages from `/accounts` that are displayed to the user.
+1. Verifies all SSL/TLS certificates when making HTTPS requests.
 
 ### Recommended
 
