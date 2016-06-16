@@ -214,10 +214,12 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 <ol type="1">
 <li>Handles a 403 response when claiming an Access URL.</li>
 <li>When claiming an Access URL fails, notifies the customer that the token may be compromised so they can disable the token.</li>
+<li>Only makes requests to SSL/TLS URLs (i.e. HTTPS and never HTTP).</li>
 <li>Stores Access URLs at least as securely as the user’s financial data.</li>
 <li>Handles a 403 response from <code>/accounts</code>.</li>
 <li>Displays error messages from <code>/accounts</code> to the user.</li>
 <li>Sanitizes all error messages from <code>/accounts</code> that are displayed to the user.</li>
+<li>Verifies all SSL/TLS certificates when making HTTPS requests.</li>
 </ol>
 <h3 id="recommended">Recommended</h3>
 <p>The application:</p>
