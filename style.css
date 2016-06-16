@@ -166,7 +166,8 @@ figure {
 }
 
 
-warning {
+warning,
+note {
     border: 1px solid orange;
     border-width: 0 0 0 12px;
     background-color: #eee;
@@ -178,6 +179,15 @@ warning {
 warning::before {
     content: 'WARNING';
     color: orange;
+    font-weight: bold;
+    display: block;
+}
+note {
+    border-color: steelblue;
+}
+note::before {
+    content: 'NOTE';
+    color: steelblue;
     font-weight: bold;
     display: block;
 }

@@ -331,6 +331,10 @@ Custom currencies are identified by a unique URL.  When an HTTP GET request is m
 | name | string | **yes** | Human-readable name of the currency. |
 | abbr | string | **yes** | Human-readable short name of the currency. |
 
+<warning>
+All strings obtained from these requests **must** be sanitized when displaying them to users.
+</warning>
+
 </div>
 
 <div class="example">
@@ -415,7 +419,9 @@ Returns the following:
 
 <div class="main">
 
-**Note:** Either `domain` or `name` is required.
+<note>
+Either `domain` or `name` is required.  Both may be specified.
+</note>
 
 | Attribute | Type | Required | Description |
 |---|---|---|---|

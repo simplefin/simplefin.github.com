@@ -414,6 +414,9 @@ Though the array of strings are meant for users, you <strong>must</strong> sanit
 </tr>
 </tbody>
 </table>
+<warning>
+All strings obtained from these requests <strong>must</strong> be sanitized when displaying them to users.
+</warning>
 </div>
 <div class="example">
 <p>The following Account’s currency is <code>https://www.example.com/fake-currency</code></p>
@@ -497,7 +500,9 @@ Though the array of strings are meant for users, you <strong>must</strong> sanit
 <h2 id="organization">Organization</h2>
 <section>
 <div class="main">
-<p><strong>Note:</strong> Either <code>domain</code> or <code>name</code> is required.</p>
+<note>
+Either <code>domain</code> or <code>name</code> is required. Both may be specified.
+</note>
 <table>
 <thead>
 <tr class="header">
