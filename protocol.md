@@ -24,13 +24,22 @@ Banks/Financial Institutions wanting to host their own SimpleFIN Server should s
 
 
 
+## Flow
+
+This diagram shows how a User gives read-only bank account access to an App:
+
+![](img/flow.svg)
+
+
 ## SimpleFIN Bridge
 
 For optimal privacy, banks ought to implement SimpleFIN Servers.  In some cases, where banks haven't yet implemented SimpleFIN, the [SimpleFIN Bridge](https://bridge.simplefin.org) can be used.
 
+
+
 # App Quickstart
 
-This guide is for application developers that want to integrate financial data (bank account balances/transactions) into their application.
+This section is for application developers that want to integrate financial data (bank account balances/transactions) into their application.
 
 If you are a programmer, and want programmatic access to your financial data, you're in the right place.
 
@@ -574,6 +583,6 @@ Sample response:
 </div>
 </section>
 
-## Server Implementation Guide
+# Server Implementation Guide
 
 TODO

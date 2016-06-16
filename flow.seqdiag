@@ -1,0 +1,28 @@
+seqdiag {
+  autonumber = True;
+  default_note_color = lightblue;
+  default_fontsize = 14;
+
+  User  => App [
+    label = "I want to connect\nmy bank to this app.",
+    return = "Go see the\nSimpleFIN Server."
+  ];
+  User => Server [
+    label = "I want to connect an app",
+    return = "Here's a SimpleFIN Token"
+  ];
+  User => App [
+    label = "Here's a\nSimpleFIN Token",
+    return = "Alright, I'm connected."
+  ] {
+    App => Server [
+      label = "Here's a\nSimpleFIN Token",
+      return = "Here's a read-only\nAccess Key",
+      rightnote = "That one-time\ntoken is now\nused up."
+    ];
+  }
+  App => Server [
+    label = "Here's my Access Key",
+    return = "Here's the User's\ntransaction history."
+  ]
+}

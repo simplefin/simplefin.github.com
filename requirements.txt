@@ -1,0 +1,2 @@
+actdiag==0.5.4
+watchdog==0.8.3

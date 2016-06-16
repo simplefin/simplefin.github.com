@@ -57,6 +57,7 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 </ul>
 <ul>
 <li><a href="#introduction">Introduction</a><ul>
+<li><a href="#flow">Flow</a></li>
 <li><a href="#simplefin-bridge">SimpleFIN Bridge</a></li>
 </ul></li>
 <li><a href="#app-quickstart">App Quickstart</a><ul>
@@ -76,8 +77,8 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 <li><a href="#create-simplefin-token">Create SimpleFIN Token</a></li>
 <li><a href="#claim-access-key">Claim Access Key</a></li>
 <li><a href="#get-account-data">Get account data</a></li>
-<li><a href="#server-implementation-guide">Server Implementation Guide</a></li>
 </ul></li>
+<li><a href="#server-implementation-guide">Server Implementation Guide</a></li>
 </ul>
 </nav>
 <div class="page-wrap">
@@ -94,32 +95,37 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 <table>
 <thead>
 <tr class="header">
-<th>Party</th>
-<th>Description</th>
+<th style="text-align: left;">Party</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>User</td>
-<td>A person using a web browser. They have an account at a bank or other institution.</td>
+<td style="text-align: left;">User</td>
+<td style="text-align: left;">A person using a web browser. They have an account at a bank or other institution.</td>
 </tr>
 <tr class="even">
-<td>Application</td>
-<td>Third party software that wants read-only access to a <em>User</em>’s financial data.</td>
+<td style="text-align: left;">Application</td>
+<td style="text-align: left;">Third party software that wants read-only access to a <em>User</em>’s financial data.</td>
 </tr>
 <tr class="odd">
-<td>Server</td>
-<td>A SimpleFIN Server operated by a bank or other financial institution.</td>
+<td style="text-align: left;">Server</td>
+<td style="text-align: left;">A SimpleFIN Server operated by a bank or other financial institution.</td>
 </tr>
 </tbody>
 </table>
 <p>Users should visit the <a href="https://bridge.simplefin.org">SimpleFIN Bridge</a>.</p>
 <p>Application developers should start with the <a href="#app-quickstart">App Quickstart</a>.</p>
 <p>Banks/Financial Institutions wanting to host their own SimpleFIN Server should start at the <a href="#server-implementation-guide">TODO: Server Implementation Guide</a>.</p>
+<h2 id="flow">Flow</h2>
+<p>This diagram shows how a User gives read-only bank account access to an App:</p>
+<figure>
+<img src="img/flow.svg" alt="" />
+</figure>
 <h2 id="simplefin-bridge">SimpleFIN Bridge</h2>
 <p>For optimal privacy, banks ought to implement SimpleFIN Servers. In some cases, where banks haven’t yet implemented SimpleFIN, the <a href="https://bridge.simplefin.org">SimpleFIN Bridge</a> can be used.</p>
 <h1 id="app-quickstart">App Quickstart</h1>
-<p>This guide is for application developers that want to integrate financial data (bank account balances/transactions) into their application.</p>
+<p>This section is for application developers that want to integrate financial data (bank account balances/transactions) into their application.</p>
 <p>If you are a programmer, and want programmatic access to your financial data, you’re in the right place.</p>
 <h2 id="start-a-connection">1. Start a connection</h2>
 <section>
@@ -200,24 +206,24 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 <table>
 <thead>
 <tr class="header">
-<th>Attribute</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>errors</td>
-<td>array</td>
-<td><strong>yes</strong></td>
-<td>Array of strings suitable for displaying to a user.</td>
+<td style="text-align: left;">errors</td>
+<td style="text-align: left;">array</td>
+<td style="text-align: left;"><strong>yes</strong></td>
+<td style="text-align: left;">Array of strings suitable for displaying to a user.</td>
 </tr>
 <tr class="even">
-<td>accounts</td>
-<td>array of <a href="#accounts">Accounts</a></td>
-<td><strong>yes</strong></td>
-<td>List of accounts.</td>
+<td style="text-align: left;">accounts</td>
+<td style="text-align: left;">array of <a href="#accounts">Accounts</a></td>
+<td style="text-align: left;"><strong>yes</strong></td>
+<td style="text-align: left;">List of accounts.</td>
 </tr>
 </tbody>
 </table>
@@ -262,66 +268,66 @@ Though the array of strings are meant for users, you <strong>must</strong> sanit
 <table>
 <thead>
 <tr class="header">
-<th>Attribute</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>org</td>
-<td><a href="#organization">Organization</a></td>
-<td><strong>yes</strong></td>
-<td>Organization from which this account originates.</td>
+<td style="text-align: left;">org</td>
+<td style="text-align: left;"><a href="#organization">Organization</a></td>
+<td style="text-align: left;"><strong>yes</strong></td>
+<td style="text-align: left;">Organization from which this account originates.</td>
 </tr>
 <tr class="even">
-<td>id</td>
-<td>string</td>
-<td><strong>yes</strong></td>
-<td>String that uniquely identifies the account within the organization. It is recommended that this id be chosen such that it does not reveal any sensitive data (login information for the bank’s web banking portal, for instance).</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>yes</strong></td>
+<td style="text-align: left;">String that uniquely identifies the account within the organization. It is recommended that this id be chosen such that it does not reveal any sensitive data (login information for the bank’s web banking portal, for instance).</td>
 </tr>
 <tr class="odd">
-<td>name</td>
-<td>string</td>
-<td><strong>yes</strong></td>
-<td>A name that uniquely describes an account among all the users other accounts. This name should be chosen so that a person can easily associate it with only one of their accounts within an organization.</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>yes</strong></td>
+<td style="text-align: left;">A name that uniquely describes an account among all the users other accounts. This name should be chosen so that a person can easily associate it with only one of their accounts within an organization.</td>
 </tr>
 <tr class="even">
-<td>currency</td>
-<td>string</td>
-<td><strong>yes</strong></td>
-<td>If the currency is a standard currency, this is the currency code from the official ISO 4217. For example <code>&quot;ZMW&quot;</code> or <code>&quot;USD&quot;</code>.</td>
+<td style="text-align: left;">currency</td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>yes</strong></td>
+<td style="text-align: left;">If the currency is a standard currency, this is the currency code from the official ISO 4217. For example <code>&quot;ZMW&quot;</code> or <code>&quot;USD&quot;</code>.</td>
 </tr>
 <tr class="odd">
-<td>balance</td>
-<td>numeric string</td>
-<td><strong>yes</strong></td>
-<td>The balance of the account as of <code>balance-date</code>.</td>
+<td style="text-align: left;">balance</td>
+<td style="text-align: left;">numeric string</td>
+<td style="text-align: left;"><strong>yes</strong></td>
+<td style="text-align: left;">The balance of the account as of <code>balance-date</code>.</td>
 </tr>
 <tr class="even">
-<td>available-balance</td>
-<td>numeric string</td>
-<td>optional</td>
-<td>The available balance of the account as of balance-date. This may be omitted if it is the same as balance.</td>
+<td style="text-align: left;">available-balance</td>
+<td style="text-align: left;">numeric string</td>
+<td style="text-align: left;">optional</td>
+<td style="text-align: left;">The available balance of the account as of balance-date. This may be omitted if it is the same as balance.</td>
 </tr>
 <tr class="odd">
-<td>balance-date</td>
-<td>UNIX epoch timestamp</td>
-<td><strong>yes</strong></td>
-<td>The timestamp when the balance and available-balance became what they are.</td>
+<td style="text-align: left;">balance-date</td>
+<td style="text-align: left;">UNIX epoch timestamp</td>
+<td style="text-align: left;"><strong>yes</strong></td>
+<td style="text-align: left;">The timestamp when the balance and available-balance became what they are.</td>
 </tr>
 <tr class="even">
-<td>transactions</td>
-<td>array of <a href="#transaction">Transactions</a></td>
-<td>optional</td>
-<td>List of a subset of <a href="#transaction">Transactions</a> for this account, ordered by <code>posted</code>.</td>
+<td style="text-align: left;">transactions</td>
+<td style="text-align: left;">array of <a href="#transaction">Transactions</a></td>
+<td style="text-align: left;">optional</td>
+<td style="text-align: left;">List of a subset of <a href="#transaction">Transactions</a> for this account, ordered by <code>posted</code>.</td>
 </tr>
 <tr class="odd">
-<td>extra</td>
-<td>object</td>
-<td>optional</td>
-<td>This optional attribute may be used to include extra account-specific data that is not defined in this standard. It is up to the Server to decide whether or not to include data in here.</td>
+<td style="text-align: left;">extra</td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">optional</td>
+<td style="text-align: left;">This optional attribute may be used to include extra account-specific data that is not defined in this standard. It is up to the Server to decide whether or not to include data in here.</td>
 </tr>
 </tbody>
 </table>
@@ -358,42 +364,42 @@ Though the array of strings are meant for users, you <strong>must</strong> sanit
 <table>
 <thead>
 <tr class="header">
-<th>Attribute</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>id</td>
-<td>string</td>
-<td><strong>yes</strong></td>
-<td>An ID that uniquely describes a transaction within an Account. An organization may reuse transaction ids for different accounts, but may never reuse a transaction id within an account.</td>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>yes</strong></td>
+<td style="text-align: left;">An ID that uniquely describes a transaction within an Account. An organization may reuse transaction ids for different accounts, but may never reuse a transaction id within an account.</td>
 </tr>
 <tr class="even">
-<td>posted</td>
-<td>UNIX epoch timestamp</td>
-<td><strong>yes</strong></td>
-<td>This is when the transaction happened.</td>
+<td style="text-align: left;">posted</td>
+<td style="text-align: left;">UNIX epoch timestamp</td>
+<td style="text-align: left;"><strong>yes</strong></td>
+<td style="text-align: left;">This is when the transaction happened.</td>
 </tr>
 <tr class="odd">
-<td>amount</td>
-<td>numeric string</td>
-<td><strong>yes</strong></td>
-<td>Amount of transaction. Positive numbers indicate money being deposited into the account.</td>
+<td style="text-align: left;">amount</td>
+<td style="text-align: left;">numeric string</td>
+<td style="text-align: left;"><strong>yes</strong></td>
+<td style="text-align: left;">Amount of transaction. Positive numbers indicate money being deposited into the account.</td>
 </tr>
 <tr class="even">
-<td>description</td>
-<td>string</td>
-<td><strong>yes</strong></td>
-<td>A human-readable description of what the transaction was for.</td>
+<td style="text-align: left;">description</td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>yes</strong></td>
+<td style="text-align: left;">A human-readable description of what the transaction was for.</td>
 </tr>
 <tr class="odd">
-<td>extra</td>
-<td>object</td>
-<td>optional</td>
-<td>This optional attribute may be used to include extra transaction-specific data that is not defined in this standard. It is up to the Server to decide whether or not to include data in here.</td>
+<td style="text-align: left;">extra</td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">optional</td>
+<td style="text-align: left;">This optional attribute may be used to include extra transaction-specific data that is not defined in this standard. It is up to the Server to decide whether or not to include data in here.</td>
 </tr>
 </tbody>
 </table>
@@ -417,30 +423,30 @@ Though the array of strings are meant for users, you <strong>must</strong> sanit
 <table>
 <thead>
 <tr class="header">
-<th>Attribute</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>domain</td>
-<td>string</td>
-<td>maybe</td>
-<td>Domain name of the financial institution.</td>
+<td style="text-align: left;">domain</td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">maybe</td>
+<td style="text-align: left;">Domain name of the financial institution.</td>
 </tr>
 <tr class="even">
-<td>sfin-url</td>
-<td>string</td>
-<td><strong>yes</strong></td>
-<td>Root URL of organization’s SimpleFIN Server</td>
+<td style="text-align: left;">sfin-url</td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>yes</strong></td>
+<td style="text-align: left;">Root URL of organization’s SimpleFIN Server</td>
 </tr>
 <tr class="odd">
-<td>name</td>
-<td>string</td>
-<td>maybe</td>
-<td>Human-friendly name of the financial institution.</td>
+<td style="text-align: left;">name</td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">maybe</td>
+<td style="text-align: left;">Human-friendly name of the financial institution.</td>
 </tr>
 </tbody>
 </table>
@@ -480,14 +486,14 @@ Though the array of strings are meant for users, you <strong>must</strong> sanit
 <table>
 <thead>
 <tr class="header">
-<th>Attribute</th>
-<th>Description</th>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>versions</td>
-<td>An array of version strings that this server supports.</td>
+<td style="text-align: left;">versions</td>
+<td style="text-align: left;">An array of version strings that this server supports.</td>
 </tr>
 </tbody>
 </table>
@@ -531,14 +537,14 @@ Though the array of strings are meant for users, you <strong>must</strong> sanit
 <table>
 <thead>
 <tr class="header">
-<th>Parameter</th>
-<th>Description</th>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>:token</td>
-<td>A one-time use code embedded within the SimpleFIN Token.</td>
+<td style="text-align: left;">:token</td>
+<td style="text-align: left;">A one-time use code embedded within the SimpleFIN Token.</td>
 </tr>
 </tbody>
 </table>
@@ -548,18 +554,18 @@ Though the array of strings are meant for users, you <strong>must</strong> sanit
 <table>
 <thead>
 <tr class="header">
-<th>Code</th>
-<th>Description</th>
+<th style="text-align: left;">Code</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>200</td>
-<td>Successful response</td>
+<td style="text-align: left;">200</td>
+<td style="text-align: left;">Successful response</td>
 </tr>
 <tr class="even">
-<td>403</td>
-<td>The claim token either does not exist or has already been used claimed by someone else. Receiving this could mean that the user’s transaction information has been compromised.</td>
+<td style="text-align: left;">403</td>
+<td style="text-align: left;">The claim token either does not exist or has already been used claimed by someone else. Receiving this could mean that the user’s transaction information has been compromised.</td>
 </tr>
 </tbody>
 </table>
@@ -583,21 +589,21 @@ Though the array of strings are meant for users, you <strong>must</strong> sanit
 <table>
 <thead>
 <tr class="header">
-<th>Parameter</th>
-<th>Required</th>
-<th>Description</th>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>start-date</td>
-<td>optional</td>
-<td>If given, transactions will be restricted to those on or after this Unix epoch timestamp.</td>
+<td style="text-align: left;">start-date</td>
+<td style="text-align: left;">optional</td>
+<td style="text-align: left;">If given, transactions will be restricted to those on or after this Unix epoch timestamp.</td>
 </tr>
 <tr class="even">
-<td>end-date</td>
-<td>optional</td>
-<td>If given, transactions will be restricted to those before (<strong>but not on</strong>) this Unix epoch timestamp.</td>
+<td style="text-align: left;">end-date</td>
+<td style="text-align: left;">optional</td>
+<td style="text-align: left;">If given, transactions will be restricted to those before (<strong>but not on</strong>) this Unix epoch timestamp.</td>
 </tr>
 </tbody>
 </table>
@@ -609,18 +615,18 @@ Though the array of strings are meant for users, you <strong>must</strong> sanit
 <table>
 <thead>
 <tr class="header">
-<th>Code</th>
-<th>Description</th>
+<th style="text-align: left;">Code</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>200</td>
-<td>Successful response</td>
+<td style="text-align: left;">200</td>
+<td style="text-align: left;">Successful response</td>
 </tr>
 <tr class="even">
-<td>403</td>
-<td>Authentication failed. This could be because access has been revoked or if the credentials are incorrect.</td>
+<td style="text-align: left;">403</td>
+<td style="text-align: left;">Authentication failed. This could be because access has been revoked or if the credentials are incorrect.</td>
 </tr>
 </tbody>
 </table>
@@ -649,7 +655,7 @@ Though the array of strings are meant for users, you <strong>must</strong> sanit
 <span class="fu">}</span></code></pre></div>
 </div>
 </section>
-<h2 id="server-implementation-guide">Server Implementation Guide</h2>
+<h1 id="server-implementation-guide">Server Implementation Guide</h1>
 <p>TODO</p>
 </div>
 
