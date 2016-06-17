@@ -679,4 +679,16 @@ Sample response:
 
 # Server Implementation Guide
 
-TODO
+This section is for those wanting to implement a SimpleFIN Server.  This is likely you if you work at a bank or company that has customers/users with accounts.
+
+## 1. /info
+
+## 2. /create
+
+## 3. /claim/:token
+
+## 4. /accounts
+
+
+## Checklist
+
