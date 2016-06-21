@@ -7,4 +7,4 @@ url: "http://simplefin.org"
 
 # Build settings
 markdown: kramdown
-highlighter: pygments
+highlighter: rouge
