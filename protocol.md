@@ -138,7 +138,7 @@ Issue GET requests to the Access URL's `/accounts` resource to get account and t
 
 Successful responses will be a JSON [Account Set](#account-set).
 
-See [Get account data](#get-account-data) for more information.
+See [GET /accounts](#get-accounts) for more information.
 
 </div>
 
@@ -457,10 +457,10 @@ A SimpleFIN Server has a root URL.  All the resources below are relative to this
 
 Following are all 4 HTTP endpoints a SimpleFIN Server must implement.
 
-- [`GET /info`](#server-info)
-- [`GET /create`](#create-simplefin-token)
-- [`POST /claim/:token`](#claim-access-url)
-- [`GET /accounts`](#get-account-data)
+- [`GET /info`](#get-info)
+- [`GET /create`](#get-create)
+- [`POST /claim/:token`](#post-claimtoken)
+- [`GET /accounts`](#get-accounts)
 
 </div>
 
@@ -475,7 +475,7 @@ ROOT="https://bridge.simplefin.org/simplefin"
 </section>
 
 
-## Server Info
+## GET /info
 
 <section>
 
@@ -514,7 +514,7 @@ Response:
 
 </section>
 
-## Create SimpleFIN Token
+## GET /create
 
 <section>
 
@@ -554,7 +554,7 @@ aHR0cHM6Ly9icmlkZ2Uuc2ltcGxlZmluLm9yZy9zaW1wbGVmaW4vY2xhaW0vZGVtbw==
 </section>
 
 
-## Claim Access URL
+## POST /claim/:token
 
 <section>
 
@@ -610,7 +610,7 @@ ACCESS_URL=$(curl -X POST "${DECODED_TOKEN}")
 </section>
 
 
-## Get account data
+## GET /accounts
 
 
 <section>
@@ -629,7 +629,7 @@ Retrieve account and transaction data.
 
 ### Authentication
 
-HTTP Basic Authentication using credentials obtained from the [Claim Access URL](#claim-access-url) endpoint are used.
+HTTP Basic Authentication using credentials obtained from the [POST /claim/:token](#post-claimtoken) endpoint are used.
 
 ### Successful response
 

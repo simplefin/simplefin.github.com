@@ -74,10 +74,10 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 <li><a href="#organization">Organization</a></li>
 </ul></li>
 <li><a href="#http-endpoints">HTTP Endpoints</a><ul>
-<li><a href="#server-info">Server Info</a></li>
-<li><a href="#create-simplefin-token">Create SimpleFIN Token</a></li>
-<li><a href="#claim-access-url">Claim Access URL</a></li>
-<li><a href="#get-account-data">Get account data</a></li>
+<li><a href="#get-info">GET /info</a></li>
+<li><a href="#get-create">GET /create</a></li>
+<li><a href="#post-claimtoken">POST /claim/:token</a></li>
+<li><a href="#get-accounts">GET /accounts</a></li>
 </ul></li>
 <li><a href="#server-implementation-guide">Server Implementation Guide</a></li>
 </ul>
@@ -179,7 +179,7 @@ code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
 <div class="main">
 <p>Issue GET requests to the Access URL’s <code>/accounts</code> resource to get account and transaction information.</p>
 <p>Successful responses will be a JSON <a href="#account-set">Account Set</a>.</p>
-<p>See <a href="#get-account-data">Get account data</a> for more information.</p>
+<p>See <a href="#get-accounts">GET /accounts</a> for more information.</p>
 </div>
 <div class="example">
 <p>Request:</p>
@@ -550,10 +550,10 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 <p>A SimpleFIN Server has a root URL. All the resources below are relative to this root URL.</p>
 <p>Following are all 4 HTTP endpoints a SimpleFIN Server must implement.</p>
 <ul>
-<li><a href="#server-info"><code>GET /info</code></a></li>
-<li><a href="#create-simplefin-token"><code>GET /create</code></a></li>
-<li><a href="#claim-access-url"><code>POST /claim/:token</code></a></li>
-<li><a href="#get-account-data"><code>GET /accounts</code></a></li>
+<li><a href="#get-info"><code>GET /info</code></a></li>
+<li><a href="#get-create"><code>GET /create</code></a></li>
+<li><a href="#post-claimtoken"><code>POST /claim/:token</code></a></li>
+<li><a href="#get-accounts"><code>GET /accounts</code></a></li>
 </ul>
 </div>
 <div class="example">
@@ -561,7 +561,7 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ot">ROOT=</span><span class="st">&quot;https://bridge.simplefin.org/simplefin&quot;</span></code></pre></div>
 </div>
 </section>
-<h2 id="server-info">Server Info</h2>
+<h2 id="get-info">GET /info</h2>
 <section>
 <div class="main">
 <p>Used by Applications to find out what versions of the SimpleFIN Protocol the server supports.</p>
@@ -592,7 +592,7 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 <span class="fu">}</span></code></pre></div>
 </div>
 </section>
-<h2 id="create-simplefin-token">Create SimpleFIN Token</h2>
+<h2 id="get-create">GET /create</h2>
 <section>
 <div class="main">
 <p>An application directs a user to this URL to initiate a bank-app connection. When a user visits this URL the server:</p>
@@ -613,7 +613,7 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 <pre><code>aHR0cHM6Ly9icmlkZ2Uuc2ltcGxlZmluLm9yZy9zaW1wbGVmaW4vY2xhaW0vZGVtbw==</code></pre>
 </div>
 </section>
-<h2 id="claim-access-url">Claim Access URL</h2>
+<h2 id="post-claimtoken">POST /claim/:token</h2>
 <section>
 <div class="main">
 <p>An application receives a SimpleFIN Token from a user. SimpleFIN Tokens are Base64-encoded URLs. A decoded SimpleFIN Token will point to this resource.</p>
@@ -665,7 +665,7 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 <span class="co"># https://demo:demo@bridge.simplefin.org/simplefin</span></code></pre></div>
 </div>
 </section>
-<h2 id="get-account-data">Get account data</h2>
+<h2 id="get-accounts">GET /accounts</h2>
 <section>
 <div class="main">
 <p>Retrieve account and transaction data.</p>
@@ -693,7 +693,7 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 </tbody>
 </table>
 <h3 id="authentication">Authentication</h3>
-<p>HTTP Basic Authentication using credentials obtained from the <a href="#claim-access-url">Claim Access URL</a> endpoint are used.</p>
+<p>HTTP Basic Authentication using credentials obtained from the <a href="#post-claimtoken">POST /claim/:token</a> endpoint are used.</p>
 <h3 id="successful-response">Successful response</h3>
 <p>A successful response will be a JSON <a href="#account-set">Account Set</a>.</p>
 <h3 id="responses-1">Responses</h3>
