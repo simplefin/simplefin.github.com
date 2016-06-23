@@ -7,7 +7,7 @@ SimpleFIN (also SFIN) stands for Simple Financial Interchange and makes read-onl
 # Why give them the combination to your safe...
 
 <center>
-    <img src="/img/safe.png" style="width: 50%;">
+    <img src="/img/safe.small.png" style="width: 50%;">
 </center>
 
 # ...when they only need to look through a window?
