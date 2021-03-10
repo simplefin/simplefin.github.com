@@ -4,13 +4,11 @@ layout: default
 
 SimpleFIN (also SFIN) stands for Simple Financial Interchange and makes read-only financial interchange simple. It's like RSS for financial information.
 
-# Why give them the combination to your safe...
+<span style="font-size: 2rem;">Why give out your <span style="font-weight: bold; font-style: italic;">key</span> when they only need a <span style="font-weight: bold; font-style: italic;">window?</span></span>
 
 <center>
-    <img src="/img/safe.small.png" style="width: 50%;">
+    <img src="/img/safe.png">
 </center>
-
-# ...when they only need to look through a window?
 
 SimpleFIN is like a window on a safe: it lets people look at, but not touch your financial information. And you control who can look through the window!
 
