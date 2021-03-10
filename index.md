@@ -2,7 +2,9 @@
 layout: default
 ---
 
-<span style="font-size: 2rem;">Why give out your <span style="font-weight: bold; font-style: italic;">key</span> when they only need a <span style="font-weight: bold; font-style: italic;">window?</span></span>
+<p style="text-align: center;">
+    <span style="font-size: 1.75rem;">Why give out your <span style="font-weight: bold; font-style: italic;">key</span> when they only need a <span style="font-weight: bold; font-style: italic;">window?</span></span>
+</p>
 
 <center>
     <img src="/img/safe.png" style="max-width: 450px;">
