@@ -55,7 +55,7 @@ Here is some software that supports the SimpleFIN Protocol.  Email info@simplefi
 
 <div class="app-list">
 
-<a class="item" href="https://www.bucketsisbetter.com" target="_blank">
+<a class="item" href="https://www.budgetwithbuckets.com" target="_blank">
   <div class="item-logo"><img src="/img/applogos/buckets.png"></div>
   <div class="item-title">Buckets</div>
   <div class="item-desc">Budgeting App</div>
