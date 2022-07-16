@@ -1,8 +1,8 @@
 
 <img src="img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol
 
-- Version: 1.0-draft.4
-- Last modified: 15 Jun 2016
+- Version: 1.0-draft.5
+- Last modified: 15 Jul 2022
 
 # Introduction
 
@@ -391,6 +391,7 @@ Returns the following:
 | posted | UNIX epoch timestamp | **yes** | This is when the transaction happened. |
 | amount | numeric string | **yes** | Amount of transaction. Positive numbers indicate money being deposited into the account. |
 | description | string | **yes** | A human-readable description of what the transaction was for. |
+| pending | boolean | optional | `true` indicates that this transaction has not yet posted. Default is `false`, meaning the transaction has posted |
 | extra | object | optional | This optional attribute may be used to include extra transaction-specific data that is not defined in this standard. It is up to the Server to decide whether or not to include data in here. |
 
 </div>
@@ -403,6 +404,7 @@ Returns the following:
   "posted": 793090572,
   "amount": "-33293.43",
   "description": "Uncle Frank's Bait Shop",
+  "pending": true,
   "extra": {
     "category": "food"
   }
