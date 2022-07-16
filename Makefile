@@ -6,6 +6,7 @@ all: protocol.html diagrams
 protocol.html: protocol.md style.css pandoc_template.html
 	cat protocol.md | pandoc \
 		-s -c style.css \
+		--metadata title="SimpleFIN Protocol" \
 		--toc --toc-depth=2 \
 		-t html5 \
 		--highlight-style zenburn \
