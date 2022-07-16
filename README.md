@@ -1,6 +1,4 @@
-bundle jekyll serve
+To rebuild:
 
-Remake table of contents:
+    make
 
-  # npm install doctoc
-  doctoc protocol.md
