@@ -111,7 +111,6 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 <li><a href="#post-claimtoken">POST /claim/:token</a></li>
 <li><a href="#get-accounts">GET /accounts</a></li>
 </ul></li>
-<li><a href="#server-implementation-guide">Server Implementation Guide</a></li>
 </ul>
 </nav>
 <div class="page-wrap">
@@ -119,8 +118,8 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 <div class="main-column">
 <p><img src="img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol</p>
 <ul>
-<li>Version: 1.0-draft.5</li>
-<li>Last modified: 15 Jul 2022</li>
+<li>Version: 1.0-draft.6</li>
+<li>Last modified: 08 Feb 2024</li>
 </ul>
 <h1 id="introduction">Introduction</h1>
 <p>The SimpleFIN protocol allows users to share read-only financial data with third parties. It’s similar to RSS, but for financial data.</p>
@@ -492,7 +491,7 @@ All strings obtained from these requests <strong>must</strong> be sanitized when
 <td>posted</td>
 <td>UNIX epoch timestamp</td>
 <td><strong>yes</strong></td>
-<td>This is when the transaction happened.</td>
+<td>This is when the transaction posted to the account. If the transaction is pending, this may be <code>0</code>.</td>
 </tr>
 <tr class="odd">
 <td>amount</td>
@@ -507,12 +506,18 @@ All strings obtained from these requests <strong>must</strong> be sanitized when
 <td>A human-readable description of what the transaction was for.</td>
 </tr>
 <tr class="odd">
+<td>transacted_at</td>
+<td>UNIX epoch timestamp</td>
+<td>optional</td>
+<td>This is when the transaction happened.</td>
+</tr>
+<tr class="even">
 <td>pending</td>
 <td>boolean</td>
 <td>optional</td>
-<td><code>true</code> indicates that this transaction has not yet posted. Default is <code>false</code>, meaning the transaction has posted</td>
+<td><code>true</code> indicates that this transaction has not yet posted. Default is <code>false</code> (or absent), meaning the transaction has posted.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>extra</td>
 <td>object</td>
 <td>optional</td>
@@ -725,6 +730,11 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 <td>optional</td>
 <td>If given, transactions will be restricted to those before (<strong>but not on</strong>) this Unix epoch timestamp.</td>
 </tr>
+<tr class="odd">
+<td>pending</td>
+<td>optional</td>
+<td>If <code>pending=1</code> is provided, pending transactions will be included (if supported). By default, pending transaction are <strong>NOT</strong> included.</td>
+</tr>
 </tbody>
 </table>
 <h3 id="authentication">Authentication</h3>
@@ -745,6 +755,10 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 <td>Successful response</td>
 </tr>
 <tr class="even">
+<td>402</td>
+<td>Payment required</td>
+</tr>
+<tr class="odd">
 <td>403</td>
 <td>Authentication failed. This could be because access has been revoked or if the credentials are incorrect.</td>
 </tr>
@@ -775,8 +789,6 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 <span id="cb24-18"><a href="#cb24-18" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
 </div>
 </section>
-<h1 id="server-implementation-guide">Server Implementation Guide</h1>
-<p>TODO</p>
 </div>
 
 </div>

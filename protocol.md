@@ -1,8 +1,8 @@
 
 <img src="img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol
 
-- Version: 1.0-draft.5
-- Last modified: 15 Jul 2022
+- Version: 1.0-draft.6
+- Last modified: 08 Feb 2024
 
 # Introduction
 
@@ -388,10 +388,11 @@ Returns the following:
 | Attribute | Type | Required | Description |
 |---|---|---|---|
 | id | string | **yes** | An ID that uniquely describes a transaction within an Account. An organization may reuse transaction ids for different accounts, but may never reuse a transaction id within an account. |
-| posted | UNIX epoch timestamp | **yes** | This is when the transaction happened. |
+| posted | UNIX epoch timestamp | **yes** | This is when the transaction posted to the account. If the transaction is pending, this may be `0`. |
 | amount | numeric string | **yes** | Amount of transaction. Positive numbers indicate money being deposited into the account. |
 | description | string | **yes** | A human-readable description of what the transaction was for. |
-| pending | boolean | optional | `true` indicates that this transaction has not yet posted. Default is `false`, meaning the transaction has posted |
+| transacted_at | UNIX epoch timestamp | optional | This is when the transaction happened. |
+| pending | boolean | optional | `true` indicates that this transaction has not yet posted. Default is `false` (or absent), meaning the transaction has posted. |
 | extra | object | optional | This optional attribute may be used to include extra transaction-specific data that is not defined in this standard. It is up to the Server to decide whether or not to include data in here. |
 
 </div>
@@ -628,6 +629,7 @@ Retrieve account and transaction data.
 |---|---|---|
 | start-date | optional | If given, transactions will be restricted to those on or after this Unix epoch timestamp. |
 | end-date | optional | If given, transactions will be restricted to those before (**but not on**) this Unix epoch timestamp. |
+| pending | optional | If `pending=1` is provided, pending transactions will be included (if supported). By default, pending transaction are **NOT** included. |
 
 ### Authentication
 
@@ -642,6 +644,7 @@ A successful response will be a JSON [Account Set](#account-set).
 | Code | Description |
 |---|---|
 | 200 | Successful response |
+| 402 | Payment required |
 | 403 | Authentication failed.  This could be because access has been revoked or if the credentials are incorrect. |
 
 </div>
@@ -678,7 +681,3 @@ Sample response:
 
 </div>
 </section>
-
-# Server Implementation Guide
-
-TODO
