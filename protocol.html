@@ -118,8 +118,8 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 <div class="main-column">
 <p><img src="img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol</p>
 <ul>
-<li>Version: 1.0-draft.6</li>
-<li>Last modified: 08 Feb 2024</li>
+<li>Version: 1.0-draft.7</li>
+<li>Last modified: 05 Jun 2024</li>
 </ul>
 <h1 id="introduction">Introduction</h1>
 <p>The SimpleFIN protocol allows users to share read-only financial data with third parties. It’s similar to RSS, but for financial data.</p>
@@ -572,6 +572,18 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 <td>string</td>
 <td>maybe</td>
 <td>Human-friendly name of the financial institution.</td>
+</tr>
+<tr class="even">
+<td>url</td>
+<td>string</td>
+<td>no</td>
+<td>Optional URL of financial institution</td>
+</tr>
+<tr class="odd">
+<td>id</td>
+<td>string</td>
+<td>no</td>
+<td>Optional ID for the financial institution. The ID must be unique per SimpleFIN server, but it is not guaranteed that IDs are globally unique. Prefer <code>domain</code> as a globally unique ID for each institution</td>
 </tr>
 </tbody>
 </table>

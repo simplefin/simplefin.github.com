@@ -1,8 +1,8 @@
 
 <img src="img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol
 
-- Version: 1.0-draft.6
-- Last modified: 08 Feb 2024
+- Version: 1.0-draft.7
+- Last modified: 05 Jun 2024
 
 # Introduction
 
@@ -433,6 +433,8 @@ Either `domain` or `name` is required.  Both may be specified.
 | domain | string | maybe | Domain name of the financial institution. |
 | sfin-url | string | **yes** | Root URL of organization's SimpleFIN Server |
 | name | string | maybe | Human-friendly name of the financial institution. |
+| url | string | no | Optional URL of financial institution |
+| id | string | no | Optional ID for the financial institution. The ID must be unique per SimpleFIN server, but it is not guaranteed that IDs are globally unique. Prefer `domain` as a globally unique ID for each institution |
 
 </div>
 
