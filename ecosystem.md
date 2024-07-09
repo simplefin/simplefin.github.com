@@ -47,6 +47,11 @@ Here is some software that supports the SimpleFIN Protocol.  Email info@simplefi
   <div class="item-desc">CLI to convert from SimpleFIN to Ledger</div>
 </a>
 
+<a class="item" href="https://github.com/actualbudget/actual" target="_blank">
+  <div class="item-logo"><img src="/img/applogos/actual.png"></div>
+  <div class="item-title">Actual Budget</div>
+  <div class="item-desc">A local-first personal finance app</div>
+</a>
 
 </div>
 
