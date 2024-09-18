@@ -1,10 +1,23 @@
 
 title: SimpleFIN
-email: info@simplefin.org
+email: support@support.simplefin.org
 description: SimpleFIN is a protocol for simple financial aggregation.
-baseurl: "" # the subpath of your site, e.g. /blog/
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://simplefin.org"
 
 # Build settings
 markdown: kramdown
-highlighter: rouge
+theme: minima
+plugins:
+  - jekyll-feed
+
+# Exclude from processing.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
