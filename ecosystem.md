@@ -13,14 +13,21 @@ section {
 .app-list {
     display: flex;
     flex-wrap: wrap;
+    gap: 1em;
+    row-gap: 1em;
 }
 .item {
   /* max-width: 120px; */
-  padding: 1rem 2rem 1rem 0;
+  padding: 1em;
   display: grid;
   grid-template-areas:
-    "title"
+    "title    " 
     "description";
+  box-sizing: border-box;
+  flex-basis: 48%;
+  flex-shrink: 1;
+  border: 1px solid lightgray;
+  border-radius: 6px;
 }
 a.item:hover {
   text-decoration: none;
@@ -29,6 +36,8 @@ a.item:hover {
   grid-area: title;
   font-size: 1.5em;
   align-self: end;
+  font-weight: 400;
+  color: black;
 }
 .item-title img {
   max-height: 1.5em;
@@ -41,6 +50,13 @@ a.item:hover {
   grid-area: description;
   width: 100%;
   font-size: 1em;
+}
+@media screen and (max-width: 600px) {
+  .item {
+    flex-basis: 100%;
+    flex-grow: 1;
+    flex-shrink: initial;
+  }
 }
 </style>
 
@@ -59,8 +75,13 @@ Here is some software that supports the SimpleFIN Protocol.  To add to this list
 </a>
 
 <a class="item" href="https://github.com/actualbudget/actual" target="_blank">
-  <div class="item-title"><img src="/img/applogos/actual.png" title="Actual Budget"></div>
+  <div class="item-title"><img src="/img/applogos/actual.png" title="Actual Budget logo"></div>
   <div class="item-desc">A local-first personal finance app</div>
+</a>
+
+<a class="item" href="https://www.mybudgetcoach.com/" target="_blank">
+  <div class="item-title"><img src="/img/applogos/mybudgetcoach.png" title="MyBudgetCoach logo"></div>
+  <div class="item-desc">Budget app with built in coaching guidance</div>
 </a>
 
 </div>
