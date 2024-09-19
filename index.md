@@ -21,5 +21,5 @@ You should use SimpleFIN because:
 - Banks don't have to pay anyone to use it (like they do with QFX).
 - Ubiquitous use will help train people that giving out their account credentials is unacceptable.
 
-Fork this on GitHub join #simplefin on Freenode or send an email: info@ (this domain)
+Fork this on GitHub or send an email: support@support.simplefin.org
 
