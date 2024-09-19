@@ -49,20 +49,17 @@ Here is some software that supports the SimpleFIN Protocol.  To add to this list
 <div class="app-list">
 
 <a class="item" href="https://www.budgetwithbuckets.com" target="_blank">
-  <div class="item-logo"></div>
-  <div class="item-title"><img src="/img/applogos/buckets.png"> Buckets</div>
+  <div class="item-title"><img src="/img/applogos/buckets.png" title="Bucket logo"> Buckets</div>
   <div class="item-desc">Local, private budgeting app</div>
 </a>
 
 <a class="item" href="https://bridge.simplefin.org" target="_blank">
-  <div class="item-logo"></div>
-  <div class="item-title"><img src="/img/applogos/simplefin.png"> SimpleFIN Bridge</div>
+  <div class="item-title"><img src="/img/applogos/simplefin.png" title="SimpleFIN logo"> SimpleFIN Bridge</div>
   <div class="item-desc">Bridge for banks without SimpleFIN</div>
 </a>
 
 <a class="item" href="https://github.com/actualbudget/actual" target="_blank">
-  <div class="item-logo"></div>
-  <div class="item-title"><img src="/img/applogos/actual.png"></div>
+  <div class="item-title"><img src="/img/applogos/actual.png" title="Actual Budget"></div>
   <div class="item-desc">A local-first personal finance app</div>
 </a>
 
