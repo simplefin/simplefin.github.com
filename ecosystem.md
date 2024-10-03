@@ -60,7 +60,9 @@ a.item:hover {
 }
 </style>
 
-Here is some software that supports the SimpleFIN Protocol.  To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/blob/master/ecosystem.md">fork this repo</a> and submit a pull request.
+Here is some software that supports the SimpleFIN Protocol.  Being listed below does <strong>not</strong> imply that we endorse or guarantee the third party software.
+
+To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/blob/master/ecosystem.md">fork this repo</a> and submit a pull request.
 
 <div class="app-list">
 
