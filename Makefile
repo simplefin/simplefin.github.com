@@ -4,7 +4,7 @@
 all: protocol.html diagrams
 
 protocol.html: protocol.md style.css pandoc_template.html CHANGELOG.md
-	( cat protocol.md ; echo '# Changes' ; echo ''; cat CHANGELOG.md | sed -e s/#/##/g ) | pandoc \
+	( cat protocol.md | sed -e s/VERSIONTAG/$$(changer current-version)/ ; echo '# Changes' ; echo ''; cat CHANGELOG.md | sed -e s/#/##/g ) | pandoc \
 		-s -c style.css \
 		--metadata title="SimpleFIN Protocol" \
 		--toc --toc-depth=2 \

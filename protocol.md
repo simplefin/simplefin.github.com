@@ -1,8 +1,7 @@
 
 <img src="img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol
 
-- Version: 1.1.0
-- Last modified: 16 Oct 2024
+- Version: VERSIONTAG
 
 # Introduction
 
