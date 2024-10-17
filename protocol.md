@@ -1,8 +1,8 @@
 
 <img src="img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol
 
-- Version: 1.0-draft.7
-- Last modified: 05 Jun 2024
+- Version: 1.1.0
+- Last modified: 16 Oct 2024
 
 # Introduction
 
@@ -632,6 +632,8 @@ Retrieve account and transaction data.
 | start-date | optional | If given, transactions will be restricted to those on or after this Unix epoch timestamp. |
 | end-date | optional | If given, transactions will be restricted to those before (**but not on**) this Unix epoch timestamp. |
 | pending | optional | If `pending=1` is provided, pending transactions will be included (if supported). By default, pending transaction are **NOT** included. |
+| account | optional | If given, only return information related to the given account id. May be specified multiple times. |
+| balances-only | optional | If `balances-only=1` is provided, no transaction data is returned. |
 
 ### Authentication
 

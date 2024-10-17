@@ -1,0 +1,30 @@
+update_nimble = true
+update_package_json = true
+
+# Replacements are string substitutions using
+# https://nitely.github.io/nim-regex/regex.html#replace%2Cstring%2CRegex%2Cstring%2Cint
+# They run on each snippet in the order defined, before the snippet is
+# added to the CHANGELOG.md file.
+#
+# For example, uncomment the following lines to replace issue numbers with
+# links to your GitHub project.
+
+# [[replacement]]
+# pattern = '#(\d+)'
+# replace = "[#$1](https://github.com/YOURNAME/YOURPROJECT/issues/$1)"
+
+
+# Duplications are directories that you want to duplicate
+# changelog entries to.
+#
+# For example, uncomment the following and then any time
+# you add a change with `changer add`, it will create a
+# change snippet in these directories:
+#   ./changes
+#   ./changes/../../componentB/changes
+#   ./changes/../../componentC/changes
+
+# [[duplicate]]
+# dst = '../../componentB/changes'
+# [[duplicate]]
+# dst = '../../componentC/changes'
