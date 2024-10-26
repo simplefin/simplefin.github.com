@@ -111,6 +111,10 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 <li><a href="#post-claimtoken">POST /claim/:token</a></li>
 <li><a href="#get-accounts">GET /accounts</a></li>
 </ul></li>
+<li><a href="#changes">Changes</a>
+<ul>
+<li><a href="#v1.0.7">v1.0.7</a></li>
+</ul></li>
 </ul>
 </nav>
 <div class="page-wrap">
@@ -118,8 +122,7 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 <div class="main-column">
 <p><img src="img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol</p>
 <ul>
-<li>Version: 1.0-draft.7</li>
-<li>Last modified: 05 Jun 2024</li>
+<li>Version: 1.0.7</li>
 </ul>
 <h1 id="introduction">Introduction</h1>
 <p>The SimpleFIN protocol allows users to share read-only financial data with third parties. It’s similar to RSS, but for financial data.</p>
@@ -747,6 +750,16 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 <td>optional</td>
 <td>If <code>pending=1</code> is provided, pending transactions will be included (if supported). By default, pending transaction are <strong>NOT</strong> included.</td>
 </tr>
+<tr class="even">
+<td>account</td>
+<td>optional</td>
+<td>If given, only return information related to the given account id. May be specified multiple times.</td>
+</tr>
+<tr class="odd">
+<td>balances-only</td>
+<td>optional</td>
+<td>If <code>balances-only=1</code> is provided, no transaction data is returned.</td>
+</tr>
 </tbody>
 </table>
 <h3 id="authentication">Authentication</h3>
@@ -801,6 +814,11 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 <span id="cb24-18"><a href="#cb24-18" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
 </div>
 </section>
+<h1 id="changes">Changes</h1>
+<h2 id="v1.0.7">v1.0.7</h2>
+<ul>
+<li>Started this changelog</li>
+</ul>
 </div>
 
 </div>
