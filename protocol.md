@@ -1,7 +1,7 @@
 
 <img src="img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol
 
-- Version: VERSIONTAG
+- Version: VERSIONTAG-draft
 
 # Introduction
 
@@ -484,7 +484,10 @@ ROOT="https://bridge.simplefin.org/simplefin"
 <section>
 
 <div class="main">
-Used by Applications to find out what versions of the SimpleFIN Protocol the server supports.
+
+Used by Applications to find out what versions of the SimpleFIN Protocol the server supports. The strings returned must be in `MAJOR.MINOR.FIX` or `MAJOR.MINOR` format.
+
+Note: as this specification is still in draft, most servers will report `1.0` but may not yet support all things from the draft specification.
 
 ### HTTP Request
 
@@ -494,7 +497,7 @@ Used by Applications to find out what versions of the SimpleFIN Protocol the ser
 
 | Attribute | Description |
 |---|---|
-| versions | An array of version strings that this server supports. |
+| versions | An array of version string prefixes that this server supports. |
 
 </div>
 
@@ -510,7 +513,7 @@ Response:
 
 ~~~{.json}
 {
-    "versions": ["1.0-draft"],
+    "versions": ["1.0"],
 }
 ~~~
 </div>
