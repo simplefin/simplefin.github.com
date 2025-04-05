@@ -91,6 +91,11 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-desc">Track your spending using email alerts (or bank sync)</div>
 </a>
 
+<a class="item" href="https://github.com/CodeWithCJ/SparkyBudget" target="_blank">
+  <div class="item-title"><img src="/img/applogos/SparkyBudget.png" title="Sparky Budget"></div>
+  <div class="item-desc">Simple Budgeting, Powerful Results</div>
+</a>
+
 </div>
 
 <script>
