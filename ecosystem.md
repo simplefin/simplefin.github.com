@@ -92,7 +92,7 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
 </a>
 
 <a class="item" href="https://github.com/CodeWithCJ/SparkyBudget" target="_blank">
-  <div class="item-title"><img src="/img/applogos/SparkyBudget.png" title="Sparky Budget"></div>
+  <div class="item-title"><img src="/img/applogos/SparkyBudget.png" title="Sparky Budget">Sparky Budget</div>
   <div class="item-desc">Simple Budgeting, Powerful Results</div>
 </a>
 
