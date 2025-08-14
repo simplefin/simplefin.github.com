@@ -7,7 +7,7 @@ layout: default
 </p>
 
 <center>
-    <img src="/img/safe.png" style="max-width: 450px;">
+    <img src="/img/safe2.png" style="max-width: 450px;">
 </center>
 
 SimpleFIN (also SFIN) stands for Simple Financial Interchange and makes read-only financial interchange simple. It's like RSS for financial information.
