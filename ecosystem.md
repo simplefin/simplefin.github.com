@@ -96,6 +96,11 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-desc">Simple Budgeting, Powerful Results</div>
 </a>
 
+<a class="item" href="https://envelopebudget.com" target="_blank">
+  <div class="item-title"><img src="/img/applogos/envelopebudget.png" title="EnvelopeBudget logo"> EnvelopeBudget</div>
+  <div class="item-desc">Envelope method for the digital age</div>
+</a>
+
 </div>
 
 <script>
