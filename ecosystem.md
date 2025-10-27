@@ -81,11 +81,6 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-desc">A local-first personal finance app</div>
 </a>
 
-<a class="item" href="https://www.mybudgetcoach.com/" target="_blank">
-  <div class="item-title"><img src="/img/applogos/mybudgetcoach.png" title="MyBudgetCoach logo"></div>
-  <div class="item-desc">Budget app with built in coaching guidance</div>
-</a>
-
 <a class="item" href="https://skwad.app/" target="_blank">
   <div class="item-title"><img src="/img/applogos/skwad.png" title="Skwad logo"></div>
   <div class="item-desc">Track your spending using email alerts (or bank sync)</div>
