@@ -4373,7 +4373,7 @@ function $CompileProvider($provide) {
      *
      * @param {string} name name of the directive to look up.
      * @param {string} location The directive must be found in specific format.
-     *   String containing any of theses characters:
+     *   String containing any of these characters:
      *
      *   * `E`: element name
      *   * `A': attribute
