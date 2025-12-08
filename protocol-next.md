@@ -1,7 +1,10 @@
+---
+layout: blank
+---
 
-<img src="img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol
+<div style="display: flex; align-items: center; font-size: 1.5em; font-weight: bold;"><img src="img/logo.svg" style="width: 32px; height: 32px; margin-right: 8px;" align="center"><div>SimpleFIN Protocol</div></div>
 
-- Version: VERSIONTAG-draft
+Version: VERSIONTAG-draft
 
 # Introduction
 
@@ -153,15 +156,28 @@ Sample response:
 
 ~~~{.json}
 {
-  "errors": ["You must reauthenticate."],
+  "errlist": [
+    {
+      "code": "con.auth",
+      "message": "Authentication required",
+      "conn_id": "CON-10829309823094234",
+    }
+  ],
+  "connections": [
+    {
+      "conn_id": "CON-10829309823094234",
+      "name": "My Bank - James",
+      "org_id": "INST-129839182938123123",
+      "org_url": "https://mybank.com",
+      "sfin_url": "https://mybank.com",
+    }
+  ],
   "accounts": [
     {
-      "org": {
-        "domain": "mybank.com",
-        "sfin-url": "https://sfin.mybank.com"
-      },
       "id": "2930002",
       "name": "Savings",
+      "conn_id": "CON-10829309823094234",
+      "conn_name": "My Bank - Jeff",
       "currency": "USD",
       "balance": "100.23",
       "available-balance": "75.23",
@@ -211,6 +227,105 @@ The application:
 
 # Data
 
+## Error
+
+<section>
+
+<div class="main">
+
+| Attribute | Type | Required | Description |
+|---|---|---|---|
+| code | string | **yes** | One of the codes listed below |
+| msg | string | **yes** | String error suitable for displaying to users |
+| conn_id | string | no | Connection id. This is only given if the error is specific to a particular connection. |
+| account_id | string | no | Account id. This is only given if the error is specific to a particular account. |
+
+### Codes
+
+Error codes are in the format `prefix.[subcode]`. Current valid prefixes are `gen`, `con` or `act` indicating General, [Connection](#connection) or [Account](#account) errors respectively.
+
+Consumers of the protocol should handle unknown subcodes by falling back to treating the error like a naked `prefix.`.
+
+| Code              | Extra attributes | Description |
+|-------------------|------------------|-------------|
+| `gen.`            |                  | General error |
+| `gen.api`         |                  | Error in how the API is being used. This is meant for the developer and not the user. |
+| `gen.auth`        |                  | General authentication error (to the SimpleFIN Server) |
+| `con.`            | `conn_id`        | General connection-level error |
+| `con.auth`        | `conn_id`        | Authentication issue for a connection |
+| `act.`            | `account_id`     | General account-level error |
+| `act.failed`      | `account_id`     | Failed to get account information. Try again later. |
+| `act.missingdata` | `account_id`     | Incomplete transaction listing. Try again later. |
+
+
+</div>
+
+<div class="example">
+
+~~~{.json}
+{
+  "code": "gen.auth",
+  "msg": "No credentials provided",
+}
+~~~
+
+~~~{.json}
+{
+  "code": "con.auth",
+  "msg": "Authentication failed for My Bank - Jim",
+  "conn_id": "CON-21983498-29349823984293842",
+}
+~~~
+
+~~~{.json}
+{
+  "code": "act.failed",
+  "msg": "Failed to get all transactions. Try again later.",
+  "account_id": "ACT-1982398-12398192839182398123",
+}
+~~~
+
+</div>
+
+
+</section>
+
+
+## Connection
+
+<section>
+
+<div class="main">
+
+This represents a single connection to an institution. Users with 2 sets of login credentials for a particular bank will have 2 different Connections, each with the same `org_*` fields.
+
+| Attribute | Type | Required | Description |
+|---|---|---|---|
+| conn_id | string | **yes** | ID of a particular connection for a financial institution. |
+| name | string | **yes** | Human-friendly name for this connection. This should include the financial institution name (and may be identical to the financial institution's name in some cases). |
+| org_id | string | **yes** | ID of the financial institution. The ID must be unique per SimpleFIN server, but it is not guaranteed to be globally unique. |
+| org_url | string | no | Domain name of the financial institution |
+| sfin_url | string | **yes** | Root URL of organization's SimpleFIN Server |
+
+</div>
+
+<div class="example">
+
+~~~{.json}
+{
+  "conn_id": "CON-923049234-203940293409234",
+  "name": "My Bank - Jill",
+  "org_id": "ORG-8293948-230482398492834",
+  "org_url": "https://mybank.com",
+  "sfin_url": "https://sfin.mybank.com"
+}
+~~~
+
+</div>
+
+</section>
+
+
 ## Account Set
 
 <section>
@@ -219,12 +334,10 @@ The application:
 
 | Attribute | Type | Required | Description |
 |---|---|---|---|
-| errors | array | **yes** | Array of strings suitable for displaying to a user. |
-| accounts | array of [Accounts](#accounts) | **yes** | List of accounts. |
-
-<warning>
-Though the array of strings are meant for users, you **must** sanitize the strings when displaying them.
-</warning>
+| errlist | array of [Errors](#error) | **yes** | List of errors |
+| errors | array | **no** (DEPRECATED) | Array of strings suitable for displaying to a user. |
+| connections | array of [Connections](#connection) | **yes** | List of Connections. |
+| accounts | array of [Accounts](#account) | **yes** | List of Accounts. |
 
 </div>
 
@@ -232,15 +345,19 @@ Though the array of strings are meant for users, you **must** sanitize the strin
 
 ~~~{.json}
 {
-  "errors": [],
+  "errlist": [],
+  "connections": [
+    "conn_id": "CON-1122121298398234234",
+    "name": "My Bank - Jill",
+    "org_id": "INST-1298391823-129381928391823",
+    "org_url": "https://mybank.com",
+    "sfin_url": "https://sfin.mybank.com",
+  ],
   "accounts": [
     {
-      "org": {
-        "domain": "mybank.com",
-        "sfin-url": "https://sfin.mybank.com"
-      },
       "id": "2930002",
       "name": "Savings",
+      "conn_id": "CON-1122121298398234234",
       "currency": "USD",
       "balance": "100.23",
       "available-balance": "75.23",
@@ -273,9 +390,9 @@ Though the array of strings are meant for users, you **must** sanitize the strin
 
 | Attribute | Type | Required | Description |
 |---|---|---|---|
-| org | [Organization](#organization) | **yes** | Organization from which this account originates. |
-| id | string | **yes** | String that uniquely identifies the account within the organization.  It is recommended that this id be chosen such that it does not reveal any sensitive data (login information for the bank's web banking portal, for instance). |
-| name | string | **yes** | A name that uniquely describes an account among all the users other accounts. This name should be chosen so that a person can easily associate it with only one of their accounts within an organization. |
+| id | string | **yes** | String that uniquely identifies the account within the Connection.  It is recommended that this id be chosen such that it does not reveal any sensitive data (login information for the bank's web banking portal, for instance). |
+| name | string | **yes** | A name that uniquely describes an account among all the users other accounts. This name should be chosen so that a person can easily associate it with only one of their accounts within an Connection. |
+| conn_id | string | **yes** | ID of the account's [Connection](#connection) |
 | currency | string | **yes** | If the currency is a standard currency, this is the currency code from the official ISO 4217.  For example `"ZMW"` or `"USD"`.  If this is a custom currency, see the [Custom Currencies section](#custom-currencies) below. |
 | balance | numeric string | **yes** | The balance of the account as of `balance-date`. |
 | available-balance | numeric string | optional | The available balance of the account as of balance-date. This may be omitted if it is the same as balance. |
@@ -289,12 +406,9 @@ Though the array of strings are meant for users, you **must** sanitize the strin
 
 ~~~{.json}
 {
-  "org": {
-    "domain": "mybank.com",
-    "sfin-url": "https://sfin.mybank.com"
-  },
   "id": "2930002",
   "name": "Savings",
+  "conn_id": "1238239482348382932",
   "currency": "USD",
   "balance": "100.23",
   "available-balance": "75.23",
@@ -408,42 +522,6 @@ Returns the following:
   "extra": {
     "category": "food"
   }
-}
-~~~
-
-</div>
-
-</section>
-
-
-
-## Organization
-
-<section>
-
-<div class="main">
-
-<note>
-Either `domain` or `name` is required.  Both may be specified.
-</note>
-
-| Attribute | Type | Required | Description |
-|---|---|---|---|
-| domain | string | maybe | Domain name of the financial institution. |
-| sfin-url | string | **yes** | Root URL of organization's SimpleFIN Server |
-| name | string | maybe | Human-friendly name of the financial institution. |
-| url | string | no | Optional URL of financial institution |
-| id | string | no | Optional ID for the financial institution. The ID must be unique per SimpleFIN server, but it is not guaranteed that IDs are globally unique. Prefer `domain` as a globally unique ID for each institution |
-
-</div>
-
-<div class="example">
-
-~~~{.json}
-"org": {
-  "domain": "mybank.com",
-  "name": "My Bank",
-  "sfin-url": "https://sfin.mybank.com"
 }
 ~~~
 
@@ -666,15 +744,22 @@ Sample response:
 
 ~~~{.json}
 {
-  "errors": [],
+  "errlist": [],
+  "connections": [
+    {
+      "conn_id": "10829309823094234",
+      "name": "My Bank - Jeff",
+      "org_id": "INST-982394823948230-2340923094",
+      "org_name": "My Bank",
+      "org_url": "https://mybank.com",
+      "sfin_url": "https://sfin.mybank.com",
+    }
+  ],
   "accounts": [
     {
-      "org": {
-        "domain": "mybank.com",
-        "sfin-url": "https://sfin.mybank.com"
-      },
       "id": "2930002",
       "name": "Savings",
+      "conn_id": "10829309823094234",
       "currency": "USD",
       "balance": "100.23",
       "available-balance": "75.23",
