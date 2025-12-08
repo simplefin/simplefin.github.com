@@ -113,6 +113,7 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 </ul></li>
 <li><a href="#changes" id="toc-changes">Changes</a>
 <ul>
+<li><a href="#v2.0.0---2025-12-08" id="toc-v2.0.0---2025-12-08">v2.0.0 - 2025-12-08</a></li>
 <li><a href="#v1.0.7" id="toc-v1.0.7">v1.0.7</a></li>
 </ul></li>
 </ul>
@@ -126,7 +127,7 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 SimpleFIN Protocol
 </div>
 </div>
-<p>Version: 1.0.7-draft</p>
+<p>Version: 2.0.0-draft</p>
 <h1 id="introduction">Introduction</h1>
 <p>The SimpleFIN protocol allows users to share read-only financial data with third parties. It’s similar to RSS, but for financial data.</p>
 <p>Though intended mostly for banks, it can also be used for reward points or gift certificate balances (e.g. Frequent Flyer Miles, Amazon gift card balance, etc…)</p>
@@ -960,6 +961,15 @@ All strings obtained from these requests <strong>must</strong> be sanitized when
 </div>
 </section>
 <h1 id="changes">Changes</h1>
+<h2 id="v2.0.0---2025-12-08">v2.0.0 - 2025-12-08</h2>
+<ul>
+<li><strong>BREAKING CHANGE:</strong> Deprecated <code>errors</code> list on <code>AccountSet</code> object in favor of new <code>errlist</code> list for structured errors.</li>
+<li><strong>BREAKING CHANGE:</strong> Deprecated <code>Organization</code> object in favor of new, flatter <code>Connection</code> object.</li>
+<li><strong>NEW:</strong> Added <code>GET /accounts?balances-only=1</code> parameter to skip fetching account transaction data.</li>
+<li><strong>NEW:</strong> Added <code>connections</code> list to <code>AccountSet</code></li>
+<li><strong>NEW:</strong> Added <code>GET /accounts?account=</code> parameter for filtering which accounts are returned.</li>
+<li><strong>NEW:</strong> Added <code>conn_id</code> to <code>Account</code> object to disambiguate between two different logins to the same bank.</li>
+</ul>
 <h2 id="v1.0.7">v1.0.7</h2>
 <ul>
 <li>Started this changelog</li>
