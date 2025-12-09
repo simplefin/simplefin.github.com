@@ -98,10 +98,11 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 </ul></li>
 <li><a href="#data" id="toc-data">Data</a>
 <ul>
+<li><a href="#error" id="toc-error">Error</a></li>
+<li><a href="#connection" id="toc-connection">Connection</a></li>
 <li><a href="#account-set" id="toc-account-set">Account Set</a></li>
 <li><a href="#account" id="toc-account">Account</a></li>
 <li><a href="#transaction" id="toc-transaction">Transaction</a></li>
-<li><a href="#organization" id="toc-organization">Organization</a></li>
 </ul></li>
 <li><a href="#http-endpoints" id="toc-http-endpoints">HTTP Endpoints</a>
 <ul>
@@ -112,6 +113,7 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 </ul></li>
 <li><a href="#changes" id="toc-changes">Changes</a>
 <ul>
+<li><a href="#v2.0.0---2025-12-08" id="toc-v2.0.0---2025-12-08">v2.0.0 - 2025-12-08</a></li>
 <li><a href="#v1.0.7" id="toc-v1.0.7">v1.0.7</a></li>
 </ul></li>
 </ul>
@@ -119,10 +121,13 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 <div class="page-wrap">
 <div class="right-column"></div>
 <div class="main-column">
-<p><img src="img/logo.svg" style="width: 32px; height: 32px;" align="center"> SimpleFIN Protocol</p>
-<ul>
-<li>Version: 1.0.7-draft</li>
-</ul>
+<div style="display: flex; align-items: center; font-size: 1.5em; font-weight: bold;">
+<img src="img/logo.svg" style="width: 32px; height: 32px; margin-right: 8px;" align="center">
+<div>
+SimpleFIN Protocol
+</div>
+</div>
+<p>Version: 2.0.0-draft</p>
 <h1 id="introduction">Introduction</h1>
 <p>The SimpleFIN protocol allows users to share read-only financial data with third parties. It’s similar to RSS, but for financial data.</p>
 <p>Though intended mostly for banks, it can also be used for reward points or gift certificate balances (e.g. Frequent Flyer Miles, Amazon gift card balance, etc…)</p>
@@ -215,23 +220,36 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="st">&quot;</span><span class="va">${ACCESS_URL}</span><span class="st">/accounts&quot;</span></span></code></pre></div>
 <p>Sample response:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;errors&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;You must reauthenticate.&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;accounts&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;org&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;domain&quot;</span><span class="fu">:</span> <span class="st">&quot;mybank.com&quot;</span><span class="fu">,</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;sfin-url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sfin.mybank.com&quot;</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">},</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;2930002&quot;</span><span class="fu">,</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Savings&quot;</span><span class="fu">,</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;currency&quot;</span><span class="fu">:</span> <span class="st">&quot;USD&quot;</span><span class="fu">,</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;balance&quot;</span><span class="fu">:</span> <span class="st">&quot;100.23&quot;</span><span class="fu">,</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;available-balance&quot;</span><span class="fu">:</span> <span class="st">&quot;75.23&quot;</span><span class="fu">,</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;balance-date&quot;</span><span class="fu">:</span> <span class="dv">978366153</span><span class="fu">,</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;transactions&quot;</span><span class="fu">:</span> <span class="ot">[]</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;errlist&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;code&quot;</span><span class="fu">:</span> <span class="st">&quot;con.auth&quot;</span><span class="fu">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;Authentication required&quot;</span><span class="fu">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;conn_id&quot;</span><span class="fu">:</span> <span class="st">&quot;CON-10829309823094234&quot;</span><span class="fu">,</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;connections&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;conn_id&quot;</span><span class="fu">:</span> <span class="st">&quot;CON-10829309823094234&quot;</span><span class="fu">,</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;My Bank - James&quot;</span><span class="fu">,</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;org_id&quot;</span><span class="fu">:</span> <span class="st">&quot;INST-129839182938123123&quot;</span><span class="fu">,</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;org_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://mybank.com&quot;</span><span class="fu">,</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;sfin_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://mybank.com&quot;</span><span class="fu">,</span></span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;accounts&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;2930002&quot;</span><span class="fu">,</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Savings&quot;</span><span class="fu">,</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;conn_id&quot;</span><span class="fu">:</span> <span class="st">&quot;CON-10829309823094234&quot;</span><span class="fu">,</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;conn_name&quot;</span><span class="fu">:</span> <span class="st">&quot;My Bank - Jeff&quot;</span><span class="fu">,</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;currency&quot;</span><span class="fu">:</span> <span class="st">&quot;USD&quot;</span><span class="fu">,</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;balance&quot;</span><span class="fu">:</span> <span class="st">&quot;100.23&quot;</span><span class="fu">,</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;available-balance&quot;</span><span class="fu">:</span> <span class="st">&quot;75.23&quot;</span><span class="fu">,</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;balance-date&quot;</span><span class="fu">:</span> <span class="dv">978366153</span><span class="fu">,</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;transactions&quot;</span><span class="fu">:</span> <span class="ot">[]</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 </div>
 </section>
 <h2 id="checklist">Checklist</h2>
@@ -258,6 +276,174 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 </div>
 </section>
 <h1 id="data">Data</h1>
+<h2 id="error">Error</h2>
+<section>
+<div class="main">
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>string</td>
+<td><strong>yes</strong></td>
+<td>One of the codes listed below</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>string</td>
+<td><strong>yes</strong></td>
+<td>String error suitable for displaying to users</td>
+</tr>
+<tr>
+<td>conn_id</td>
+<td>string</td>
+<td>no</td>
+<td>Connection id. This is only given if the error is specific to a particular connection.</td>
+</tr>
+<tr>
+<td>account_id</td>
+<td>string</td>
+<td>no</td>
+<td>Account id. This is only given if the error is specific to a particular account.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="codes">Codes</h3>
+<p>Error codes are in the format <code>prefix.[subcode]</code>. Current valid prefixes are <code>gen</code>, <code>con</code> or <code>act</code> indicating General, <a href="#connection">Connection</a> or <a href="#account">Account</a> errors respectively.</p>
+<p>Consumers of the protocol should handle unknown subcodes by falling back to treating the error like a naked <code>prefix.</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Extra attributes</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gen.</code></td>
+<td></td>
+<td>General error</td>
+</tr>
+<tr>
+<td><code>gen.api</code></td>
+<td></td>
+<td>Error in how the API is being used. This is meant for the developer and not the user.</td>
+</tr>
+<tr>
+<td><code>gen.auth</code></td>
+<td></td>
+<td>General authentication error (to the SimpleFIN Server)</td>
+</tr>
+<tr>
+<td><code>con.</code></td>
+<td><code>conn_id</code></td>
+<td>General connection-level error</td>
+</tr>
+<tr>
+<td><code>con.auth</code></td>
+<td><code>conn_id</code></td>
+<td>Authentication issue for a connection</td>
+</tr>
+<tr>
+<td><code>act.</code></td>
+<td><code>account_id</code></td>
+<td>General account-level error</td>
+</tr>
+<tr>
+<td><code>act.failed</code></td>
+<td><code>account_id</code></td>
+<td>Failed to get account information. Try again later.</td>
+</tr>
+<tr>
+<td><code>act.missingdata</code></td>
+<td><code>account_id</code></td>
+<td>Incomplete transaction listing. Try again later.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="example">
+<div class="sourceCode" id="cb8"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;code&quot;</span><span class="fu">:</span> <span class="st">&quot;gen.auth&quot;</span><span class="fu">,</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;msg&quot;</span><span class="fu">:</span> <span class="st">&quot;No credentials provided&quot;</span><span class="fu">,</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;code&quot;</span><span class="fu">:</span> <span class="st">&quot;con.auth&quot;</span><span class="fu">,</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;msg&quot;</span><span class="fu">:</span> <span class="st">&quot;Authentication failed for My Bank - Jim&quot;</span><span class="fu">,</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;conn_id&quot;</span><span class="fu">:</span> <span class="st">&quot;CON-21983498-29349823984293842&quot;</span><span class="fu">,</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;code&quot;</span><span class="fu">:</span> <span class="st">&quot;act.failed&quot;</span><span class="fu">,</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;msg&quot;</span><span class="fu">:</span> <span class="st">&quot;Failed to get all transactions. Try again later.&quot;</span><span class="fu">,</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;account_id&quot;</span><span class="fu">:</span> <span class="st">&quot;ACT-1982398-12398192839182398123&quot;</span><span class="fu">,</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+</div>
+</section>
+<h2 id="connection">Connection</h2>
+<section>
+<div class="main">
+<p>This represents a single connection to an institution. Users with 2 sets of login credentials for a particular bank will have 2 different Connections, each with the same <code>org_*</code> fields.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>conn_id</td>
+<td>string</td>
+<td><strong>yes</strong></td>
+<td>ID of a particular connection for a financial institution.</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td><strong>yes</strong></td>
+<td>Human-friendly name for this connection. This should include the financial institution name (and may be identical to the financial institution’s name in some cases).</td>
+</tr>
+<tr>
+<td>org_id</td>
+<td>string</td>
+<td><strong>yes</strong></td>
+<td>ID of the financial institution. The ID must be unique per SimpleFIN server, but it is not guaranteed to be globally unique.</td>
+</tr>
+<tr>
+<td>org_url</td>
+<td>string</td>
+<td>no</td>
+<td>Domain name of the financial institution</td>
+</tr>
+<tr>
+<td>sfin_url</td>
+<td>string</td>
+<td><strong>yes</strong></td>
+<td>Root URL of organization’s SimpleFIN Server</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="example">
+<div class="sourceCode" id="cb11"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;conn_id&quot;</span><span class="fu">:</span> <span class="st">&quot;CON-923049234-203940293409234&quot;</span><span class="fu">,</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;My Bank - Jill&quot;</span><span class="fu">,</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;org_id&quot;</span><span class="fu">:</span> <span class="st">&quot;ORG-8293948-230482398492834&quot;</span><span class="fu">,</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;org_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://mybank.com&quot;</span><span class="fu">,</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;sfin_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sfin.mybank.com&quot;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+</div>
+</section>
 <h2 id="account-set">Account Set</h2>
 <section>
 <div class="main">
@@ -272,52 +458,65 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
 </thead>
 <tbody>
 <tr>
+<td>errlist</td>
+<td>array of <a href="#error">Errors</a></td>
+<td><strong>yes</strong></td>
+<td>List of errors</td>
+</tr>
+<tr>
 <td>errors</td>
 <td>array</td>
-<td><strong>yes</strong></td>
+<td><strong>no</strong> (DEPRECATED)</td>
 <td>Array of strings suitable for displaying to a user.</td>
 </tr>
 <tr>
-<td>accounts</td>
-<td>array of <a href="#accounts">Accounts</a></td>
+<td>connections</td>
+<td>array of <a href="#connection">Connections</a></td>
 <td><strong>yes</strong></td>
-<td>List of accounts.</td>
+<td>List of Connections.</td>
+</tr>
+<tr>
+<td>accounts</td>
+<td>array of <a href="#account">Accounts</a></td>
+<td><strong>yes</strong></td>
+<td>List of Accounts.</td>
 </tr>
 </tbody>
 </table>
-<warning>
-Though the array of strings are meant for users, you <strong>must</strong> sanitize the strings when displaying them.
-</warning>
 </div>
 <div class="example">
-<div class="sourceCode" id="cb8"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;errors&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;accounts&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;org&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;domain&quot;</span><span class="fu">:</span> <span class="st">&quot;mybank.com&quot;</span><span class="fu">,</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;sfin-url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sfin.mybank.com&quot;</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">},</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;2930002&quot;</span><span class="fu">,</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Savings&quot;</span><span class="fu">,</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;currency&quot;</span><span class="fu">:</span> <span class="st">&quot;USD&quot;</span><span class="fu">,</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;balance&quot;</span><span class="fu">:</span> <span class="st">&quot;100.23&quot;</span><span class="fu">,</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;available-balance&quot;</span><span class="fu">:</span> <span class="st">&quot;75.23&quot;</span><span class="fu">,</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;balance-date&quot;</span><span class="fu">:</span> <span class="dv">978366153</span><span class="fu">,</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;transactions&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;12394832938403&quot;</span><span class="fu">,</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&quot;posted&quot;</span><span class="fu">:</span> <span class="dv">793090572</span><span class="fu">,</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&quot;amount&quot;</span><span class="fu">:</span> <span class="st">&quot;-33293.43&quot;</span><span class="fu">,</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Uncle Frank&#39;s Bait Shop&quot;</span><span class="fu">,</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>      <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;extra&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;account-open-date&quot;</span><span class="fu">:</span> <span class="dv">978360153</span><span class="fu">,</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;errlist&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;connections&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;conn_id&quot;</span><span class="er">:</span> <span class="st">&quot;CON-1122121298398234234&quot;</span><span class="ot">,</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;name&quot;</span><span class="er">:</span> <span class="st">&quot;My Bank - Jill&quot;</span><span class="ot">,</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;org_id&quot;</span><span class="er">:</span> <span class="st">&quot;INST-1298391823-129381928391823&quot;</span><span class="ot">,</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;org_url&quot;</span><span class="er">:</span> <span class="st">&quot;https://mybank.com&quot;</span><span class="ot">,</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;sfin_url&quot;</span><span class="er">:</span> <span class="st">&quot;https://sfin.mybank.com&quot;</span><span class="ot">,</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;accounts&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;2930002&quot;</span><span class="fu">,</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Savings&quot;</span><span class="fu">,</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;conn_id&quot;</span><span class="fu">:</span> <span class="st">&quot;CON-1122121298398234234&quot;</span><span class="fu">,</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;currency&quot;</span><span class="fu">:</span> <span class="st">&quot;USD&quot;</span><span class="fu">,</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;balance&quot;</span><span class="fu">:</span> <span class="st">&quot;100.23&quot;</span><span class="fu">,</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;available-balance&quot;</span><span class="fu">:</span> <span class="st">&quot;75.23&quot;</span><span class="fu">,</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;balance-date&quot;</span><span class="fu">:</span> <span class="dv">978366153</span><span class="fu">,</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;transactions&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;12394832938403&quot;</span><span class="fu">,</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&quot;posted&quot;</span><span class="fu">:</span> <span class="dv">793090572</span><span class="fu">,</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&quot;amount&quot;</span><span class="fu">:</span> <span class="st">&quot;-33293.43&quot;</span><span class="fu">,</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>          <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Uncle Frank&#39;s Bait Shop&quot;</span><span class="fu">,</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>      <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;extra&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;account-open-date&quot;</span><span class="fu">:</span> <span class="dv">978360153</span><span class="fu">,</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 </div>
 </section>
 <h2 id="account">Account</h2>
@@ -334,22 +533,22 @@ Though the array of strings are meant for users, you <strong>must</strong> sanit
 </thead>
 <tbody>
 <tr>
-<td>org</td>
-<td><a href="#organization">Organization</a></td>
-<td><strong>yes</strong></td>
-<td>Organization from which this account originates.</td>
-</tr>
-<tr>
 <td>id</td>
 <td>string</td>
 <td><strong>yes</strong></td>
-<td>String that uniquely identifies the account within the organization. It is recommended that this id be chosen such that it does not reveal any sensitive data (login information for the bank’s web banking portal, for instance).</td>
+<td>String that uniquely identifies the account within the Connection. It is recommended that this id be chosen such that it does not reveal any sensitive data (login information for the bank’s web banking portal, for instance).</td>
 </tr>
 <tr>
 <td>name</td>
 <td>string</td>
 <td><strong>yes</strong></td>
-<td>A name that uniquely describes an account among all the users other accounts. This name should be chosen so that a person can easily associate it with only one of their accounts within an organization.</td>
+<td>A name that uniquely describes an account among all the users other accounts. This name should be chosen so that a person can easily associate it with only one of their accounts within an Connection.</td>
+</tr>
+<tr>
+<td>conn_id</td>
+<td>string</td>
+<td><strong>yes</strong></td>
+<td>ID of the account’s <a href="#connection">Connection</a></td>
 </tr>
 <tr>
 <td>currency</td>
@@ -391,29 +590,26 @@ Though the array of strings are meant for users, you <strong>must</strong> sanit
 </table>
 </div>
 <div class="example">
-<div class="sourceCode" id="cb9"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;org&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;domain&quot;</span><span class="fu">:</span> <span class="st">&quot;mybank.com&quot;</span><span class="fu">,</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;sfin-url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sfin.mybank.com&quot;</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;2930002&quot;</span><span class="fu">,</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Savings&quot;</span><span class="fu">,</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;currency&quot;</span><span class="fu">:</span> <span class="st">&quot;USD&quot;</span><span class="fu">,</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;balance&quot;</span><span class="fu">:</span> <span class="st">&quot;100.23&quot;</span><span class="fu">,</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;available-balance&quot;</span><span class="fu">:</span> <span class="st">&quot;75.23&quot;</span><span class="fu">,</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;balance-date&quot;</span><span class="fu">:</span> <span class="dv">978366153</span><span class="fu">,</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;transactions&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;12394832938403&quot;</span><span class="fu">,</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;posted&quot;</span><span class="fu">:</span> <span class="dv">793090572</span><span class="fu">,</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;amount&quot;</span><span class="fu">:</span> <span class="st">&quot;-33293.43&quot;</span><span class="fu">,</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Uncle Frank&#39;s Bait Shop&quot;</span><span class="fu">,</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;extra&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;account-open-date&quot;</span><span class="fu">:</span> <span class="dv">978360153</span><span class="fu">,</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;2930002&quot;</span><span class="fu">,</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Savings&quot;</span><span class="fu">,</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;conn_id&quot;</span><span class="fu">:</span> <span class="st">&quot;1238239482348382932&quot;</span><span class="fu">,</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;currency&quot;</span><span class="fu">:</span> <span class="st">&quot;USD&quot;</span><span class="fu">,</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;balance&quot;</span><span class="fu">:</span> <span class="st">&quot;100.23&quot;</span><span class="fu">,</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;available-balance&quot;</span><span class="fu">:</span> <span class="st">&quot;75.23&quot;</span><span class="fu">,</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;balance-date&quot;</span><span class="fu">:</span> <span class="dv">978366153</span><span class="fu">,</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;transactions&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;12394832938403&quot;</span><span class="fu">,</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;posted&quot;</span><span class="fu">:</span> <span class="dv">793090572</span><span class="fu">,</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;amount&quot;</span><span class="fu">:</span> <span class="st">&quot;-33293.43&quot;</span><span class="fu">,</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Uncle Frank&#39;s Bait Shop&quot;</span><span class="fu">,</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;extra&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;account-open-date&quot;</span><span class="fu">:</span> <span class="dv">978360153</span><span class="fu">,</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 </div>
 </section>
 <h3 id="custom-currencies">Custom Currencies</h3>
@@ -451,23 +647,23 @@ All strings obtained from these requests <strong>must</strong> be sanitized when
 </div>
 <div class="example">
 <p>The following Account’s currency is <code>https://www.example.com/fake-currency</code></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="er">...</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;2930002&quot;</span><span class="fu">,</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Savings&quot;</span><span class="fu">,</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;currency&quot;</span><span class="fu">:</span> <span class="st">&quot;https://www.example.com/flight-miles&quot;</span><span class="fu">,</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;balance&quot;</span><span class="fu">:</span> <span class="st">&quot;100.23&quot;</span><span class="fu">,</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;available-balance&quot;</span><span class="fu">:</span> <span class="st">&quot;75.23&quot;</span><span class="fu">,</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;balance-date&quot;</span><span class="fu">:</span> <span class="dv">978366153</span><span class="fu">,</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;transactions&quot;</span><span class="fu">:</span> <span class="ot">[]</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="er">...</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;2930002&quot;</span><span class="fu">,</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Savings&quot;</span><span class="fu">,</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;currency&quot;</span><span class="fu">:</span> <span class="st">&quot;https://www.example.com/flight-miles&quot;</span><span class="fu">,</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;balance&quot;</span><span class="fu">:</span> <span class="st">&quot;100.23&quot;</span><span class="fu">,</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;available-balance&quot;</span><span class="fu">:</span> <span class="st">&quot;75.23&quot;</span><span class="fu">,</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;balance-date&quot;</span><span class="fu">:</span> <span class="dv">978366153</span><span class="fu">,</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;transactions&quot;</span><span class="fu">:</span> <span class="ot">[]</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <p>Making a request to the currency URL:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://www.example.com/flight-miles</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://www.example.com/flight-miles</span></code></pre></div>
 <p>Returns the following:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Example Airline Miles&quot;</span><span class="fu">,</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;abbr&quot;</span><span class="fu">:</span> <span class="st">&quot;miles&quot;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Example Airline Miles&quot;</span><span class="fu">,</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;abbr&quot;</span><span class="fu">:</span> <span class="st">&quot;miles&quot;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 </div>
 </section>
 <h2 id="transaction">Transaction</h2>
@@ -529,73 +725,16 @@ All strings obtained from these requests <strong>must</strong> be sanitized when
 </table>
 </div>
 <div class="example">
-<div class="sourceCode" id="cb13"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;12394832938403&quot;</span><span class="fu">,</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;posted&quot;</span><span class="fu">:</span> <span class="dv">793090572</span><span class="fu">,</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;amount&quot;</span><span class="fu">:</span> <span class="st">&quot;-33293.43&quot;</span><span class="fu">,</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Uncle Frank&#39;s Bait Shop&quot;</span><span class="fu">,</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;pending&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;extra&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;category&quot;</span><span class="fu">:</span> <span class="st">&quot;food&quot;</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
-</div>
-</section>
-<h2 id="organization">Organization</h2>
-<section>
-<div class="main">
-<note>
-Either <code>domain</code> or <code>name</code> is required. Both may be specified.
-</note>
-<table>
-<thead>
-<tr>
-<th>Attribute</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>domain</td>
-<td>string</td>
-<td>maybe</td>
-<td>Domain name of the financial institution.</td>
-</tr>
-<tr>
-<td>sfin-url</td>
-<td>string</td>
-<td><strong>yes</strong></td>
-<td>Root URL of organization’s SimpleFIN Server</td>
-</tr>
-<tr>
-<td>name</td>
-<td>string</td>
-<td>maybe</td>
-<td>Human-friendly name of the financial institution.</td>
-</tr>
-<tr>
-<td>url</td>
-<td>string</td>
-<td>no</td>
-<td>Optional URL of financial institution</td>
-</tr>
-<tr>
-<td>id</td>
-<td>string</td>
-<td>no</td>
-<td>Optional ID for the financial institution. The ID must be unique per SimpleFIN server, but it is not guaranteed that IDs are globally unique. Prefer <code>domain</code> as a globally unique ID for each institution</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="example">
-<div class="sourceCode" id="cb14"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="er">&quot;org&quot;:</span> <span class="fu">{</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;domain&quot;</span><span class="fu">:</span> <span class="st">&quot;mybank.com&quot;</span><span class="fu">,</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;My Bank&quot;</span><span class="fu">,</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;sfin-url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sfin.mybank.com&quot;</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;12394832938403&quot;</span><span class="fu">,</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;posted&quot;</span><span class="fu">:</span> <span class="dv">793090572</span><span class="fu">,</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;amount&quot;</span><span class="fu">:</span> <span class="st">&quot;-33293.43&quot;</span><span class="fu">,</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Uncle Frank&#39;s Bait Shop&quot;</span><span class="fu">,</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;pending&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;extra&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;category&quot;</span><span class="fu">:</span> <span class="st">&quot;food&quot;</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 </div>
 </section>
 <h1 id="http-endpoints">HTTP Endpoints</h1>
@@ -612,7 +751,7 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 </div>
 <div class="example">
 <p>Here’s an example root URL, set to the shell environment variable <code>ROOT</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="va">ROOT</span><span class="op">=</span><span class="st">&quot;https://bridge.simplefin.org/simplefin&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="va">ROOT</span><span class="op">=</span><span class="st">&quot;https://bridge.simplefin.org/simplefin&quot;</span></span></code></pre></div>
 </div>
 </section>
 <h2 id="get-info">GET /info</h2>
@@ -640,11 +779,11 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 </div>
 <div class="example">
 <p>Request:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://bridge.simplefin.org/simplefin/info</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://bridge.simplefin.org/simplefin/info</span></code></pre></div>
 <p>Response:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;versions&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;1.0&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;versions&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;1.0&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 </div>
 </section>
 <h2 id="get-create">GET /create</h2>
@@ -662,8 +801,8 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 </div>
 <div class="example">
 <p>For example, an application that wants to access a user’s transaction data could present the following in a web page:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>To connect your bank to this application,</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;https://bridge.simplefin.org/simplefin/create&quot;</span><span class="dt">&gt;</span>click here<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>To connect your bank to this application,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;https://bridge.simplefin.org/simplefin/create&quot;</span><span class="dt">&gt;</span>click here<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span></code></pre></div>
 <p>An example SimpleFIN Token looks like this:</p>
 <pre><code>aHR0cHM6Ly9icmlkZ2Uuc2ltcGxlZmluLm9yZy9zaW1wbGVmaW4vY2xhaW0vZGVtbw==</code></pre>
 </div>
@@ -712,12 +851,12 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 </div>
 <div class="example">
 <p>The following example uses a demo token that can be reused:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="va">TOKEN</span><span class="op">=</span><span class="st">&quot;aHR0cHM6Ly9icmlkZ2Uuc2ltcGxlZmluLm9yZy9zaW1wbGVmaW4vY2xhaW0vZGVtbw==&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="va">TOKEN</span><span class="op">=</span><span class="st">&quot;aHR0cHM6Ly9icmlkZ2Uuc2ltcGxlZmluLm9yZy9zaW1wbGVmaW4vY2xhaW0vZGVtbw==&quot;</span></span></code></pre></div>
 <p>Decode the token:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="va">DECODED_TOKEN</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${TOKEN}</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">base64</span> <span class="at">-D</span><span class="va">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="va">DECODED_TOKEN</span><span class="op">=</span><span class="va">$(</span><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${TOKEN}</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">base64</span> <span class="at">-D</span><span class="va">)</span></span></code></pre></div>
 <p>Claim the Access URL associated with this SimpleFIN Token:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="va">ACCESS_URL</span><span class="op">=</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-X</span> POST <span class="st">&quot;</span><span class="va">${DECODED_TOKEN}</span><span class="st">&quot;</span><span class="va">)</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># https://demo:demo@bridge.simplefin.org/simplefin</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="va">ACCESS_URL</span><span class="op">=</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-X</span> POST <span class="st">&quot;</span><span class="va">${DECODED_TOKEN}</span><span class="st">&quot;</span><span class="va">)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># https://demo:demo@bridge.simplefin.org/simplefin</span></span></code></pre></div>
 </div>
 </section>
 <h2 id="get-accounts">GET /accounts</h2>
@@ -792,29 +931,45 @@ Either <code>domain</code> or <code>name</code> is required. Both may be specifi
 </div>
 <div class="example">
 <p>Request:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="st">&quot;https://demo:demo@bridge.simplefin.org/simplefin/accounts?start-date=978360153&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="st">&quot;https://demo:demo@bridge.simplefin.org/simplefin/accounts?start-date=978360153&quot;</span></span></code></pre></div>
 <p>Sample response:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;errors&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;accounts&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;org&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;domain&quot;</span><span class="fu">:</span> <span class="st">&quot;mybank.com&quot;</span><span class="fu">,</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;sfin-url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sfin.mybank.com&quot;</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">},</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;2930002&quot;</span><span class="fu">,</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Savings&quot;</span><span class="fu">,</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;currency&quot;</span><span class="fu">:</span> <span class="st">&quot;USD&quot;</span><span class="fu">,</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;balance&quot;</span><span class="fu">:</span> <span class="st">&quot;100.23&quot;</span><span class="fu">,</span></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;available-balance&quot;</span><span class="fu">:</span> <span class="st">&quot;75.23&quot;</span><span class="fu">,</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;balance-date&quot;</span><span class="fu">:</span> <span class="dv">978366153</span><span class="fu">,</span></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;transactions&quot;</span><span class="fu">:</span> <span class="ot">[]</span></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;errlist&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;connections&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;conn_id&quot;</span><span class="fu">:</span> <span class="st">&quot;10829309823094234&quot;</span><span class="fu">,</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;My Bank - Jeff&quot;</span><span class="fu">,</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;org_id&quot;</span><span class="fu">:</span> <span class="st">&quot;INST-982394823948230-2340923094&quot;</span><span class="fu">,</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;org_name&quot;</span><span class="fu">:</span> <span class="st">&quot;My Bank&quot;</span><span class="fu">,</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;org_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://mybank.com&quot;</span><span class="fu">,</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;sfin_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sfin.mybank.com&quot;</span><span class="fu">,</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;accounts&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;2930002&quot;</span><span class="fu">,</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Savings&quot;</span><span class="fu">,</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;conn_id&quot;</span><span class="fu">:</span> <span class="st">&quot;10829309823094234&quot;</span><span class="fu">,</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;currency&quot;</span><span class="fu">:</span> <span class="st">&quot;USD&quot;</span><span class="fu">,</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;balance&quot;</span><span class="fu">:</span> <span class="st">&quot;100.23&quot;</span><span class="fu">,</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;available-balance&quot;</span><span class="fu">:</span> <span class="st">&quot;75.23&quot;</span><span class="fu">,</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;balance-date&quot;</span><span class="fu">:</span> <span class="dv">978366153</span><span class="fu">,</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;transactions&quot;</span><span class="fu">:</span> <span class="ot">[]</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 </div>
 </section>
 <h1 id="changes">Changes</h1>
+<h2 id="v2.0.0---2025-12-08">v2.0.0 - 2025-12-08</h2>
+<ul>
+<li><strong>BREAKING CHANGE:</strong> Deprecated <code>errors</code> list on <code>AccountSet</code> object in favor of new <code>errlist</code> list for structured errors.</li>
+<li><strong>BREAKING CHANGE:</strong> Deprecated <code>Organization</code> object in favor of new, flatter <code>Connection</code> object.</li>
+<li><strong>NEW:</strong> Added <code>GET /accounts?balances-only=1</code> parameter to skip fetching account transaction data.</li>
+<li><strong>NEW:</strong> Added <code>connections</code> list to <code>AccountSet</code></li>
+<li><strong>NEW:</strong> Added <code>GET /accounts?account=</code> parameter for filtering which accounts are returned.</li>
+<li><strong>NEW:</strong> Added <code>conn_id</code> to <code>Account</code> object to disambiguate between two different logins to the same bank.</li>
+</ul>
 <h2 id="v1.0.7">v1.0.7</h2>
 <ul>
 <li>Started this changelog</li>
