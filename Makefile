@@ -1,10 +1,12 @@
 
 .PHONY: all watch
 
-all: protocol.html diagrams
+PROTOCOL_HTMLS := $(patsubst %.md,%.html,$(wildcard protocol*.md))
 
-protocol.html: protocol.md style.css pandoc_template.html CHANGELOG.md
-	( cat protocol.md | sed -e s/VERSIONTAG/$$(changer current-version)/ ; echo '# Changes' ; echo ''; cat CHANGELOG.md | sed -e s/#/##/g ) | pandoc \
+all: $(PROTOCOL_HTMLS) diagrams
+
+$(PROTOCOL_HTMLS): %.html : %.md style.css pandoc_template.html CHANGELOG.md
+	( cat $< | sed -e s/VERSIONTAG/$$(changer current-version)/ ; echo '# Changes' ; echo ''; cat CHANGELOG.md | sed -e s/#/##/g ) | pandoc \
 		-s -c style.css \
 		--metadata title="SimpleFIN Protocol" \
 		--toc --toc-depth=2 \
