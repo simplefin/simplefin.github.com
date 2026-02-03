@@ -569,7 +569,7 @@ ROOT="https://bridge.simplefin.org/simplefin"
 
 Used by Applications to find out what versions of the SimpleFIN Protocol the server supports. The strings returned must be in `MAJOR.MINOR.FIX` or `MAJOR.MINOR` format.
 
-Note: as this specification is still in draft, most servers will report `1.0` but may not yet support all things from the draft specification.
+Note: as this specification is still in draft, most servers will report `1` but may not yet support all things from the draft specification.
 
 ### HTTP Request
 
@@ -595,7 +595,7 @@ Response:
 
 ~~~{.json}
 {
-    "versions": ["1.0"],
+    "versions": ["1","2"],
 }
 ~~~
 </div>
@@ -718,6 +718,7 @@ Retrieve account and transaction data.
 | pending | optional | If `pending=1` is provided, pending transactions will be included (if supported). By default, pending transaction are **NOT** included. |
 | account | optional | If given, only return information related to the given account id. May be specified multiple times. |
 | balances-only | optional | If `balances-only=1` is provided, no transaction data is returned. |
+| version | optional | Must be `2` for this version of the protocol. Can be `1` for earlier versions. The server chooses the default version if this is not specified. |
 
 ### Authentication
 
