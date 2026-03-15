@@ -73,7 +73,7 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
 
 <a class="item" href="https://apps.apple.com/us/app/strata-money/id6759932830" target="_blank">
   <div class="item-title"><img src="/img/applogos/strata_app.png" title="Strata logo"> Strata Money</div>
-  <div class="item-desc">Strata shows you where your money goes and how it moves</div>
+  <div class="item-desc">Strata shows you where your money goes and how it moves </div>
 </a>
 
 <a class="item" href="https://bridge.simplefin.org" target="_blank">
