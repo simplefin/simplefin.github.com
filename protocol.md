@@ -569,7 +569,7 @@ ROOT="https://bridge.simplefin.org/simplefin"
 
 Used by Applications to find out what versions of the SimpleFIN Protocol the server supports. The strings returned must be in `MAJOR.MINOR.FIX` or `MAJOR.MINOR` format.
 
-Note: as this specification is still in draft, most servers will report `1` but may not yet support all things from the draft specification.
+Note: as this specification is still in draft, most servers will report `1` or `2` but may not yet support all things from the draft specification.
 
 ### HTTP Request
 
