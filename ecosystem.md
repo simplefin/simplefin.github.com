@@ -71,6 +71,11 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-desc">Local, private budgeting app</div>
 </a>
 
+<a class="item" href="https://apps.apple.com/us/app/strata-money/id6759932830" target="_blank">
+  <div class="item-title"><img src="/img/applogos/strata_app.png" title="Strata logo"> Strata Money</div>
+  <div class="item-desc">Strata shows you where your money goes and how it moves </div>
+</a>
+
 <a class="item" href="https://bridge.simplefin.org" target="_blank">
   <div class="item-title"><img src="/img/applogos/simplefin.png" title="SimpleFIN logo"> SimpleFIN Bridge</div>
   <div class="item-desc">Bridge for banks without SimpleFIN</div>
@@ -89,6 +94,11 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
 <a class="item" href="https://github.com/CodeWithCJ/SparkyBudget" target="_blank">
   <div class="item-title"><img src="/img/applogos/SparkyBudget.png" title="Sparky Budget">Sparky Budget</div>
   <div class="item-desc">Simple Budgeting, Powerful Results</div>
+</a>
+
+<a class="item" href="https://zapyeti.com" target="_blank">
+  <div class="item-title"><img src="/img/applogos/zapyeti.png" title="ZapYeti logo"> ZapYeti</div>
+  <div class="item-desc">Debt payoff calculator and tracker</div>
 </a>
 
 <a class="item" href="https://envelopebudget.com" target="_blank">
