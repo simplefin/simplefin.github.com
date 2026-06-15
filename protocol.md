@@ -163,7 +163,7 @@ Sample response:
   "errlist": [
     {
       "code": "con.auth",
-      "message": "Authentication required",
+      "msg": "Authentication required",
       "conn_id": "CON-10829309823094234",
     }
   ],
