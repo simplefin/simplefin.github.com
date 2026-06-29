@@ -423,6 +423,7 @@ This represents a single connection to an institution. Users with 2 sets of logi
       "posted": 793090572,
       "amount": "-33293.43",
       "description": "Uncle Frank's Bait Shop",
+      "mcc": null,
     }
   ],
   "extra": {
