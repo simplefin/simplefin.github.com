@@ -106,6 +106,11 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-desc">Envelope method for the digital age</div>
 </a>
 
+<a class="item" href="https://rafe.dev/shmoney" target="_blank">
+  <div class="item-title"><img src="https://cdn.jsdelivr.net/gh/rafeautie/shmoney/docs/logo.png" title="shmoney logo"> Shmoney</div>
+  <div class="item-desc">Local-first, private-first, personal finance app. With local LLMs.</div>
+</a>
+
 </div>
 
 <script>
