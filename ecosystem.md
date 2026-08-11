@@ -106,6 +106,11 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-desc">Envelope method for the digital age</div>
 </a>
 
+<a class="item" href="https://synci.io/destinations/simplefin" target="_blank">
+  <div class="item-title"><img src="/img/applogos/synci.png" title="Synci logo"> Synci</div>
+  <div class="item-desc">Bank, brokerage, and crypto sync for Europe and New Zealand via the SimpleFIN protocol.</div>
+</a>
+
 </div>
 
 <script>
