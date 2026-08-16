@@ -148,7 +148,7 @@ Get an Account Holder's transaction data.
 #### Query parameters
 
 - `start-date` - (optional) if given, transactions will be restricted to those on or after this Unix epoch timestamp.
-- `end-date` - (optional) if given, transactions will be retricted to those before (**but not on**) this Unix epoch timestamp
+- `end-date` - (optional) if given, transactions will be restricted to those before (**but not on**) this Unix epoch timestamp
 
 #### Authentication
 
