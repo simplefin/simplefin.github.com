@@ -110,6 +110,10 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-title"><img src="/img/applogos/synci.png" title="Synci logo"> Synci</div>
   <div class="item-desc">Bank, brokerage, and crypto sync for Europe and New Zealand via the SimpleFIN protocol.</div>
 </a>
+<a class="item" href="https://netwrth.app" target="_blank">
+  <div class="item-title"><img src="/img/applogos/netwrth.png" title="netwrth"> netwrth</div>
+  <div class="item-desc">Net worth, spending and bills over time, with Home Assistant cards</div>
+</a>
 
 </div>
 
