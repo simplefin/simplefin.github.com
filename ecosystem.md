@@ -111,6 +111,14 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-desc">Bank, brokerage, and crypto sync for Europe and New Zealand via the SimpleFIN protocol.</div>
 </a>
 
+<a class="item" href="https://apps.microsoft.com/detail/9PPQGBQDDHC8" target="_blank">
+  <div class="item-title">
+    <img src="/img/applogos/budget-unplugged.png" title="Budget Unplugged logo">
+    Budget Unplugged
+  </div>
+  <div class="item-desc">Local-first Windows personal finance app with optional Bank sync via SimpleFIN.</div>
+</a>
+
 </div>
 
 <script>
