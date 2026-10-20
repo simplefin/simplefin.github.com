@@ -111,6 +111,11 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-desc">Bank, brokerage, and crypto sync for Europe and New Zealand via the SimpleFIN protocol.</div>
 </a>
 
+<a class="item" href="https://tallymint.app" target="_blank">
+  <div class="item-title"><img src="/img/applogos/tallymint.png" title="TallyMint logo"> TallyMint</div>
+  <div class="item-desc">Windows personal finance app with a Quicken-style register. Your ledger stays encrypted on your PC.</div>
+</a>
+
 </div>
 
 <script>
