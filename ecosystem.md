@@ -66,6 +66,11 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
 
 <div class="app-list">
 
+<a class="item" href="https://bowbudget.com/" target="_blank">
+  <div class="item-title"><img src="/img/applogos/bow-logo.png" title="Bow logo"> Bow</div>
+  <div class="item-desc">Aim every dollar.</div>
+</a>
+
 <a class="item" href="https://www.budgetwithbuckets.com" target="_blank">
   <div class="item-title"><img src="/img/applogos/buckets.png" title="Bucket logo"> Buckets</div>
   <div class="item-desc">Local, private budgeting app</div>
