@@ -138,6 +138,11 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-desc">Tax and money app for employees and sole traders: categorises your SimpleFIN transactions, flags deductions and tracks GST/VAT.</div>
 </a>
 
+<a class="item" href="https://moneymatter.app" target="_blank">
+  <div class="item-title"><img src="/img/applogos/moneymatter.png" title="MoneyMatter logo"> MoneyMatter</div>
+  <div class="item-desc">Open-source budget tracker you can self-host or use in the cloud</div>
+</a>
+
 </div>
 
 <script>
