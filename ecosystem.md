@@ -133,6 +133,11 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-desc">Debt snowball payoff planner that syncs balances and payments from your bank</div>
 </a>
 
+<a class="item" href="https://docs.ai2fin.com/connectors/simplefin" target="_blank">
+  <div class="item-title"><img src="/img/applogos/2fin.png" title="2Fin logo"> 2Fin</div>
+  <div class="item-desc">Tax and money app for employees and sole traders: categorises your SimpleFIN transactions, flags deductions and tracks GST/VAT.</div>
+</a>
+
 </div>
 
 <script>
