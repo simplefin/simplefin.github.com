@@ -153,6 +153,11 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-desc">Windows personal finance app with a Quicken-style register. Your ledger stays encrypted on your PC.</div>
 </a>
 
+<a class="item" href="https://totalfigures.app" target="_blank">
+  <div class="item-title"><img src="/img/applogos/totalfigures.png" title="TotalFigures logo"> TotalFigures</div>
+  <div class="item-desc">Privacy-focused net worth and personal finance tracking app</div>
+</a>
+
 </div>
 
 <script>
