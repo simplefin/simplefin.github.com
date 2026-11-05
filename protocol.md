@@ -423,6 +423,7 @@ This represents a single connection to an institution. Users with 2 sets of logi
       "posted": 793090572,
       "amount": "-33293.43",
       "description": "Uncle Frank's Bait Shop",
+      "mcc": null,
     }
   ],
   "extra": {
@@ -510,6 +511,7 @@ Returns the following:
 | description | string | **yes** | A human-readable description of what the transaction was for. |
 | transacted_at | UNIX epoch timestamp | optional | This is when the transaction happened. |
 | pending | boolean | optional | `true` indicates that this transaction has not yet posted. Default is `false` (or absent), meaning the transaction has posted. |
+| mcc | string | optional | ISO 18245 category code for the transaction as a 4-character string. Will either be omitted or `null` if unavailable for a transaction. |
 | extra | object | optional | This optional attribute may be used to include extra transaction-specific data that is not defined in this standard. It is up to the Server to decide whether or not to include data in here. |
 
 </div>
@@ -523,6 +525,7 @@ Returns the following:
   "amount": "-33293.43",
   "description": "Uncle Frank's Bait Shop",
   "pending": true,
+  "mcc": "5812",
   "extra": {
     "category": "food"
   }
