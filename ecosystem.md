@@ -158,6 +158,11 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-desc">Privacy-focused net worth and personal finance tracking app</div>
 </a>
 
+<a class="item" href="https://cashington.app" target="_blank">
+  <div class="item-title"><img src="/img/applogos/cashington.png" title="Cashington logo"> Cashington</div>
+  <div class="item-desc">Household finance app for Windows and Mac. One ledger on your own computer: no account, no cloud.</div>
+</a>
+
 </div>
 
 <script>
