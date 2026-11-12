@@ -158,6 +158,11 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-desc">Privacy-focused net worth and personal finance tracking app</div>
 </a>
 
+<a class="item" href="https://bucketmymoney.com" target="_blank">
+  <div class="item-title"><img src="/img/applogos/bucketmymoney.png" title="Bucket My Money logo"> Bucket My Money</div>
+  <div class="item-desc">Envelope budgeting you can read at a glance, so you spend on facts, not feelings.</div>
+</a>
+
 </div>
 
 <script>
