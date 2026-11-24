@@ -158,6 +158,11 @@ To add to this list, <a href="https://github.com/simplefin/simplefin.github.com/
   <div class="item-desc">Privacy-focused net worth and personal finance tracking app</div>
 </a>
 
+<a class="item" href="https://github.com/Good-Work-Dojo/Family-Financials" target="_blank">
+  <div class="item-title"><img src="/img/applogos/family-financials.png" title="Family Financials logo"> Family Financials</div>
+  <div class="item-desc">Self-hosted household finances and net-worth planning, from your bank feed and statement files</div>
+</a>
+
 </div>
 
 <script>
